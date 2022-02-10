@@ -4,6 +4,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const cors = require("cors");
+require("dotenv").config();
 // const bodyParser = require("body-parser")
 // const cookieParser = require("cookie-parser")
 const passport = require("passport");
@@ -33,12 +34,21 @@ const User = require("./models/user.js");
 // run express, connect mongoose to mongodb
 const app = express();
 mongoose
-  .connect("mongodb://127.0.0.1:27017/llab", {
+  .connect(process.env.MONGO_PROD_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true
   })
   .then(() => console.log("Mongo Connection Open!"))
   .catch((e) => console.log("Oh no mongo error!!", e));
+
+//PORT
+const PORT = process.env.PORT || 4000;
+
+// set express to listen on port 4000
+app.listen(4000, () => {
+  console.log("Listening on port 4000");
+});
 
 const sessionConfig = {
   secret: "thisshouldbeabettersecret!",
@@ -93,7 +103,3 @@ app.post("/sessions", async (req, res) => {
   res.json(session);
 });
 
-// set express to listen on port 4000
-app.listen(4000, () => {
-  console.log("Listening on port 4000");
-});
