@@ -5,8 +5,8 @@ import User from './users'
 const App = () => {
   return (
     <div>
-      <ItemList />
-      {/* <User /> */}
+      {/* <ItemList /> */}
+      <User />
     </div>
   )
 }
