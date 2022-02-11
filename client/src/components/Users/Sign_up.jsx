@@ -1,63 +1,16 @@
 import {useState, useEffect} from "react"
-import axios from "axios"
 import './Users.css';
 import express from "../../apis/express";
 
 function User() {
-  const [users , setNewUsers] = useState(null)
   const [formUser, setFormUser] = useState({
         email: "",
         name: "",
+        username: "",
         location: "",
         password: ""
         })
 
-  
-// useEffect(() => {
-//   getUsers()
-//     } ,[])
-
-
-
-// function getUsers() {
-//   axios({
-//       method: "GET",
-//       url:"/users/",
-//     }).then((response)=>{
-//       const data = response.data
-//       setNewUsers(data)
-//     }).catch((error) => {
-//       if (error.response) {
-//         console.log(error.response);
-//         console.log(error.response.status);
-//         console.log(error.response.headers);
-//         }
-//     })}
-
-
-// function createUser(event) {
-//   axios({
-//     method: "POST",
-//     url:"/users/",
-//     data:{
-//       name: formUser.name,
-//       email: formUser.email,
-//       location: formUser.location,
-//       password: formUser.password
-//       }
-//   })
-//   // .then((response) => {
-//   //   getUsers()
-//   // })
-
-//   setFormUser(({
-//     email: "",
-//     name: "",
-//     location: "",
-//     password: ""}))
-
-//   event.preventDefault()
-// }
 
 const createUser = async (event) => {
   event.preventDefault()
