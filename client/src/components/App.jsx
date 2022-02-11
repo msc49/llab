@@ -1,6 +1,6 @@
 import React from "react";
 import ItemList from "./ItemList";
-import User from './users'
+import User from './Users/Sign_up'
 import Header from "./Header/Header";
 
 const App = () => {
