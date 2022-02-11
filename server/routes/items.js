@@ -40,7 +40,6 @@ router.delete("/items/:id", async (req, res) => {
 const uploadMulter = require('../middleware/upload.js')
 // validation
 const validation = require('../middleware/validation.js');
-const { ItemMeta } = require("semantic-ui-react");
 
 router.post("/items/:id/images", uploadMulter, validation, async (req, res) => {
   const { id } = req.params;
