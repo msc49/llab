@@ -1,5 +1,7 @@
 import {useState, useEffect} from "react"
 import axios from "axios"
+import './Users.css';
+import express from "../../apis/express";
 
 function User() {
   const [users , setNewUsers] = useState(null)
@@ -11,52 +13,65 @@ function User() {
         })
 
   
-useEffect(() => {
-  getUsers()
-    } ,[])
+// useEffect(() => {
+//   getUsers()
+//     } ,[])
 
 
 
-function getUsers() {
-  axios({
-      method: "GET",
-      url:"/users/",
-    }).then((response)=>{
-      const data = response.data
-      setNewUsers(data)
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-        }
-    })}
+// function getUsers() {
+//   axios({
+//       method: "GET",
+//       url:"/users/",
+//     }).then((response)=>{
+//       const data = response.data
+//       setNewUsers(data)
+//     }).catch((error) => {
+//       if (error.response) {
+//         console.log(error.response);
+//         console.log(error.response.status);
+//         console.log(error.response.headers);
+//         }
+//     })}
 
 
+// function createUser(event) {
+//   axios({
+//     method: "POST",
+//     url:"/users/",
+//     data:{
+//       name: formUser.name,
+//       email: formUser.email,
+//       location: formUser.location,
+//       password: formUser.password
+//       }
+//   })
+//   // .then((response) => {
+//   //   getUsers()
+//   // })
 
+//   setFormUser(({
+//     email: "",
+//     name: "",
+//     location: "",
+//     password: ""}))
 
-function createUser(event) {
-  axios({
-    method: "POST",
-    url:"/users/",
-    data:{
+//   event.preventDefault()
+// }
+
+const createUser = async (event) => {
+  event.preventDefault()
+  const { data } = await express.post('/users', {
+    user: {
       name: formUser.name,
       email: formUser.email,
       location: formUser.location,
-      password: formUser.password
-      }
+      password: formUser.password,
+      username: formUser.username
+    }
   })
-  .then((response) => {
-    getUsers()
-  })
-
-  setFormUser(({
-    email: "",
-    name: "",
-    location: "",
-    password: ""}))
-
-  event.preventDefault()
+  console.log(data)
+  // getItems()
 }
 
 function handleChange(event) { 
@@ -86,10 +101,18 @@ function handleChange(event) {
 
               <div className="field">
                <div className="ui left icon input">
-                <i className="inbox icon"></i>
-                <input onChange={handleChange} text={formUser.email} name="email" placeholder="Email" value={formUser.email} />
+                <i className="user icon"></i>
+                <input onChange={handleChange} text={formUser.username} name="username" placeholder="Username" value={formUser.username} required/>
                </div>
               </div> 
+
+              <div className="field">
+               <div className="ui left icon input">
+                <i className="inbox icon"></i>
+                <input onChange={handleChange} text={formUser.email} name="email" placeholder="Email" value={formUser.email} required/>
+               </div>
+              </div> 
+
 
               <div className="field">
                <div className="ui left icon input">

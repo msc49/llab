@@ -1,10 +1,12 @@
+let mongoose = require('mongoose')
 const express = require("express")
 const router = express.Router()
 const User = require("../models/user")
 
 // USER ROUTES
 router.post("/users", async (req, res) => {
-  const { name, email, username, password } = req.body
+  console.log(req.body)
+  const { name, email, username, password } = req.body.user
   const user = new User({name, email, username})
   const registeredUser = await User.register(user, password)
   res.send(registeredUser)

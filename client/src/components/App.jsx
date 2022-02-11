@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 import ItemList from "./ItemList";
-import User from './users'
+import User from './Users/Sign_up'
 import Header from "./Header/Header";
 
 const PageOne = () => {
