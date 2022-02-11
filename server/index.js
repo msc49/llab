@@ -1,3 +1,11 @@
+if(process.env.NODE_ENV !== "production") {
+  require('dotenv').config();
+}
+
+
+
+
+
 // require express, path, mongoose, method-oveerride
 const express = require("express");
 const path = require("path");
@@ -6,6 +14,9 @@ const session = require("express-session");
 const cors = require("cors");
 require("dotenv").config();
 // const bodyParser = require("body-parser")
+const multer = require("multer");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
 // const cookieParser = require("cookie-parser")
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -77,6 +88,24 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use("/", itemRoutes);
 app.use("/", userRoutes);
+// use uploads folder to save image
+app.use("/uploads", express.static("uploads"));
+app.use(morgan("dev"));
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
+// // import category route??
+// app.use('/api', require('./routes/category.route.js'))
+// // Page note found 404
+// app.use((req, res) => {
+//   res.status(404).json({
+//     errors: "page not found"
+//   })
+// })
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());

@@ -12,6 +12,18 @@ const ItemSchema = new Schema({
     required: true,
     maxLength: 250,
   },
+  images: [
+    {
+      title: {
+        type: String,
+        required: true,
+      },
+      path: {
+        type: String,
+        required: true,
+      }
+    }
+]
   // lender: {
   //   type: Schema.Types.ObjectId,
   //   ref: "User",

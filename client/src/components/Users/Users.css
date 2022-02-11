@@ -1,0 +1,12 @@
+.user-form{
+  padding-top:5em !important;
+  align-items: center;
+}
+
+.column {
+  max-width: 450px; 
+}
+
+.ui.stacked.segment:after {
+  border-top: none !important;
+}

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Item from './Item'
 import express from "../apis/express";
 
 const ItemList = () => {
 
   const [itemList, setItemList] = useState([])
-  
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
 
@@ -28,11 +26,13 @@ const ItemList = () => {
         lender: 2,
       }
     })
+    
     getItems()
   }
 
   const deleteItem = async (id) => {
     const { data } = await express.delete(`/items/${id}`)
+    
     getItems()
   }
 
@@ -43,6 +43,23 @@ const ItemList = () => {
         description: description,
       }
     })
+   
+    getItems()
+  }
+
+  const uploadImage = async (event, imageTitle, imageFile, id) => {
+    
+    event.preventDefault()
+    let formData = new FormData()
+    formData.append('title', imageTitle)
+    formData.append('itemImage', imageFile)
+
+    try {
+      const { data } = await express.post(`/items/${id}/images`, formData)
+      console.log(data)
+    } catch(err) {
+      console.log(err)
+    }
     getItems()
   }
 
@@ -53,6 +70,7 @@ const ItemList = () => {
         item={item}
         deleteItem={deleteItem}
         updateItem={updateItem}
+        uploadImage={uploadImage}
       />
     )
   })

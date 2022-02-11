@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react"
 import axios from "axios"
-import express from "../apis/express";
+import './Users.css';
+import express from "../../apis/express";
 
 function User() {
   const [users , setNewUsers] = useState(null)
