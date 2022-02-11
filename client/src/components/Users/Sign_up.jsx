@@ -2,7 +2,7 @@ import {useState, useEffect} from "react"
 import './Users.css';
 import express from "../../apis/express";
 
-function User() {
+function UserSignUp() {
   const [formUser, setFormUser] = useState({
         email: "",
         name: "",
@@ -90,12 +90,10 @@ function handleChange(event) {
 </div>
 
         
-      );
+  );
 
 
 }
 
 
-
-
-export default User;
+export default UserSignUp;

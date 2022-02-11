@@ -1,5 +1,6 @@
 let mongoose = require('mongoose')
 const express = require("express")
+const passport = require('passport')
 const router = express.Router()
 const User = require("../models/user")
 
@@ -13,48 +14,41 @@ router.post("/users", async (req, res) => {
 });
 
 
-// const { getToken, COOKIE_OPTIONS, getRefreshToken } = require("../authenticate")
+// console.log('outside strategy')
+// var JwtStrategy = require('passport-jwt').Strategy,
+//     ExtractJwt = require('passport-jwt').ExtractJwt;
+// var opts = {}
+// opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+// console.log(opts)
+// opts.secretOrKey = 'secret';
+// console.log(opts)
+// console.log('hell')
 
-// router.post("/signup", async (req, res, next) => {
-//   // Verify that name is not empty
-//   if (!req.body.name) {
-//     res.statusCode = 500
-//     res.send({
-//       name: "NameError",
-//       message: "The name is required",
-//     })
-//   } else {
-//     console.log('about to register')
-//     console.log(req.body)
-//     User.register(
-    
-//       new User({ email: req.body.email }),
-//       req.body.password,
-//       (err, user) => {
+// passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+//   console.log('function runnung')
+//     User.findOne({password: jwt_payload.sub}, function(err, user) {
 //         if (err) {
-//           console.log('EROOOOOORRRR')
-//           console.log(err)
-//           res.statusCode = 500
-//           res.send(err)
-//         } else {
-//           user.name = req.body.name
-//           user.location = req.body.location || ""
-//           const token = getToken({ _id: user._id })
-//           const refreshToken = getRefreshToken({ _id: user._id })
-//           user.refreshToken.push({ refreshToken })
-//           user.save((err, user) => {
-//             if (err) {
-//               res.statusCode = 500
-//               res.send(err)
-//             } else {
-//               res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS)
-//               res.send({ success: true, token })
-//             }
-//           })
+//           console.log(jwt_payload)
+//           console.log('this is an errorr', err)
+//           console.log(user)
+//             return done(err, false);
 //         }
-//       }
-//     )
-//   }
-// })
+//         if (user) {
+//           console.log('user', user)
+//             return done(null, user);
+//         } else {
+//           console.log('no user found')
+//             return done(null, false);
+//             // or you could create a new account
+//         }
+//     });
+// }));
+
+router.post("/login", async (req, res) => {
+
+  const { password, username } = req.body.login
+  console.log('success! you reached sessions')
+  console.log(password, username)
+})
 
 module.exports = router
