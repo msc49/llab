@@ -6,7 +6,6 @@ import express from "../apis/express";
 const ItemList = () => {
 
   const [itemList, setItemList] = useState([])
-  
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
 
@@ -46,6 +45,22 @@ const ItemList = () => {
     getItems()
   }
 
+  const uploadImage = async (event, imageTitle, imageFile, id) => {
+    
+    event.preventDefault()
+    let formData = new FormData()
+    formData.append('title', imageTitle)
+    formData.append('itemImage', imageFile)
+
+    try {
+      const { data } = await express.post(`/items/${id}/images`, formData)
+      console.log(data)
+    } catch(err) {
+      console.log(err)
+    }
+    getItems()
+  }
+
   const renderedList = itemList.map(item => {
     return (
       <Item 
@@ -53,6 +68,7 @@ const ItemList = () => {
         item={item}
         deleteItem={deleteItem}
         updateItem={updateItem}
+        uploadImage={uploadImage}
       />
     )
   })

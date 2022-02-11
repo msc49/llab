@@ -7,8 +7,8 @@ const App = () => {
   return (
     <div>
       <Header />
-      {/* <ItemList /> */}
       <User />
+      <ItemList />
     </div>
   )
 }
