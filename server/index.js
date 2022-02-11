@@ -33,11 +33,11 @@ const User = require("./models/user.js");
 
 // run express, connect mongoose to mongodb
 const app = express();
+
 mongoose
-  .connect(process.env.MONGO_PROD_URI, {
+  .connect(process.env.NODE_ENV !== 'prod' ? process.env.MONGO_DEV_URI : process.env.MONGO_PROD_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
   })
   .then(() => console.log("Mongo Connection Open!"))
   .catch((e) => console.log("Oh no mongo error!!", e));
