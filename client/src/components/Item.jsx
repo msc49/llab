@@ -1,10 +1,9 @@
-import axios from "axios";
 import React, {useState} from "react";
 
 const Item = ({ item, deleteItem, updateItem, uploadImage }) => {
 
   // Update Item States
-  const [name, setName] = useState("")
+  const [name, setName] = useState(item.name)
   const [description, setDescription] = useState("")
 
   // Upload Image States

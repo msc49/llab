@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Item from './Item'
 import express from "../apis/express";
 
@@ -27,11 +26,13 @@ const ItemList = () => {
         lender: 2,
       }
     })
+    
     getItems()
   }
 
   const deleteItem = async (id) => {
     const { data } = await express.delete(`/items/${id}`)
+    
     getItems()
   }
 
@@ -42,6 +43,7 @@ const ItemList = () => {
         description: description,
       }
     })
+   
     getItems()
   }
 
