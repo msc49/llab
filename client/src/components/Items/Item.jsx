@@ -12,15 +12,17 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
 
   return (
     <div>
-      <p>{item.lender.location}</p>
-      <p>{item.lender.name}</p>
+
       <h3>{item.name}</h3>
       <p>{item.description}</p>
-      <p>{item.description}</p>
+      {
+        item.lender ? <h4> Lender: {item.lender.name}, {item.lender.location}</h4> : ""
+      }
+      
 
 
       {
-        item.borrower ? <p>borrowed by {item.borrower.name}</p> : ""
+        item.borrower ? <h4>Borrower: {item.borrower.name}, {item.borrower.location}</h4> : ""
       }
 
       <button onClick={() => deleteItem(item._id)}>Delete</button>
@@ -39,7 +41,7 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
         <input type="file" id="imageFile" capture="user" accept="image/*"/>
         <button type="submit">Submit</button>
       </form>
-
+      <hr />
     </div>
   )
  
