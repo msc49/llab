@@ -22,13 +22,6 @@ const UserSchema = new Schema({
     type: String,
     default: 'London'
   },
-  // authStrategy: {
-  //   type: String,
-  //   default: "local",
-  // },
-  // refreshToken: {
-  //   type: [Session],
-  // },
   items: [
     {
       type: Schema.Types.ObjectId,
@@ -37,15 +30,11 @@ const UserSchema = new Schema({
   ],
 });
 
-// //Remove refreshToken from the response
-// UserSchema.set("toJSON", {
-//   transform: function (doc, ret, options) {
-//     delete ret.refreshToken
-//     return ret
-//   },
-// })
 
 UserSchema.plugin(passportLocalMongoose)
 
+
 const User = mongoose.model("User", UserSchema);
+
+
 module.exports = User;
