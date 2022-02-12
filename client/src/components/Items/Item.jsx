@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const Item = ({ item, deleteItem, updateItem, uploadImage }) => {
+const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
 
   // Update Item States
   const [name, setName] = useState("")
@@ -16,6 +16,8 @@ const Item = ({ item, deleteItem, updateItem, uploadImage }) => {
       <h3>{item.name}</h3>
       <p>{item.description}</p>
       <button onClick={() => deleteItem(item._id)}>Delete</button>
+
+      <button onClick={() => borrowItem(item._id)}>Borrow</button>
 
       <form onSubmit={(event) => updateItem(event, name, description, item.lender, item.borrower, item._id)}>
         <input onChange={(event) => setName(event.target.value)} value={name} type="text" name="name" required/>

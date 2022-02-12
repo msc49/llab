@@ -23,15 +23,16 @@ const ItemSchema = new Schema({
         required: true,
       }
     }
-]
-  // lender: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "User",
-  // },
-  // borrower: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "User",
-  // },
+],
+  lender: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  borrower: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Item = mongoose.model("Item", ItemSchema);
