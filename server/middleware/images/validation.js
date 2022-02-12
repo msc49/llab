@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
 let { title } = req.body
 let { path } = req.file
 
-// check type of image we will accept only pn/jpg/jpeg
+// check type of image we will accept only png/jpg/jpeg
 if (
   !req.file.mimetype.includes("jpeg") &&
   !req.file.mimetype.includes("jpg") &&

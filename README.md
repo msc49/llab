@@ -26,3 +26,5 @@ cd server > nodemon index.js
 
 8. Run client (starts react)
 cd client > npm start 
+
+<!-- VIDEOS SAY PASSPORT DOCS MISS THINGS OUT LOL -->
