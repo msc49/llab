@@ -11,24 +11,22 @@ const userDetails = JSON.parse(localStorage.getItem('user'))
 
 return (
   <div className="ui container"> 
-     <div className="profile-header">
-       <div className="avatar-container">
-       <img className="profile-avatar" src={avatar}></img>
+     <div className="profile-wrapper">
+        <div className="user-info-container">
+              <div className="avatar-container">
+                <img className="avatar" src={avatar}></img>
+              </div>
+                <span className="profile-username">{userDetails.user.username}</span>
+          </div>
 
-       </div>
-
-       <div className="name-container">    
-       <h1>{userDetails.user.username}</h1>
-       </div>
-       <div className="button-container"></div>
-
-
-     </div>
-
-
-    <div>Items
-
-   
+        <div className = "profile-items-container">
+            <div className="items-header">
+              <h3>Item's you're lending</h3>
+              <div className="button-container">
+                  <button className="ui blue button">Add new item</button>
+              </div>
+            </div>
+        </div>
     </div>
   </div>
 
