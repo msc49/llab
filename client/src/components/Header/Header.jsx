@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import UserLogIn from '../Users/LogIn';
 
 import './Header.css';
 
@@ -11,9 +10,7 @@ const Header = ({setSession}) => {
     setSession(false)
   }
 
-   
   const userDetails = JSON.parse(localStorage.getItem('user')) 
-  console.log(userDetails)
 
   return (
     <div className="header ui secondary pointing menu">
