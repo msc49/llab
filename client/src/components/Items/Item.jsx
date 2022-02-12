@@ -12,9 +12,17 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
 
   return (
     <div>
-  
+      <p>{item.lender.location}</p>
+      <p>{item.lender.name}</p>
       <h3>{item.name}</h3>
       <p>{item.description}</p>
+      <p>{item.description}</p>
+
+
+      {
+        item.borrower ? <p>borrowed by {item.borrower.name}</p> : ""
+      }
+
       <button onClick={() => deleteItem(item._id)}>Delete</button>
 
       <button onClick={() => borrowItem(item._id)}>Borrow</button>

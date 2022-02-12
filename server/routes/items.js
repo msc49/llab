@@ -4,7 +4,9 @@ const Item = require("../models/item")
 
 // ITEM ROUTES
 router.get("/items", async (req, res) => {
-  const items = await Item.find({});
+  const items = await Item.find({})
+    .populate('borrower')
+    .populate('lender')
   res.json(items);
 });
 
