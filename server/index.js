@@ -17,18 +17,6 @@ const morgan = require("morgan");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
-// // unneeded? --
-// const methodOverride = require("method-override");
-// // ------------
-
-// if (process.env.NODE_ENV !== "production") {
-//   // Load environment variables from .env file in non-prod environments
-//   require("dotenv").config()
-// }
-
-// require("./strategies/JwtStrategy")
-// require("./strategies/LocalStrategy")
-// require("./authenticate")
 
 // ROUTES
 const userRoutes = require("./routes/users");
@@ -68,15 +56,7 @@ const sessionConfig = {
   },
 };
 
-// // configure express to find views directory, use EJS
-// app.set("views", path.join(__dirname, "views"));
-// app.set("view engine", "ejs");
 
-// configure express to use method-override, receive form data, receive json, morgan
-// app.use(methodOverride("_method"));
-// app.use(bodyParser.json())
-// app.use(cookieParser(process.env.COOKIE_SECRET))
-// app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use(session(sessionConfig));
@@ -94,33 +74,12 @@ app.use(
   })
 );
 
-// // import category route??
-// app.use('/api', require('./routes/category.route.js'))
-// // Page note found 404
-// app.use((req, res) => {
-//   res.status(404).json({
-//     errors: "page not found"
-//   })
-// })
-
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 // Example Routes
 app.get("/", (req, res) => {
   res.send("home");
 });
 
-app.get("/fakeUser", async (req, res) => {
-  const user = new User({
-    name: "MyName",
-    email: "coltttt@gmail.com",
-    username: "collllt",
-  });
-  const newUser = await User.register(user, "chicken");
-  res.send(newUser);
-});
 
 // SESSION ROUTES
 app.post("/sessions", async (req, res) => {

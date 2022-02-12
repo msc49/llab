@@ -1,51 +1,48 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
-const passportLocalMongoose = require("passport-local-mongoose")
-
-const UserSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    maxLength: 80,
-    default: "",
-  },
-  email: {
-    type: String,
-    required: true,
-    match: /\S+@\S+\.\S+/,
-    unique: true,
-    lowercase: true,
-    maxLength: 320,
-  },
-  location: {
-    type: String,
-    default: 'London'
-  },
-  // authStrategy: {
-  //   type: String,
-  //   default: "local",
-  // },
-  // refreshToken: {
-  //   type: [Session],
-  // },
-  items: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Item",
+const bcrypt = require('bcryptjs')
+const userSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      maxLength: 80,
+      default: "",
     },
-  ],
-});
+    username: {
+      type: String,
+      required: true,
+      maxLength: 80,
+      default: "",
+    },
+    email: {
+      type: String,
+      required: true,
+      match: /\S+@\S+\.\S+/,
+      unique: true,
+      lowercase: true,
+      maxLength: 320,
+    },
+    location: {
+      type: String,
+      default: 'London'
+    },
+    password: {
+      type: String,
+      required: true,
+    }
+  },
+  {
+    timestamps: true,
+  }
+);
 
-// //Remove refreshToken from the response
-// UserSchema.set("toJSON", {
-//   transform: function (doc, ret, options) {
-//     delete ret.refreshToken
-//     return ret
-//   },
-// })
+userSchema.pre('save', async function (next){
+  if(!this.isModified('password')) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+})
 
-UserSchema.plugin(passportLocalMongoose)
-
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;
