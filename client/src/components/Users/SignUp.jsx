@@ -1,63 +1,16 @@
-import {useState, useEffect} from "react"
-import axios from "axios"
-import './Users.css';
+import React, { useState } from "react";
 import express from "../../apis/express";
+import './Users.css';
 
-function User() {
-  const [users , setNewUsers] = useState(null)
+const UserSignUp = ({setShowLogIn, setAlert }) => {
+
   const [formUser, setFormUser] = useState({
         email: "",
         name: "",
+        username: "",
         location: "",
         password: ""
         })
-
-  
-// useEffect(() => {
-//   getUsers()
-//     } ,[])
-
-
-
-// function getUsers() {
-//   axios({
-//       method: "GET",
-//       url:"/users/",
-//     }).then((response)=>{
-//       const data = response.data
-//       setNewUsers(data)
-//     }).catch((error) => {
-//       if (error.response) {
-//         console.log(error.response);
-//         console.log(error.response.status);
-//         console.log(error.response.headers);
-//         }
-//     })}
-
-
-// function createUser(event) {
-//   axios({
-//     method: "POST",
-//     url:"/users/",
-//     data:{
-//       name: formUser.name,
-//       email: formUser.email,
-//       location: formUser.location,
-//       password: formUser.password
-//       }
-//   })
-//   // .then((response) => {
-//   //   getUsers()
-//   // })
-
-//   setFormUser(({
-//     email: "",
-//     name: "",
-//     location: "",
-//     password: ""}))
-
-//   event.preventDefault()
-// }
 
 const createUser = async (event) => {
   event.preventDefault()
@@ -70,8 +23,11 @@ const createUser = async (event) => {
       username: formUser.username
     }
   })
-  console.log(data)
-  // getItems()
+  if (data.success) {
+    // intermediary step like my app
+    setShowLogIn(true);
+    setAlert({type: 'success', message: "Registration Successful!"});
+  }
 }
 
 function handleChange(event) { 
@@ -128,8 +84,13 @@ function handleChange(event) {
                </div>
               </div> 
 
-
               <button className="ui green button" onClick={createUser}>Sign up</button>
+
+              <div>
+                <hr></hr>
+                <p className="ui blue button" onClick={() => setShowLogIn(true)}>Log In</p>
+              </div>
+
             </div>
           </form>
 
@@ -137,12 +98,10 @@ function handleChange(event) {
 </div>
 
         
-      );
+  );
 
 
 }
 
 
-
-
-export default User;
+export default UserSignUp;
