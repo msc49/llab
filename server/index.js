@@ -37,24 +37,24 @@ mongoose
 //PORT
 const PORT = process.env.PORT || 4000;
 
-const sessionConfig = {
-  secret: "thisshouldbeabettersecret!",
-  resave: false,
-  saveUninitialized: true,
-  store: sessionStore,
-  cookie: {
-    httpOnly: true,
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-  },
-};
+// const sessionConfig = {
+//   secret: "thisshouldbeabettersecret!",
+//   resave: false,
+//   saveUninitialized: true,
+//   store: sessionStore,
+//   cookie: {
+//     httpOnly: true,
+//     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+//     maxAge: 1000 * 60 * 60 * 24 * 7,
+//   },
+// };
 
 // RUN MIDDLEWARE
 app.use(express.json());
 app.use(cors());
-app.use(session(sessionConfig));
+// app.use(session(sessionConfig));
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 app.use("/uploads", express.static("uploads"));
 app.use(morgan("dev"));
@@ -71,12 +71,12 @@ app.use("/", itemRoutes);
 app.use("/", userRoutes);
 
 app.get("/", (req, res) => {
-  if(req.session.viewCount) {
-    req.session.viewCount++
-  } else {
-    req.session.viewCount = 1
-  }
-  console.log(req.session)
+  // if(req.session.viewCount) {
+  //   req.session.viewCount++
+  // } else {
+  //   req.session.viewCount = 1
+  // }
+  // console.log(req.session)
   res.send("home");
 });
 
