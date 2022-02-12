@@ -14,10 +14,10 @@ const Header = ({setSession}) => {
 
   return (
     <div className="header ui secondary pointing menu">
-        
-      <div className="nav-item">
-         Local Lab Logo
-      </div> 
+
+      <Link to='/' className='nav-item'>
+          Local Lab Logo
+      </Link>
 
       <div className="nav-item">
         <p className="blue" href="#" onClick={signOut}>Sign Out</p>
@@ -26,7 +26,7 @@ const Header = ({setSession}) => {
       {userDetails &&
            <div className="nav-item profile">
            <Link to='/profile' className='nav-item'>
-             {userDetails.user.name} 
+             Hi, {userDetails.user.name}!
            </Link>
            </div>
         }

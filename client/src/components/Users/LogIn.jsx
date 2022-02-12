@@ -9,25 +9,25 @@ const UserLogIn = ({ setShowLogIn, setSession }) => {
     password: ""
   })
 
+
   const authenticateUser = async (event) => {
     event.preventDefault()
     const { data } = await express.post('/login', {
-      password: formUser.password,
-      username: formUser.username
-  })
-  localStorage.setItem('user', JSON.stringify(data))
+    password: formUser.password,
+    username: formUser.username
+    })
+    localStorage.setItem('user', JSON.stringify(data))
 
-setSession(JSON.parse(localStorage.getItem('user')))
-console.log('stored in localstorage', JSON.parse(localStorage.getItem('user')))
-}
+    setSession(JSON.parse(localStorage.getItem('user')))
+    console.log('stored in localstorage', JSON.parse(localStorage.getItem('user')))
+   }
 
-function handleChange(event) { 
-  const {value, name} = event.target
-  setFormUser(prevUser => ({
-  ...prevUser, [name]: value})
-)}
+  function handleChange(event) { 
+    const {value, name} = event.target
+    setFormUser(prevUser => ({
+    ...prevUser, [name]: value})
+  )}
 
-  
   return (
     <div className="user-form ui middle aligned center aligned grid">
     <div className="column">

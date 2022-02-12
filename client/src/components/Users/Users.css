@@ -10,3 +10,10 @@
 .ui.stacked.segment:after {
   border-top: none !important;
 }
+
+.profile-avatar{
+  display: inline-block;
+    width: 10em;
+    height: 10em;
+    border-radius: 500rem;
+}

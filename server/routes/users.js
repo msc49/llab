@@ -35,14 +35,6 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
   res.json(userAuthPacket);
 });
 
-router.post("/profile", async (req, res) => {
-  console.log("hi")
-  const user = await User.findOne({ email });
-  ;
-  res.json(user);
- 
-});
-
 
 
 module.exports = router;
