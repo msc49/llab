@@ -35,4 +35,6 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
   res.json(userAuthPacket);
 });
 
+// router.post('/profile').post(updateUserProfile);
+
 module.exports = router;

@@ -9,13 +9,13 @@ const UserLogIn = ({ setShowLogIn, setSession }) => {
     password: ""
   })
 
-const authenticateUser = async (event) => {
-  event.preventDefault()
-  const { data } = await express.post('/login', {
-    password: formUser.password,
-    username: formUser.username
-})
-localStorage.setItem('user', JSON.stringify(data))
+  const authenticateUser = async (event) => {
+    event.preventDefault()
+    const { data } = await express.post('/login', {
+      password: formUser.password,
+      username: formUser.username
+  })
+  localStorage.setItem('user', JSON.stringify(data))
 
 setSession(JSON.parse(localStorage.getItem('user')))
 console.log('stored in localstorage', JSON.parse(localStorage.getItem('user')))
