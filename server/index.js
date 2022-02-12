@@ -1,48 +1,28 @@
-if(process.env.NODE_ENV !== "production") {
-  require('dotenv').config();
-}
+if (process.env.NODE_ENV !== "prod") require("dotenv").config()
 
-
-
-
-
-// require express, path, mongoose, method-oveerride
+// IMPORT DEPENDENCIES
 const express = require("express");
-const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const cors = require("cors");
 const multer = require("multer");
-const bodyParser = require("body-parser");
 const morgan = require("morgan");
-// const cookieParser = require("cookie-parser")
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const MongoStore = require('connect-mongo')
 
-// // unneeded? --
-// const methodOverride = require("method-override");
-// // ------------
-
-// if (process.env.NODE_ENV !== "production") {
-//   // Load environment variables from .env file in non-prod environments
-//   require("dotenv").config()
-// }
-
-// require("./strategies/JwtStrategy")
-// require("./strategies/LocalStrategy")
-// require("./authenticate")
-
-// ROUTES
+// IMPORT ROUTES
 const userRoutes = require("./routes/users");
 const itemRoutes = require("./routes/items");
 
-// import models
+// IMPORT MODELS
 const Item = require("./models/item.js");
 const User = require("./models/user.js");
+const { json } = require("body-parser");
 
-// run express, connect mongoose to mongodb
+// RUN EXPRESS/MONGO/MONGOOSE
 const app = express();
-mongoose
+const mongooseConnection = mongoose
   .connect("mongodb://127.0.0.1:27017/llab", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -50,10 +30,17 @@ mongoose
   .then(() => console.log("Mongo Connection Open!"))
   .catch((e) => console.log("Oh no mongo error!!", e));
 
+// CONFIGURE SESSION
+const sessionStore = MongoStore.create({
+  mongoUrl: 'mongodb://127.0.0.1:27017/llab',
+  collection: 'sessions' 
+})
+
 const sessionConfig = {
   secret: "thisshouldbeabettersecret!",
   resave: false,
   saveUninitialized: true,
+  store: sessionStore,
   cookie: {
     httpOnly: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
@@ -61,67 +48,38 @@ const sessionConfig = {
   },
 };
 
-// // configure express to find views directory, use EJS
-// app.set("views", path.join(__dirname, "views"));
-// app.set("view engine", "ejs");
-
-// configure express to use method-override, receive form data, receive json, morgan
-// app.use(methodOverride("_method"));
-// app.use(bodyParser.json())
-// app.use(cookieParser(process.env.COOKIE_SECRET))
-// app.use(express.urlencoded({ extended: true }));
+// RUN MIDDLEWARE
 app.use(express.json());
 app.use(cors());
 app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use("/", itemRoutes);
-app.use("/", userRoutes);
-// use uploads folder to save image
+
 app.use("/uploads", express.static("uploads"));
 app.use(morgan("dev"));
-app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
-// // import category route??
-// app.use('/api', require('./routes/category.route.js'))
-// // Page note found 404
-// app.use((req, res) => {
-//   res.status(404).json({
-//     errors: "page not found"
-//   })
-// })
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Example Routes
+// HOME ROUTE
+app.use("/", itemRoutes);
+app.use("/", userRoutes);
+
 app.get("/", (req, res) => {
+  if(req.session.viewCount) {
+    req.session.viewCount++
+  } else {
+    req.session.viewCount = 1
+  }
+  console.log(req.session)
   res.send("home");
 });
 
-app.get("/fakeUser", async (req, res) => {
-  const user = new User({
-    name: "MyName",
-    email: "coltttt@gmail.com",
-    username: "collllt",
-  });
-  const newUser = await User.register(user, "chicken");
-  res.send(newUser);
-});
-
-// SESSION ROUTES
-app.post("/sessions", async (req, res) => {
-  const session = "return userid and session key";
-  res.json(session);
-});
-
-// set express to listen on port 4000
+// OPEN EXPRESS ON PORT 4000
 app.listen(4000, () => {
   console.log("Listening on port 4000");
 });
