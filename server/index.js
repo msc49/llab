@@ -5,6 +5,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const cors = require("cors");
+require("dotenv").config();
+// const bodyParser = require("body-parser")
 const multer = require("multer");
 const morgan = require("morgan");
 const passport = require("passport");
@@ -22,19 +24,18 @@ const { json } = require("body-parser");
 
 // RUN EXPRESS/MONGO/MONGOOSE
 const app = express();
-const mongooseConnection = mongoose
-  .connect("mongodb://127.0.0.1:27017/llab", {
+
+
+mongoose
+  .connect(process.env.NODE_ENV !== 'prod' ? process.env.MONGO_DEV_URI : process.env.MONGO_PROD_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log("Mongo Connection Open!"))
   .catch((e) => console.log("Oh no mongo error!!", e));
 
-// CONFIGURE SESSION
-const sessionStore = MongoStore.create({
-  mongoUrl: 'mongodb://127.0.0.1:27017/llab',
-  collection: 'sessions' 
-})
+//PORT
+const PORT = process.env.PORT || 4000;
 
 const sessionConfig = {
   secret: "thisshouldbeabettersecret!",
@@ -79,7 +80,9 @@ app.get("/", (req, res) => {
   res.send("home");
 });
 
+
 // OPEN EXPRESS ON PORT 4000
 app.listen(4000, () => {
   console.log("Listening on port 4000");
 });
+

@@ -36,10 +36,11 @@ router.delete("/items/:id", async (req, res) => {
   res.json(item);
 });
 
+
 // Use multer middleware
 const uploadMulter = require('../middleware/images/upload.js')
 const validation = require('../middleware/images/validation.js');
-const { ItemMeta } = require("semantic-ui-react");
+
 
 router.post("/items/:id/images", uploadMulter, validation, async (req, res) => {
   const { id } = req.params;
