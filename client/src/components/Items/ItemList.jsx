@@ -19,7 +19,8 @@ const ItemList = () => {
 
   const addItem = async (event) => {
     event.preventDefault()
-    const { data } = await express.post('/items', {
+    // const { data } = 
+    await express.post('/items', {
       item: {
         name: name,
         description: description,
@@ -31,14 +32,16 @@ const ItemList = () => {
   }
 
   const deleteItem = async (id) => {
-    const { data } = await express.delete(`/items/${id}`)
+    // const { data } = 
+    await express.delete(`/items/${id}`)
     
     getItems()
   }
 
   const updateItem = async (event, name, description, lender, borrower, id) => {
     event.preventDefault()
-    const { data } = await express.put(`/items/${id}`, {
+    // const { data } = 
+    await express.put(`/items/${id}`, {
       item: {
         name: name,
         description: description,
