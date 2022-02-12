@@ -9,13 +9,15 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const cors = require("cors");
 require("dotenv").config();
-// const bodyParser = require("body-parser")
 const multer = require("multer");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-// const cookieParser = require("cookie-parser")
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+
+// error handling
+
+const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 
 
 // ROUTES
@@ -73,7 +75,8 @@ app.use(
     extended: true,
   })
 );
-app.use(notFound, errorHandler)
+app.use(notFound)
+app.use(errorHandler)
 
 
 // Example Routes
