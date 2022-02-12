@@ -73,6 +73,7 @@ app.use(
     extended: true,
   })
 );
+app.use(notFound, errorHandler)
 
 
 // Example Routes
