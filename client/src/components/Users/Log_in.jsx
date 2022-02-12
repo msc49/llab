@@ -1,10 +1,8 @@
 import {useState} from "react"
 import './Users.css';
 import express from "../../apis/express";
-import { Link } from 'react-router-dom';
 
-
-function Sign_up() {
+function Log_in() {
   const [formUser, setFormUser] = useState({
         email: "",
         name: "",
@@ -41,24 +39,13 @@ function handleChange(event) {
 
     <h2 className="ui teal image header">
       <div className="content">
-        Create an account
+       Log into your account
       </div>
     </h2>
           <form className="ui large form">
             <div className="ui stacked segment">
-              <div className="field">
-               <div className="ui left icon input">
-                <i className="user icon"></i>
-               <input type="text" onChange={handleChange} text={formUser.name} name="name" placeholder="Name" value={formUser.name} />
-               </div>
-              </div> 
-
-              <div className="field">
-               <div className="ui left icon input">
-                <i className="user icon"></i>
-                <input onChange={handleChange} text={formUser.username} name="username" placeholder="Username" value={formUser.username} required/>
-               </div>
-              </div> 
+          
+          
 
               <div className="field">
                <div className="ui left icon input">
@@ -70,13 +57,6 @@ function handleChange(event) {
 
               <div className="field">
                <div className="ui left icon input">
-                <i className="home icon"></i>
-                <input onChange={handleChange} text={formUser.location} name="location" placeholder="Location" value={formUser.location} />
-               </div>
-              </div> 
-
-              <div className="field">
-               <div className="ui left icon input">
                 <i className="lock icon"></i>
                 <input type="password" onChange={handleChange} text={formUser.password} name="password" placeholder="Password" value={formUser.password} />
                </div>
@@ -85,9 +65,6 @@ function handleChange(event) {
 
               <button className="ui green button" onClick={createUser}>Sign up</button>
             </div>
-            Already have an account?  <Link to='/login' className='item'>
-        Log in here
-      </Link>
           </form>
 
    </div>
@@ -102,4 +79,4 @@ function handleChange(event) {
 
 
 
-export default Sign_up;
+export default Log_in;
