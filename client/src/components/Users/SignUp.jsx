@@ -1,8 +1,9 @@
-import {useState, useEffect} from "react"
-import './Users.css';
+import React, { useState } from "react";
 import express from "../../apis/express";
+import './Users.css';
 
-function UserSignUp() {
+const UserSignUp = ({setShowLogIn, setAlert }) => {
+
   const [formUser, setFormUser] = useState({
         email: "",
         name: "",
@@ -10,7 +11,6 @@ function UserSignUp() {
         location: "",
         password: ""
         })
-
 
 const createUser = async (event) => {
   event.preventDefault()
@@ -23,8 +23,11 @@ const createUser = async (event) => {
       username: formUser.username
     }
   })
-  console.log(data)
-  // getItems()
+  if (data.success) {
+    // intermediary step like my app
+    setShowLogIn(true);
+    setAlert({type: 'success', message: "Registration Successful!"});
+  }
 }
 
 function handleChange(event) { 
@@ -81,8 +84,13 @@ function handleChange(event) {
                </div>
               </div> 
 
-
               <button className="ui green button" onClick={createUser}>Sign up</button>
+
+              <div>
+                <hr></hr>
+                <p className="ui blue button" onClick={() => setShowLogIn(true)}>Log In</p>
+              </div>
+
             </div>
           </form>
 

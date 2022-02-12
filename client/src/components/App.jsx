@@ -1,20 +1,24 @@
-import React from "react";
-import { BrowserRouter, Route, Link } from 'react-router-dom'
-import ItemList from "./ItemList";
-import UserSignUp from './Users/Sign_up'
-import UserLogIn from "./Users/Log_in";
+import React, {useState} from "react";
+import { BrowserRouter, Route } from 'react-router-dom'
 import Header from "./Header/Header";
+import Main from './Main'
+import Alert from "./Alert/Alert";
 
 // If any problems with deployment, consider using HashRouter instead of BrowserRouter
 const App = () => {
+
+  const [session, setSession] = useState(false)
+  const [alert, setAlert] = useState(false)
+ 
+  console.log('AppSession', session)
+
   return (
     <div>
       <BrowserRouter>
         <div>
-          <Header />
-          <Route path="/" exact component={UserSignUp} />
-          <Route path="/login" exact component={UserLogIn} />
-          <Route path="/items" exact component={ItemList} />
+          <Header setSession={setSession} />
+          <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} />}/>
+          <Alert alert={alert} setAlert={setAlert} /> 
         </div>
       </BrowserRouter>
     </div>

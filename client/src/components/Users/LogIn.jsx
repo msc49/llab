@@ -1,24 +1,24 @@
-import {useState, useEffect} from "react"
-import './Users.css';
+import React, { useState } from 'react'
 import express from "../../apis/express";
+import './Users.css';
 
-const UserLogIn = () => {
-
+const UserLogIn = ({ setShowLogIn, setSession }) => {
+  
   const [formUser, setFormUser] = useState({
     username: "",
     password: ""
   })
 
-
 const authenticateUser = async (event) => {
   event.preventDefault()
   const { data } = await express.post('/login', {
-  login: {
     password: formUser.password,
     username: formUser.username
-  }
 })
-  console.log(data)
+localStorage.setItem('user', JSON.stringify(data))
+
+setSession(JSON.parse(localStorage.getItem('user')))
+console.log('stored in localstorage', JSON.parse(localStorage.getItem('user')))
 }
 
 function handleChange(event) { 
@@ -26,6 +26,7 @@ function handleChange(event) {
   setFormUser(prevUser => ({
   ...prevUser, [name]: value})
 )}
+
   
   return (
     <div className="user-form ui middle aligned center aligned grid">
@@ -36,7 +37,7 @@ function handleChange(event) {
         Log in to your account
       </div>
     </h2>
-          <form onSubmit={authenticateUser} className="ui large form">
+          <form onSubmit={authenticateUser} className="ui large form" noValidate>
 
               <div className="field">
                <div className="ui left icon input">
@@ -53,7 +54,12 @@ function handleChange(event) {
               </div> 
 
               <button className="ui green button">Log in</button>
-
+              <br />
+              <br />
+              <div>
+                <hr/>
+                <p className="ui blue button" onClick={() => setShowLogIn(false)}>Create new account</p>
+              </div> 
           </form>
   
    </div>
