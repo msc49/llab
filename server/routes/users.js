@@ -6,7 +6,6 @@ const passportMiddleWare = require("../middleware/passport_jwt/jwt");
 
 // USER ROUTES
 router.post("/users", async (req, res) => {
-  console.log(req.body);
   const { name, email, username, password, location } = req.body.user;
   const user = new User({ name, email, username });
   await User.register(user, password);
