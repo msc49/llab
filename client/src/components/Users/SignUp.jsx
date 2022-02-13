@@ -26,7 +26,7 @@ const createUser = async (event) => {
   if (data.success) {
     const { username, location } = data
     setShowLogIn(true);
-    setAlert({type: 'success', header: "Registration Successful!", username, location});
+    setAlert({type: 'success', header: "Registration Successful!", event: 'SIGN_UP', username, location});
   }
 }
 

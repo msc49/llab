@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import MediaQuery from 'react-responsive'
 import './Header.css';
 
 const Header = ({session, setSession}) => {
@@ -76,6 +77,37 @@ const Header = ({session, setSession}) => {
 
         <div className='right menu'>
 {/* optional */}
+          <MediaQuery query='(min-device-width: 700px)'>
+            <div className="item">
+            <div className="ui mini statistics">
+
+              <div className="statistic">
+                <div className="value">
+                  <span className='ui small green text'>
+                    <i className="hand holding heart icon"></i> 
+                    200K
+                  </span>
+                </div>
+                <div className="label">
+                  <span className='ui small text'>Lenders</span>
+                </div>
+
+              </div>
+
+              <div className="statistic">
+                <div className="value">
+                  <span className='ui small blue text'><i className="gift icon"></i> 2.3M</span>
+                </div>
+             
+                <div className="label">
+                  <span className='ui small text'>Items</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          </MediaQuery>
+
           {/* <div className="item">
             <div className="ui mini statistics">
 

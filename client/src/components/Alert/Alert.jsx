@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import './Alert.css'
 
 const Alert = ({ alert, setAlert }) => {
-  console.log('alert', alert)
-  console.log('alert', alert)
+
   useEffect(() => {
 
     if (alert) {
@@ -52,7 +51,10 @@ const Alert = ({ alert, setAlert }) => {
         <div className="header">
           {alert.header}
         </div>
-        <p>Hi, <b>{alert.username}</b>, log-in to see what's on offer in <b>{alert.location ? alert.location : 'your area'}</b>!`</p>
+        {
+          alert.event === 'SIGN_UP' ? <p>Hi <b>{alert.username}</b>, log-in to see what's on offer <em data-emoji="gift"></em> in {alert.location ? <b>{alert.location}</b> : 'your area'}!</p> :
+          alert.event === 'LOG_IN' ? <p><b>You're in!</b> Browse free items in {alert.location ? <b>{alert.location}</b> : 'your area'}, and help your community by lending your unused goods <em data-emoji="angel"></em></p> : "DIDN't Hit"
+        }
       </div>
     )
  

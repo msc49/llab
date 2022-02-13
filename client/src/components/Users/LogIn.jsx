@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import express from "../../apis/express";
 import './Users.css';
 
-const UserLogIn = ({ setShowLogIn, setSession }) => {
+const UserLogIn = ({ setShowLogIn, setSession, setAlert }) => {
   
   const [formUser, setFormUser] = useState({
     username: "",
@@ -16,8 +16,10 @@ const authenticateUser = async (event) => {
     username: formUser.username
 })
 localStorage.setItem('user', JSON.stringify(data))
-
 setSession(JSON.parse(localStorage.getItem('user')))
+const { username, location } = data.user
+setAlert({type: 'success', header: "Log in successful!", event: 'LOG_IN', username, location});
+
 console.log('stored in localstorage', JSON.parse(localStorage.getItem('user')))
 }
 

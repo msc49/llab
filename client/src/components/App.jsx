@@ -24,7 +24,9 @@ const App = () => {
       <BrowserRouter>
         <div>
           <Header setSession={setSession} session={session} />
+          <div className="ui container">
           <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} />}/>
+          </div>
           <Alert alert={alert} setAlert={setAlert} /> 
         </div>
       </BrowserRouter>
