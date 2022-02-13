@@ -113,9 +113,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd server && npm install && npx nodeman index.js",  
-    "heroku-postbuild": "cd client && npm install && npm run build && npm start"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
