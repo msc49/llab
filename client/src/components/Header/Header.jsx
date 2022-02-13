@@ -10,7 +10,7 @@ const Header = ({setSession}) => {
   }
 
   return (
-    <div className="header ui secondary pointing menu">
+    <div className="nav-header ui secondary pointing menu">
       {/* <Link to='/items' className='item'>
         ITEMS
       </Link> */}
