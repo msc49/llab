@@ -23,7 +23,7 @@ const App = () => {
     <div>
       <BrowserRouter>
         <div>
-          <Header setSession={setSession} />
+          <Header setSession={setSession} session={session} />
           <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} />}/>
           <Alert alert={alert} setAlert={setAlert} /> 
         </div>
