@@ -4,7 +4,9 @@ const Item = require("../models/item")
 
 // ITEM ROUTES
 router.get("/items", async (req, res) => {
-  const items = await Item.find({});
+  const items = await Item.find({})
+    .populate('borrower')
+    .populate('lender')
   res.json(items);
 });
 
@@ -36,6 +38,15 @@ router.delete("/items/:id", async (req, res) => {
   res.json(item);
 });
 
+router.put("/items/:id/borrow/:userId", async (req, res) => {
+  const { id, userId } = req.params;
+  const item = await Item.findByIdAndUpdate(
+    id,
+    { borrower: userId },
+    { new: true }
+  );
+  res.json(item);
+});
 
 // Use multer middleware
 const uploadMulter = require('../middleware/images/upload.js')

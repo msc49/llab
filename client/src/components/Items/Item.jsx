@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const Item = ({ item, deleteItem, updateItem, uploadImage }) => {
+const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
 
   // Update Item States
   const [name, setName] = useState("")
@@ -12,10 +12,22 @@ const Item = ({ item, deleteItem, updateItem, uploadImage }) => {
 
   return (
     <div>
-  
+
       <h3>{item.name}</h3>
       <p>{item.description}</p>
+      {
+        item.lender ? <h4> Lender: {item.lender.name}, {item.lender.location}</h4> : ""
+      }
+      
+
+
+      {
+        item.borrower ? <h4>Borrower: {item.borrower.name}, {item.borrower.location}</h4> : ""
+      }
+
       <button onClick={() => deleteItem(item._id)}>Delete</button>
+
+      <button onClick={() => borrowItem(item._id)}>Borrow</button>
 
       <form onSubmit={(event) => updateItem(event, name, description, item.lender, item.borrower, item._id)}>
         <input onChange={(event) => setName(event.target.value)} value={name} type="text" name="name" required/>
@@ -29,7 +41,7 @@ const Item = ({ item, deleteItem, updateItem, uploadImage }) => {
         <input type="file" id="imageFile" capture="user" accept="image/*"/>
         <button type="submit">Submit</button>
       </form>
-
+      <hr />
     </div>
   )
  

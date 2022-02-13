@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Item from './Item'
 import express from "../../apis/express";
 
-const ItemList = () => {
+const ItemList = ({session}) => {
 
   const [itemList, setItemList] = useState([])
   const [name, setName] = useState("")
@@ -19,22 +19,31 @@ const ItemList = () => {
 
   const addItem = async (event) => {
     event.preventDefault()
-    // const { data } = 
-    await express.post('/items', {
-      item: {
-        name: name,
-        description: description,
-        lender: 2,
-      }
-    })
+    if(session) {
+      const { id: userId } = session.user
+      const { data } = await express.post('/items', {
+        item: {
+          name: name,
+          description: description,
+          lender: userId
+        }
+      })
+    }
     
     getItems()
   }
 
   const deleteItem = async (id) => {
-    // const { data } = 
-    await express.delete(`/items/${id}`)
-    
+
+    const { data } = await express.delete(`/items/${id}`)
+    getItems()
+  }
+
+  const borrowItem = async (id) => {
+    if(session) {
+      const { id: userId } = session.user
+      const { data } = await express.put(`/items/${id}/borrow/${userId}`)
+    }
     getItems()
   }
 
@@ -75,6 +84,7 @@ const ItemList = () => {
         deleteItem={deleteItem}
         updateItem={updateItem}
         uploadImage={uploadImage}
+        borrowItem={borrowItem}
       />
     )
   })
