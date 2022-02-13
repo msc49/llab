@@ -46,7 +46,3 @@ span.profile-username{
   margin-top:4em;
   min-width:600px;
 }
-.items-header {
-  display:flex;
-  justify-content:space-between
-}

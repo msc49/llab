@@ -82,9 +82,9 @@ const ItemList = () => {
   return (
     <div>
       <form onSubmit={addItem}>
-      <input onChange={(event) => setName(event.target.value)} value={name} type="text" name="name" required/>
-      <input onChange={(event) => setDescription(event.target.value)} value={description} type="text" name="description" required/>
-      <button>Add Item</button>
+      <input onChange={(event) => setName(event.target.value)} value={name} type="text" name="name" placeholder="name" required/>
+      <input onChange={(event) => setDescription(event.target.value)} value={description} type="text" placeholder="description" name="description" required/>
+      <button className="ui button">Add Item</button>
       </form>
       {renderedList}
     </div>
