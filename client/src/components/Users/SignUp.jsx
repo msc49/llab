@@ -24,9 +24,9 @@ const createUser = async (event) => {
     }
   })
   if (data.success) {
-    // intermediary step like my app
+    const { username, location } = data
     setShowLogIn(true);
-    setAlert({type: 'success', message: "Registration Successful!"});
+    setAlert({type: 'success', header: "Registration Successful!", username, location});
   }
 }
 
