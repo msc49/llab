@@ -30,39 +30,43 @@ function handleChange(event) {
   
   return (
     <div className="user-form ui middle aligned center aligned grid">
-    <div className="column">
-  
-    <h2 className="ui teal image header">
-      <div className="content">
-        Log in to your account
-      </div>
-    </h2>
-          <form onSubmit={authenticateUser} className="ui large form" noValidate>
+      <div className="column">
+    
+      <h2 className="ui image header">
+        <div className="content">
+          Log in to your account
+        </div>
+      </h2>
 
-              <div className="field">
-               <div className="ui left icon input">
-                <i className="user icon"></i>
-                <input onChange={handleChange} text={formUser.username} name="username" placeholder="Username" value={formUser.username} required/>
-               </div>
-              </div> 
-  
-              <div className="field">
-               <div className="ui left icon input">
-                <i className="lock icon"></i>
-                <input type="password" onChange={handleChange} text={formUser.password} name="password" placeholder="Password" value={formUser.password} />
-               </div>
-              </div> 
+      <form onSubmit={authenticateUser} className="ui large form" noValidate>
+        <div className="ui stacked segment">
+          <div className="field">
+            <div className="ui left icon input">
+              <i className="user icon"></i>
+              <input onChange={handleChange} text={formUser.username} name="username" placeholder="Username" value={formUser.username} required/>
+            </div>
+          </div> 
 
-              <button className="ui green button">Log in</button>
-              <br />
-              <br />
-              <div>
-                <hr/>
-                <p className="ui blue button" onClick={() => setShowLogIn(false)}>Create new account</p>
-              </div> 
-          </form>
-  
-   </div>
+          <div className="field">
+            <div className="ui left icon input">
+              <i className="lock icon"></i>
+              <input type="password" onChange={handleChange} text={formUser.password} name="password" placeholder="Password" value={formUser.password} />
+            </div>
+          </div> 
+
+          <button className="fluid ui large primary button">Log in</button>
+
+          <div className='light-separator'></div>
+
+          <div>
+            <p>New here?</p>
+            <p className="ui primary basic button" onClick={() => setShowLogIn(false)}>Create new account</p>
+          </div> 
+
+        </div>
+      </form>
+    
+    </div>
   </div>
   
         
