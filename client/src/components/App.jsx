@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { BrowserRouter, Route } from 'react-router-dom'
 import Header from "./Header/Header";
 import Main from './Main'
@@ -9,6 +9,13 @@ const App = () => {
 
   const [session, setSession] = useState(false)
   const [alert, setAlert] = useState(false)
+
+  useEffect(() => {
+    const user = localStorage.getItem('user')
+    if (user) {
+      setSession(JSON.parse(user))
+    }
+  }, [])
  
   console.log('AppSession', session)
 
