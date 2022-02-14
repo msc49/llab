@@ -81,10 +81,10 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
           {description}
         <br/>
         <p></p>
-        <div className="meta">
+        {/* <div className="meta">
           Location: {lender.location}
           {borrower ? <p><span className="ui blue text">Availble Soon</span></p>: <p><span className="ui green text">Available now</span></p>}
-        </div>
+        </div> */}
       </div>
       
       <div className="extra">

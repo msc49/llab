@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
-import Item from '../Items/Item';
+import React from 'react'
 import ItemList from '../Items/ItemList';
-import express from "../../apis/express";
 import avatar from "../images/user-avatar.jpeg";
 
 
@@ -16,7 +14,7 @@ return (
      <div className="profile-wrapper">
         <div className="user-info-container">
               <div className="avatar-container">
-                <img alt="user profile photo" className="avatar" src={avatar}></img>
+                <img alt="user profile" className="avatar" src={avatar}></img>
               </div>
                 <span className="profile-username">{userDetails.user.username}</span>
           </div>

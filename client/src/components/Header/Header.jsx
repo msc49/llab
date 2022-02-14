@@ -107,8 +107,10 @@ const Header = ({session, setSession}) => {
                 </div>
 
                 <div className="item">
+                  <Link to="/profile">
                   <i className="user circle outline icon"></i>
                   Profile
+                  </Link>
                 </div>
 
                 <div className="item">
