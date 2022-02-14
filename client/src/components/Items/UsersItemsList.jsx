@@ -4,12 +4,14 @@ import express from "../../apis/express";
 
 const UsersItemList = ({session}) => {
 
+
+  const [toggle, setToggle] = useState(false);
+
+
   const [itemList, setItemList] = useState([])
-
-
-  useEffect(() => {
-    getItems()
-  }, [])
+    useEffect(() => {
+      getItems()
+    }, [])
 
   const getItems = async () => {
     const { data } = await express.get('/items')
@@ -21,7 +23,6 @@ const UsersItemList = ({session}) => {
     getItems()
   }
 
-
   const updateItem = async (event, name, description, lender, borrower, id) => {
     event.preventDefault()
     await express.put(`/items/${id}`, {
@@ -30,7 +31,6 @@ const UsersItemList = ({session}) => {
         description: description,
       }
     })
-   
     getItems()
   }
 
@@ -49,7 +49,7 @@ const UsersItemList = ({session}) => {
     getItems()
   }
 
-  const renderedList = itemList.map(item => {
+  const renderedLendingList = itemList.map(item => {
         const user = JSON.parse(localStorage.getItem('user'));
         const userId = user.user.id;
     
@@ -69,9 +69,17 @@ const UsersItemList = ({session}) => {
 
   return (
     <div>
+         <div className = "profile-items-header">
+            <h3 className="items-heading">Item's you're lending</h3>
+            <div className="btn-container">
+          <button className="ui button grey" onClick={() => setToggle(!toggle)}>Borrowing</button>
+          </div>
+         </div>
+
+   
 
       <div className="ui two stackable cards">
-        {renderedList}
+        {renderedLendingList}
       </div>
      
     </div>
@@ -80,3 +88,4 @@ const UsersItemList = ({session}) => {
 }
 
 export default UsersItemList
+
