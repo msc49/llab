@@ -93,6 +93,20 @@ span.profile-date{
   min-width:600px;
 }
 
+.profile-items-header{
+  display:flex;
+  justify-content:space-between
+}
+
+.btn-container{
+  align-items: center;
+  display:flex;
+}
+
+.btn-container > .ui.button{
+  margin-left:1em;
+}
+
 h3.items-heading{
   font-size:1.8em;
   font-weight:800;

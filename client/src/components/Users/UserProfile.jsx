@@ -29,7 +29,15 @@ return (
     </div>
 
     <div className = "profile-items-container">
+         <div className = "profile-items-header">
             <h3 className="items-heading">Item's you're lending</h3>
+          <div className="btn-container">
+            <button className="ui button green">Lending</button>
+            <button className="ui button grey">Borrowing</button>
+          </div>
+           
+         </div>
+
             <UsersItemList session={session} />
       </div>
   </div>
