@@ -6,7 +6,7 @@ const path = require('path');
 
 const pathToKey = path.join(__dirname, '../..', 'id_rsa_priv.pem');
 
-  const PRIV_KEY = process.env.NODE_ENV = 'dev' ? fs.readFileSync(pathToKey, 'utf8') : process.env.id_rsa_priv
+const PRIV_KEY = process.env.NODE_ENV = 'dev' ? fs.readFileSync(pathToKey, 'utf8') : process.env.id_rsa_priv
 
   
 
