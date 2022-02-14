@@ -81,9 +81,9 @@ app.get("/", (req, res) => {
 });
 
 
-const port = process.env.PORT || 4000
+
 // OPEN EXPRESS ON PORT 4000
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
 
