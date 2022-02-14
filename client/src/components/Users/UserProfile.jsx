@@ -9,18 +9,45 @@ import testImage from "../images/linda.jpeg";
 const UserProfile = (session) => {
 
 
-const userDetails = JSON.parse(localStorage.getItem('user')) 
+const userDetails = JSON.parse(localStorage.getItem('user'));
+console.log(userDetails)
+
 
 
 return (
-  <div className="ui container"> 
-     <div className="profile-wrapper">
+  <div className="ui container profile"> 
+    <div className="profile-meta">
+       <div className="avatar-container">
+          <img alt="user profile" className="avatar" src={testImage}></img>
+       </div>
+
+       <div className="user-details">
+          <span className="profile-username">{userDetails.user.username}</span>
+          <span className="profile-location">{userDetails.user.location}</span>
+          <span className="profile-date"><em>Lending and borrowing since 2022</em></span>
+        </div>
+    </div>
+
+    <div className = "profile-items-container">
+            <div className="items-header">
+            <h3>Item's you're lending</h3>
+            <UsersItemList session={session} />
+            </div>
+      </div>
+  </div>
+
+   /* <div className="profile-wrapper">
         <div className="user-info-container">
               <div className="avatar-container">
                 <img alt="user profile" className="avatar" src={testImage}></img>
               </div>
+
+              <div className="profile-meta">
                 <span className="profile-username">{userDetails.user.username}</span>
                 <span className="profile-location">{userDetails.user.location}</span>
+                <span className="profile-date">Lending and borrowing <br></br> since 2022</span>
+              </div>
+           
 
           </div>
 
@@ -28,16 +55,8 @@ return (
             <div className="items-header">
             <h3>Item's you're lending</h3>
             <UsersItemList session={session} />
-          
- 
-       
-            </div>
-
-          
-       
         </div>
-    </div>
-  </div>
+        </div> */
 
 )
 }
