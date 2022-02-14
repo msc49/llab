@@ -1,9 +1,9 @@
 import React from 'react'
-import ItemList from '../Items/ItemList';
+import UsersItemList from '../Items/UsersItemsList';
 import avatar from "../images/user-avatar.jpeg";
 
 
-const UserProfile = () => {
+const UserProfile = (session) => {
 
 
 const userDetails = JSON.parse(localStorage.getItem('user')) 
@@ -22,7 +22,7 @@ return (
         <div className = "profile-items-container">
             <div className="items-header">
             <h3>Item's you're lending</h3>
-            <ItemList />
+            <UsersItemList session={session} />
           
  
        

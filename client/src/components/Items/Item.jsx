@@ -7,7 +7,6 @@ import '../../img/image.png'
 
 const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
   const {_id: id, name, description, images, lender, borrower } = item
-  console.log(item)
 
   // set rating when we get value from item
   let r = 4

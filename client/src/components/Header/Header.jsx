@@ -12,7 +12,7 @@ const Header = ({session, setSession}) => {
     localStorage.removeItem('user')
     setSession(false)
   }
-
+// eslint-disable-next-line
   const openAddItemModal = () => {
     const addItemModal = document.getElementById('add-item-modal')
     console.log(addItemModal)
