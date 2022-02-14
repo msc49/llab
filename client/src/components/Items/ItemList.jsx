@@ -34,6 +34,7 @@ const ItemList = ({session}) => {
   }
 
   const deleteItem = async (id) => {
+
     const { data } = await express.delete(`/items/${id}`)
     getItems()
   }
@@ -48,7 +49,8 @@ const ItemList = ({session}) => {
 
   const updateItem = async (event, name, description, lender, borrower, id) => {
     event.preventDefault()
-    const { data } = await express.put(`/items/${id}`, {
+    // const { data } = 
+    await express.put(`/items/${id}`, {
       item: {
         name: name,
         description: description,
@@ -90,9 +92,9 @@ const ItemList = ({session}) => {
   return (
     <div>
       <form onSubmit={addItem}>
-      <input onChange={(event) => setName(event.target.value)} value={name} type="text" name="name" required/>
-      <input onChange={(event) => setDescription(event.target.value)} value={description} type="text" name="description" required/>
-      <button>Add Item</button>
+      <input onChange={(event) => setName(event.target.value)} value={name} type="text" name="name" placeholder="name" required/>
+      <input onChange={(event) => setDescription(event.target.value)} value={description} type="text" placeholder="description" name="description" required/>
+      <button className="ui button">Add Item</button>
       </form>
       {renderedList}
     </div>

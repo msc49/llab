@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { BrowserRouter, Route } from 'react-router-dom'
 import Header from "./Header/Header";
+import UserProfile from "./Users/UserProfile";
 import Main from './Main'
 import Alert from "./Alert/Alert";
 
@@ -25,6 +26,8 @@ const App = () => {
         <div>
           <Header setSession={setSession} />
           <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} />}/>
+          <Route path='/profile' exact render={() => <UserProfile />}/>
+
           <Alert alert={alert} setAlert={setAlert} /> 
         </div>
       </BrowserRouter>
