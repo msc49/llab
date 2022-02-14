@@ -37,10 +37,15 @@ span.profile-username{
   font-size:2em;
   margin-top:0.5em;
 }
+
+span.profile-location{
+  margin-top:1em;
+}
 .avatar{
   margin:1em;
     width: 10em;
     height: 10em;
+    object-fit:cover;
     border-radius: 500rem;
     border: 1px solid rgb(204, 202, 202);
 }
