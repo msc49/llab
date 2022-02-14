@@ -29,10 +29,8 @@ return (
     </div>
 
     <div className = "profile-items-container">
-            <div className="items-header">
-            <h3>Item's you're lending</h3>
+            <h3 className="items-heading">Item's you're lending</h3>
             <UsersItemList session={session} />
-            </div>
       </div>
   </div>
 

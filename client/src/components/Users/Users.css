@@ -32,7 +32,7 @@
   left: 0;
   object-fit:cover;
   content:"";
-
+  filter: hue-rotate(34deg);
 }
 
 .profile-meta {
@@ -73,14 +73,28 @@ span.profile-date{
     border-radius: 500rem;
     border: 5px solid rgb(255, 255, 255);
     filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
-
 }
 
 .button-container {
   align-self: flex-end;
   margin-left:10em;
 }
+.profile-items-container::before{
+  background:rgb(245 244 244 / 49%);
+  width:100%;
+  height:100%;
+  position:absolute;
+  content: "";
+  left:0;
+  z-index:-10;
+}
 .profile-items-container{
   margin-top:4em;
   min-width:600px;
+}
+
+h3.items-heading{
+  font-size:1.8em;
+  font-weight:800;
+  padding:1em 0em;
 }
