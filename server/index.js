@@ -83,7 +83,7 @@ app.get("/", (req, res) => {
 
 
 // OPEN EXPRESS ON PORT 4000
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
