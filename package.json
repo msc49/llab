@@ -7,9 +7,7 @@
   "scripts": {
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run start-server && npm run start-client",
-    "client": "cd client && npm install && npm start",
-    "server": "cd server && npm install && node index.js"
+    "start": "cd server && npm install && node index.js"
   },
   "dependencies": {
     "bootstrap": "^5.1.3",
