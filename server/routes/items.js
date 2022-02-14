@@ -3,6 +3,7 @@ const router = express.Router()
 const Item = require("../models/item")
 
 // ITEM ROUTES
+
 router.get("/items", async (req, res) => {
   const items = await Item.find({})
     .populate('borrower')

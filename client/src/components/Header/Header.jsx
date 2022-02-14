@@ -47,6 +47,13 @@ const Header = ({session, setSession, setAlert}) => {
     setSession(false)
   }
 
+// eslint-disable-next-line
+  const openAddItemModal = () => {
+    const addItemModal = document.getElementById('add-item-modal')
+    console.log(addItemModal)
+    addItemModal.classList.add("active")
+  }
+
   if(session) {
     return (
       <div className="ui borderless fixed top sticky massive menu">
@@ -122,8 +129,11 @@ const Header = ({session, setSession, setAlert}) => {
                 </div>
 
                 <div className="item">
-                  <Link to='/profile'><i className="user circle outline icon"></i></Link>
+                  <Link to="/profile">
+                  <i className="user circle outline icon"></i>
+
                   Profile
+                  </Link>
                 </div>
 
                 <div className="item">

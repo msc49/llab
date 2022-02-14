@@ -19,7 +19,6 @@ const App = () => {
     }
   }, [])
  
-  console.log('AppSession', session)
 
   return (
     <div>
@@ -28,7 +27,7 @@ const App = () => {
           <Header setSession={setSession} session={session} setAlert={setAlert} />
           <div className="ui container content-field">
           <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} />}/>
-          <Route path='/profile' exact render={() => <UserProfile />}/>
+          <Route path='/profile' exact render={() => <UserProfile setSession={setSession} session={session} />}/>
           </div>
 
           <Alert alert={alert} setAlert={setAlert} /> 

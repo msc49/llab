@@ -7,7 +7,6 @@ import '../../img/image.png'
 
 const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
   const {_id: id, name, description, images, lender, borrower } = item
-  console.log(item)
 
   // set rating when we get value from item
   let r = 4
@@ -80,10 +79,10 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
           {description}
         <br/>
         <p></p>
-        <div className="meta">
+        {/* <div className="meta">
           Location: {lender.location}
           {borrower ? <p><span className="ui blue text">Availble Soon</span></p>: <p><span className="ui green text">Available now</span></p>}
-        </div>
+        </div> */}
       </div>
       
       <div className="extra">
