@@ -11,6 +11,12 @@
   border-top: none !important;
 }
 
+.light-separator {
+  align-items: center;
+  border-bottom: 1px solid #dadde1;
+  display: flex;
+  margin: 20px 16px;
+  text-align: center;
 /* PROFILE PAGE */
 
 .profile-wrapper{

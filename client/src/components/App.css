@@ -1,0 +1,11 @@
+@media screen and (min-width: 700px) {
+  .content-field {
+    margin-top: 8rem !important;
+  }
+}
+
+.content-field {
+  margin-top: 6rem !important;
+
+}
+

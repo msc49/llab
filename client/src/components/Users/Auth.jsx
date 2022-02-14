@@ -8,7 +8,7 @@ const Auth = ( {setSession, setAlert} ) => {
   const [showLogIn, setShowLogIn] = useState(true);
 
    if (showLogIn) {
-     return <LogIn setShowLogIn={setShowLogIn} setSession={setSession} />
+     return <LogIn setShowLogIn={setShowLogIn} setSession={setSession} setAlert={setAlert} />
    } else {
      return <SignUp setShowLogIn={setShowLogIn} setAlert={setAlert}/>
    }
