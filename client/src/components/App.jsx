@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import Header from "./Header/Header";
 import Main from './Main'
 import Alert from "./Alert/Alert";
+import './App.css'
 
 // If any problems with deployment, consider using HashRouter instead of BrowserRouter
 const App = () => {
@@ -24,7 +25,7 @@ const App = () => {
       <BrowserRouter>
         <div>
           <Header setSession={setSession} session={session} />
-          <div className="ui container">
+          <div className="ui container content-field">
           <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} />}/>
           </div>
           <Alert alert={alert} setAlert={setAlert} /> 
