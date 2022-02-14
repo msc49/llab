@@ -34,6 +34,7 @@ const ItemList = ({session}) => {
   }
 
   const deleteItem = async (id) => {
+
     const { data } = await express.delete(`/items/${id}`)
     getItems()
   }
@@ -48,7 +49,8 @@ const ItemList = ({session}) => {
 
   const updateItem = async (event, name, description, lender, borrower, id) => {
     event.preventDefault()
-    const { data } = await express.put(`/items/${id}`, {
+    // const { data } = 
+    await express.put(`/items/${id}`, {
       item: {
         name: name,
         description: description,
