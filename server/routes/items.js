@@ -14,6 +14,7 @@ router.get("/items", async (req, res) => {
 router.post("/items", async (req, res) => {
   const item = new Item(req.body.item);
   await item.save();
+  await item.populate('lender')
   res.json(item);
 });
 

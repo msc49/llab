@@ -9,19 +9,18 @@ const UserLogIn = ({ setShowLogIn, setSession, setAlert }) => {
     password: ""
   })
 
-
   const authenticateUser = async (event) => {
     event.preventDefault()
     const { data } = await express.post('/login', {
     password: formUser.password,
     username: formUser.username
 })
-localStorage.setItem('user', JSON.stringify(data))
-setSession(JSON.parse(localStorage.getItem('user')))
-const { username, location } = data.user
-setAlert({type: 'success', header: "Log in successful!", event: 'LOG_IN', username, location});
+  localStorage.setItem('user', JSON.stringify(data))
+  setSession(JSON.parse(localStorage.getItem('user')))
+  const { username, location } = data.user
+  setAlert({type: 'success', header: "Log in successful!", event: 'LOG_IN', username, location});
 
-console.log('stored in localstorage', JSON.parse(localStorage.getItem('user')))
+  console.log('stored in localstorage', JSON.parse(localStorage.getItem('user')))
 }
 
   function handleChange(event) { 
@@ -42,6 +41,7 @@ console.log('stored in localstorage', JSON.parse(localStorage.getItem('user')))
 
         <form onSubmit={authenticateUser} className="ui large form" noValidate>
           <div className="ui stacked segment">
+            
             <div className="field">
               <div className="ui left icon input">
                 <i className="user icon"></i>

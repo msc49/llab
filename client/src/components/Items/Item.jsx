@@ -70,7 +70,6 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
             <div className={`ui bottom attached ${borrower ? 'blue' : 'green'} button`} tabindex="0">
               {borrower ? 'Queue' : 'Request'}
             </div>
-   
          
         </div>
         
