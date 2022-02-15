@@ -6,8 +6,10 @@ import '../Home/Home.css';
 import express from "../../apis/express";
 import './ItemList.css'
 
+// clean unecesary functions from here when time allows
+
 const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchItems, setSearchItems}) => {
-  console.log('SEARCH PAGE:', searchItems)
+  console.log('SEARCH PAGE-SEARCH ITESM', searchItems)
 
   let history = useHistory();
 
@@ -101,10 +103,12 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchIte
   const submitSearch = async (e) => {
     e.preventDefault()
     console.log('I am searching.......!!!!!!!!')
-    console.log('SEARCH ITEM IN function', searchItem)
+    console.log('SEARCH ITEM IN function', searchItems)
     const { data } = await express.get(`/items/search/${searchItem}`)
+    setSearchItems(data)
     history.push(`/items/search/${searchItem}`);
     console.log(data)
+    
   }
 
   const renderedList = searchItems.map(item => {
