@@ -16,7 +16,6 @@ const ItemSchema = new Schema({
     {
       title: {
         type: String,
-        required: true,
       },
       path: {
         type: String,

@@ -63,8 +63,8 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
          
             <div className="ui attached segment">
               <div className="ui slide masked reveal image tiny">
-                <img className="visible content" src="https://react.semantic-ui.com/images/wireframe/image.png" alt=""/>
-                <img src="https://react.semantic-ui.com//images/avatar/large/elliot.jpg" class="hidden content" alt=""/>
+                <img className="visible content" src={item.images[0] ? item.images[0].path : "https://react.semantic-ui.com/images/wireframe/image.png"} alt=""/>
+                <img src={item.images[1] ? item.images[1].path : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} class="hidden content" alt=""/>
               </div>
             </div>
             <div className={`ui bottom attached ${borrower ? 'blue' : 'green'} button`} tabindex="0">
