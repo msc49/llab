@@ -32,7 +32,7 @@
   left: 0;
   object-fit:cover;
   content:"";
-  filter: hue-rotate(34deg);
+  filter: hue-rotate(126deg);
 }
 
 .profile-meta {
