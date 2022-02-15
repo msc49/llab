@@ -5,7 +5,7 @@ import Modal from '../Modal/Modal';
 import './Header.css';
 import express from '../../apis/express';
 
-const Header = ({session, setSession, setAlert, setRefreshItems}) => {
+const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) => {
   const [modalOpen, setModalOpen] = useState(false)
 
   const [formItem, setFormItem] = useState({
@@ -158,7 +158,7 @@ const Header = ({session, setSession, setAlert, setRefreshItems}) => {
             <div className="ui inline simple dropdown">
 
               <div className="text">
-                <img className="ui avatar image" src="https://fomantic-ui.com/images/avatar/small/elliot.jpg" alt=""/>
+                <img className="ui avatar image" src={profilePic ? profilePic[0].path : "https://fomantic-ui.com/images/avatar/small/elliot.jpg"} alt=""/>
                 {session.user.username}
               </div>
               {/* Drop Down Meny */}
