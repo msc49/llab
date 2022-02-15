@@ -8,7 +8,7 @@ import '../../img/image.png'
 const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowItem }) => {
 
   const {_id: id, name, description, images, lender, borrower} = item
-
+  console.log(lender.images)
   // set rating when we get value from item
   let r = Math.floor(Math.random() * 5) + 1;
   const RatingStar = () => (
@@ -51,7 +51,7 @@ const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowIte
       />
   
       </div>
-        <img className="ui avatar image" src={lender.images[0] ? lender.images[lender.images.length-1].path : "https://fomantic-ui.com/images/avatar/small/elliot.jpg"} alt="" data-title="blablabla"/> 
+        <img className="ui avatar image" src={lender.images && lender.images[0] ? lender.images[lender.images.length-1].path : "https://fomantic-ui.com/images/avatar/small/elliot.jpg"} alt="" data-title="blablabla"/> 
         {lender ? `contributed by ${lender.name}` : 'Anon'}
       </div>
       
@@ -63,7 +63,8 @@ const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowIte
         <div className="ui column centered right floated">
          
             <div className="ui attached segment">
-              <div className="ui slide masked reveal image tiny">
+              {/* on mobile make 'large' image to  */}
+              <div className="ui slide masked reveal image large">
                 <img className="visible content" src={images[0] ? images[0].path : "https://react.semantic-ui.com/images/wireframe/image.png"} alt=""/>
                 <img src={images[1] ? images[1].path : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} class="hidden content" alt=""/>
               </div>

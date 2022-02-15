@@ -6,7 +6,9 @@ import '../Home/Home.css';
 import express from "../../apis/express";
 import './ItemList.css'
 
-const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearchItems}) => {
+const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchItems, setSearchItems}) => {
+  console.log('SEARCH PAGE:', searchItems)
+
   let history = useHistory();
 
   const [itemList, setItemList] = useState([])
@@ -14,7 +16,12 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
   const [description, setDescription] = useState("")
   const [searchItem, setSearchItem] = useState("")
 
-  console.log('SEARCH ITEM UNDER STATE', searchItem)
+  // useEffect(() => {
+  //   if(searchItems) {
+  //     // display itema
+  //     setSearchItems(false)
+  //   }
+  // }, [searchItems, searchItems])
 
   useEffect(() => {
     getItems()
@@ -96,12 +103,11 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
     console.log('I am searching.......!!!!!!!!')
     console.log('SEARCH ITEM IN function', searchItem)
     const { data } = await express.get(`/items/search/${searchItem}`)
-    setSearchItems(data)
     history.push(`/items/search/${searchItem}`);
     console.log(data)
   }
 
-  const renderedList = itemList.map(item => {
+  const renderedList = searchItems.map(item => {
     return (
       <Item 
         key={item._id} 

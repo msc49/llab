@@ -53,8 +53,8 @@ const UsersItemList = () => {
   const userId = user.user.id;
 
 
-  const renderedLendingList = itemList.map(item => {
-    if (item.lender._id == userId) {
+  const renderedLendingList = itemList.map(item =>  {
+    if (item.lender._id === userId) {
       return (
         <Item 
           key={item._id} 
@@ -73,7 +73,7 @@ const UsersItemList = () => {
          ""
        )
      } else {
-      if (item.borrower._id == userId) {
+      if (item.borrower._id === userId) {
         return (
 
           <Item 
