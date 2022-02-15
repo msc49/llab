@@ -56,13 +56,14 @@ const ItemList = ({session, refreshItems, setRefreshItems}) => {
     getItems()
   }
 
-  const updateItem = async (event, name, description, lender, borrower, id) => {
+  const updateItem = async (event, name, description, lender, borrower, id, available) => {
     event.preventDefault()
     // const { data } = 
     await express.put(`/items/${id}`, {
       item: {
         name: name,
         description: description,
+        available:available
       }
     })
    
