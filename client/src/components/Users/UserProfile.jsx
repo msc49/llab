@@ -1,7 +1,6 @@
 
 import React from 'react'
 import UsersItemList from '../Items/UsersItemsList';
-import avatar from "../images/user-avatar.jpeg";
 import testImage from "../images/linda.jpeg";
 
 
