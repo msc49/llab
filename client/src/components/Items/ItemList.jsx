@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Item from './Item'
+import Item from './Item';
+import HomeBanner from '../Home/HomeBanner';
+import '../Home/Home.css';
 import express from "../../apis/express";
 
 const ItemList = ({session, refreshItems, setRefreshItems}) => {
@@ -98,9 +100,15 @@ const ItemList = ({session, refreshItems, setRefreshItems}) => {
 
   return (
     <div>
+      <HomeBanner />
+      <div className="main-content">
+
       <div className="ui two stackable cards">
         {renderedList}
       </div>
+
+      </div>
+  
      
     </div>
   )
