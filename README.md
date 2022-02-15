@@ -1,5 +1,5 @@
 # LOCAL LAB
-A local community free sharing app!
+A local community free sharing app!\n
 List items to lend, borrow items you need from your local area.
 
 ## Screenshots
@@ -34,12 +34,28 @@ cd server > nodemon index.js
 cd client > npm start 
 
 ## Technologies used
-MERN stack
-MongoDB production database hosted on Mongo Atlas
-MongoDB local test database
-Express
-React
-Node.js
-Heroku (deployment)
+MERN stack\n
+MongoDB production database hosted on Mongo Atlas\n
+MongoDB local test database\n
+Express\n
+React\n
+Node.js\n
+Heroku (deployment)\n
+
+## Features
+- Log In/Sign Up\n
+- List an item to lend (with an image)\n
+- View your profile and your listed items\n
+- View items available to borrow\n
+- Search for a specific item\n
+- Update, detele your item\n
+- Make your item unavailable\n
+
+## Meet the Team
+James Cort\n
+Sabrina Lord\n
+Mayo Theodore\n
+Evie Palaiochorinou\n
+Muhammad Choudhry
 
 <!-- VIDEOS SAY PASSPORT DOCS MISS THINGS OUT LOL -->
