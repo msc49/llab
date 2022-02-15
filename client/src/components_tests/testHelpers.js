@@ -11,6 +11,6 @@ export const signIn = () => {
 export const listItem = () => {
   userEvent.click(screen.getByText(/large blue plus icon/i))
   userEvent.type(screen.getByLabelText(/Item name/i), 'Screwdriver')
-  userEvent.type(screen.getByLabelText(/Item description/i), 'Works well')
+  userEvent.type(screen.getByLabelText(/Item description/i), 'works well')
   userEvent.click(screen.getByRole(/button/i))
 }
