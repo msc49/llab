@@ -29,7 +29,7 @@ const app = express();
 
 // process.env.NODE_ENV !== 'prod' ? process.env.MONGO_DEV_URI : process.env.MONGO_PROD_URI
 mongoose
-  .connect(process.env.MONGO_PROD_URI, {
+  .connect(process.env.NODE_ENV !== 'prod' ? process.env.MONGO_DEV_URI : process.env.MONGO_PROD_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
