@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV !== "prod") require("dotenv").config()
+
 
 // IMPORT DEPENDENCIES
 const express = require("express");
@@ -25,9 +25,11 @@ const { json } = require("body-parser");
 // RUN EXPRESS/MONGO/MONGOOSE
 const app = express();
 
+// add back
 
+// process.env.NODE_ENV !== 'prod' ? process.env.MONGO_DEV_URI : process.env.MONGO_PROD_URI
 mongoose
-  .connect(process.env.NODE_ENV !== 'prod' ? process.env.MONGO_DEV_URI : process.env.MONGO_PROD_URI, {
+  .connect(process.env.NODE_ENV == 'dev' ? process.env.MONGO_DEV_URI : process.env.MONGO_PROD_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -35,7 +37,7 @@ mongoose
   .catch((e) => console.log("Oh no mongo error!!", e));
 
 //PORT
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000;  //change back to 4000?
 
 // const sessionConfig = {
 //   secret: "thisshouldbeabettersecret!",
@@ -81,9 +83,9 @@ app.get("/", (req, res) => {
 });
 
 
-const port = process.env.PORT || 4000
+
 // OPEN EXPRESS ON PORT 4000
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
 

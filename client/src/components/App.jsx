@@ -12,12 +12,23 @@ const App = () => {
   const [session, setSession] = useState(false)
   const [alert, setAlert] = useState(false)
   const [refreshItems, setRefreshItems] = useState(false)
+  const [profilePic, setProfilePic] = useState(null)
+
+  console.log('PROFILE PIC FROM APP', profilePic)
+  const profilepik = localStorage.getItem('userPic')
+  console.log('PROFILE PIC FROM LOCAL STORAGE', JSON.parse(profilepik))
 
   useEffect(() => {
     const user = localStorage.getItem('user')
     if (user) {
       setSession(JSON.parse(user))
     }
+
+    const profile = localStorage.getItem('userPic')
+    if (profile) {
+      setProfilePic(JSON.parse(profile))
+    }
+
   }, [])
  
 
@@ -25,10 +36,10 @@ const App = () => {
     <div>
       <BrowserRouter>
         <div>
-          <Header setSession={setSession} session={session} setAlert={setAlert} setRefreshItems={setRefreshItems} />
+          <Header setSession={setSession} session={session} setAlert={setAlert} setRefreshItems={setRefreshItems} profilePic={profilePic} />
           <div className="ui container content-field">
-          <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} refreshItems={refreshItems} setRefreshItems={setRefreshItems} />}/>
-          <Route path='/profile' exact render={() => <UserProfile setSession={setSession} session={session} />}/>
+          <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} refreshItems={refreshItems} setRefreshItems={setRefreshItems} profilePic={profilePic}/>}/>
+          <Route path='/profile' exact render={() => <UserProfile setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} />}/>
           </div>
 
           <Alert alert={alert} setAlert={setAlert} /> 

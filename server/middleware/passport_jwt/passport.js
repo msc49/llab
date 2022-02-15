@@ -1,6 +1,6 @@
-if (process.env.NODE_ENV !== "prod") {
-  require("dotenv").config();
-}
+
+require("dotenv").config();
+
 
 const User = require('../../models/user')
 const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
