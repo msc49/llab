@@ -40,20 +40,6 @@ const ItemList = ({session, refreshItems, setRefreshItems}) => {
     getItems()
   }
 
-  const updateItem = async (event, name, description, lender, borrower, id, available) => {
-    event.preventDefault()
-    // const { data } = 
-    await express.put(`/items/${id}`, {
-      item: {
-        name: name,
-        description: description,
-        available:available
-      }
-    })
-   
-    getItems()
-  }
-
   const uploadImage = async (event, imageTitle, imageFile, id) => {
     
     event.preventDefault()
@@ -76,7 +62,6 @@ const ItemList = ({session, refreshItems, setRefreshItems}) => {
         key={item._id} 
         item={item}
         deleteItem={deleteItem}
-        updateItem={updateItem}
         uploadImage={uploadImage}
         borrowItem={borrowItem}
         refreshItems={refreshItems} 

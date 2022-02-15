@@ -12,7 +12,6 @@ import express from "../../apis/express";
 
 const Item = ({ item, deleteItem, borrowItem }) => {
 
-  
 
   const user = JSON.parse(localStorage.getItem('user'))
   const {_id: id, name, description, images, lender, borrower} = item
@@ -21,11 +20,7 @@ const Item = ({ item, deleteItem, borrowItem }) => {
    // Update Item States
   const [itemName, setName] = useState("")
   const [itemDescription, setDescription] = useState("")
-
-
- 
-    
-    const [formImage, setFormImage] = useState(null);
+  const [formImage, setFormImage] = useState(null);
 
 
     const [itemList, setItemList] = useState([])
@@ -55,6 +50,8 @@ const Item = ({ item, deleteItem, borrowItem }) => {
       setModalOpen(false)
 
       setRefreshItems(true)
+
+      getItems();
 
     }
 
@@ -168,59 +165,57 @@ const Item = ({ item, deleteItem, borrowItem }) => {
 
       <div className='right menu'>
 
-<Modal modalOpen={modalOpen}>
-<div id="add-item-modal" class="my-modal">
-  <div class="my-modal-content">
-    <span class="my-modal-close" onClick={() => {
-      setModalOpen(false)
-      setFormImage(null)
-      }}>&times;</span>
+      <Modal modalOpen={modalOpen}>
+      <div id="add-item-modal" class="my-modal">
+        <div class="my-modal-content">
+          <span class="my-modal-close" onClick={() => {
+            setModalOpen(false)
+            setFormImage(null)
+            }}>&times;</span>
 
-    {/* Modal Content */}
-    <div className="ui center aligned grid">
-      <div className="column">
-    
-        <h2 className="ui inverted image header">
-          <div className="content">
-            Update item
+          {/* Modal Content */}
+          <div className="ui center aligned grid">
+            <div className="column">
+          
+              <h2 className="ui inverted image header">
+                <div className="content">
+                  Update item
+                </div>
+              </h2>
+
+              <form onSubmit={(event) => updateItem(event, itemName, itemDescription, item.lender, item.borrower, item._id, item.available)} className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
+                <div className="ui stacked segment my-modal-segment">
+
+                  <div className="field ui left aligned container">
+                    <label htmlFor="item-name"><span className='ui medium text'>Item name</span></label>
+                    <input onChange={(event) => setName(event.target.value)} value={itemName} type="text" name="name" required/>
+
+                  </div> 
+
+                  <div className="field ui left aligned container">
+                    <label htmlFor="item-description"><span className='ui medium text'>Item decription</span></label>
+                    <input onChange={(event) => setDescription(event.target.value)} value={itemDescription} type="text" name="description" required/>
+                  </div> 
+
+                  <div className='light-separator'></div>
+                  
+                  <div className="field ui center aligned container">
+                              <label for="file-upload" class="custom-file-upload">
+                              <i class="upload green icon"></i> Upload image
+                              </label>
+                              <input onChange={handleImageChange} id="file-upload" name="imageFile" type="file" accept="image/*"/>
+                            </div>   
+                  <button className="fluid ui large primary button">Update</button>
+
+                </div>
+              </form>
+          
+            </div>
           </div>
-        </h2>
-
-        <form onSubmit={(event) => updateItem(event, itemName, itemDescription, item.lender, item.borrower, item._id, item.available)} className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
-          <div className="ui stacked segment my-modal-segment">
-
-            <div className="field ui left aligned container">
-              <label htmlFor="item-name"><span className='ui medium text'>Item name</span></label>
-              <input onChange={(event) => setName(event.target.value)} value={itemName} type="text" name="name" required/>
-
-            </div> 
-
-            <div className="field ui left aligned container">
-              <label htmlFor="item-description"><span className='ui medium text'>Item decription</span></label>
-              <input onChange={(event) => setDescription(event.target.value)} value={itemDescription} type="text" name="description" required/>
-            </div> 
-
-            <div className='light-separator'></div>
-             
-            <div className="field ui center aligned container">
-                        <label for="file-upload" class="custom-file-upload">
-                        <i class="upload green icon"></i> Upload image
-                        </label>
-                        <input onChange={handleImageChange} id="file-upload" name="imageFile" type="file" accept="image/*"/>
-                      </div>   
-    
-
-            <button className="fluid ui large primary button">Update</button>
-
-          </div>
-        </form>
-    
+          {/* modal Content End */}
+        </div>
       </div>
-    </div>
-    {/* modal Content End */}
-  </div>
-</div>
-</Modal>
+      </Modal>
 </div>
     </div>
   )
