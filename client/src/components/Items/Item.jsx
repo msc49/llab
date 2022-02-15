@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Popup } from 'semantic-ui-react'
 // import RatingStar from "../semanticUIReact/rating";
 import { Rating } from 'semantic-ui-react'
+import UpdateItemForm from "./UpdateItemForm";
 import '../../img/image.png'
 
 const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
@@ -12,6 +13,7 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
   const {_id: id, name, description, images, lender, borrower} = item
 
 
+  const [modalOpen, setModalOpen] = useState(false)
 
 
   // set rating when we get value from item
@@ -20,7 +22,7 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
     <Rating icon='star' defaultRating={r} maxRating={5} disabled/>
   )
   
-  // Update Item States
+  // // Update Item States
   // const [name, setName] = useState("")
   // const [description, setDescription] = useState("")
 
@@ -75,7 +77,7 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
             </div>
 
             {user.user.username === lender.username ? 
-                 <div className={`ui bottom attached grey button`} tabindex="0" onClick={() => console.log('hi')}>
+                 <div className={`ui bottom attached grey button`} tabindex="0" onClick={() => setModalOpen(true)}>
                      Update
                 </div> : 
                 <div className={`ui bottom attached ${borrower ? 'blue' : 'green'} button`} tabindex="0">
@@ -102,6 +104,8 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
         
         </div>
       </div>
+
+
       
       {/* {
         item.lender ? <h4> Lender: {item.lender.name}, {item.lender.location}</h4> : ""
@@ -135,3 +139,6 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
 }
 
 export default Item
+
+
+
