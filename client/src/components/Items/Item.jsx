@@ -9,9 +9,10 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
 
   const user = JSON.parse(localStorage.getItem('user'))
 
-  const {_id: id, name, description, images, lender, borrower } = item
+  const {_id: id, name, description, images, lender, borrower} = item
 
-  
+
+
 
   // set rating when we get value from item
   let r = Math.floor(Math.random() * 5) + 1;
@@ -74,8 +75,8 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
             </div>
 
             {user.user.username === lender.username ? 
-                 <div className={`ui bottom attached grey button`} tabindex="0">
-                     Make unavailable
+                 <div className={`ui bottom attached grey button`} tabindex="0" onClick={() => console.log('hi')}>
+                     Update
                 </div> : 
                 <div className={`ui bottom attached ${borrower ? 'blue' : 'green'} button`} tabindex="0">
                     {borrower ? 'Queue' : 'Request'}
