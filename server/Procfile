@@ -1,1 +1,1 @@
-web:PORT=$PORT node ./server/index.js
+web: node ./server/index.js
