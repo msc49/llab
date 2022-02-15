@@ -5,11 +5,9 @@
   "description": "MONGO DB (Database) 1.\tDownload mongodb/brew: brew tap mongodb/brew",
   "main": "index.js",
   "scripts": {
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd server && npm install && node index.js",
-    "client": "cd client && npm install && npm start",
-    "server": "cd server && npm install && node index.js"
+    "postinstall": "cd client && npm install & npm start"
   },
   "dependencies": {
     "bootstrap": "^5.1.3",
