@@ -37,7 +37,7 @@ mongoose
   .catch((e) => console.log("Oh no mongo error!!", e));
 
 //PORT
-const PORT = process.env.PORT || 8080;  //change back to 4000?
+const PORT = process.env.PORT || 4000;  //change back to 4000?
 
 // const sessionConfig = {
 //   secret: "thisshouldbeabettersecret!",
