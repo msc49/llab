@@ -4,11 +4,11 @@ require("dotenv").config();
 const fs = require('fs');
 const path = require('path');
 
-// const pathToKey = process.env.NODE_ENV = 'dev' ? path.join(__dirname, '../..', 'id_rsa_priv.pem') : 'nothing, this is an error'
+const pathToKey = process.env.NODE_ENV = 'dev' ? path.join(__dirname, '../..', 'id_rsa_priv.pem') : 'nothing, this is an error'
 
-// const PRIV_KEY = process.env.NODE_ENV = 'dev' ? fs.readFileSync(pathToKey, 'utf8') : process.env.id_rsa_priv
+const PRIV_KEY = process.env.NODE_ENV = 'dev' ? fs.readFileSync(pathToKey, 'utf8') : process.env.id_rsa_priv
 
-  const PRIV_KEY = process.env.id_rsa_priv
+
 
 
 /**
