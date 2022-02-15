@@ -6,9 +6,8 @@ import express from "../../apis/express";
 
 const ItemList = ({session, refreshItems, setRefreshItems}) => {
 
+
   const [itemList, setItemList] = useState([])
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
 
   useEffect(() => {
     getItems()
@@ -26,22 +25,7 @@ const ItemList = ({session, refreshItems, setRefreshItems}) => {
     setItemList(data)
   }
 
-  const addItem = async (event) => {
-    event.preventDefault()
-    if(session) {
-      const { id: userId } = session.user
-      const { data } = await express.post('/items', {
-        item: {
-          name: name,
-          description: description,
-          lender: userId
-        }
-      })
-    }
-    
-    getItems()
-  }
-
+  
   const deleteItem = async (id) => {
 
     const { data } = await express.delete(`/items/${id}`)
@@ -95,6 +79,8 @@ const ItemList = ({session, refreshItems, setRefreshItems}) => {
         updateItem={updateItem}
         uploadImage={uploadImage}
         borrowItem={borrowItem}
+        refreshItems={refreshItems} 
+        setRefreshItems={setRefreshItems}
       />
     )
   })
