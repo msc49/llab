@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import ItemList from '../components/Items/ItemList';
-import signIn from './testHelpers';
-import listItem from './testHelpers';
+import {signIn, listItem} from './testHelpers';
 
 describe('Item Feed', () => {
 
