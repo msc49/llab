@@ -4,7 +4,7 @@ import HomeBanner from '../Home/HomeBanner';
 import '../Home/Home.css';
 import express from "../../apis/express";
 
-const ItemList = ({session, refreshItems, setRefreshItems}) => {
+const ItemList = ({session, refreshItems, setRefreshItems, profilePic}) => {
 
 
   const [itemList, setItemList] = useState([])
@@ -66,6 +66,7 @@ const ItemList = ({session, refreshItems, setRefreshItems}) => {
         borrowItem={borrowItem}
         refreshItems={refreshItems} 
         setRefreshItems={setRefreshItems}
+        profilePic={profilePic}
       />
     )
   })

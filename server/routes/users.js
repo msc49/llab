@@ -36,5 +36,26 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
 });
 
 
+// Use multer middleware
+const uploadMulter = require('../middleware/images/uploadUserImage.js')
+const validation = require('../middleware/images/validation.js');
+
+router.put('/users/:id/images', uploadMulter, validation, async (req, res) => {
+  console.log('in the route')
+  const { id } = req.params;
+  const user = await User.findById(id)
+
+  console.log(req.file)
+  
+  user.images.push({
+    path: req.file.path
+  })
+  
+  await user.save()
+
+  res.json(user)
+
+})
+
 
 module.exports = router;
