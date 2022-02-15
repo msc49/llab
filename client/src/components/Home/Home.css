@@ -8,13 +8,14 @@
   width: 100%;
 }
 
+/* for 1792px width */
 .banner-wrapper .overlay {
   position: absolute;
   top: -2.5em; left: 0; right: 0; bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left:18em;
+  margin-left:25em;
   color:white;
   font-family:helvetica;
 }
@@ -38,4 +39,96 @@ span.site-tagline{
 .main-content{
   margin-top:33em;
 }
+
+
+@media only screen and (max-width: 1604px) {
+  .banner-wrapper .overlay{
+    margin-left:20em;
+  }
+}
+
+
+@media only screen and (max-width: 1450px) {
+  .banner-wrapper .overlay{
+    margin-left:20em;
+  }
+  span.site-header{
+    font-size:4em;
+  }
+}
+
+@media only screen and (max-width: 1420px) {
+  .banner-wrapper .overlay{
+    margin-left:10em;
+  }
+  span.site-header{
+    font-size:4em;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .banner-wrapper .overlay{
+    margin-left:12em;
+  }
+  span.site-header{
+    font-size:3em;
+  }
+  span.site-tagline{
+    font-size:1.3em;
+  }
+}
+
+@media only screen and (max-width: 1165px) {
+  .main-content{
+    margin-top:28em;
+  }
+ 
+}
+
+@media only screen and (max-width: 900px) {
+  .banner-wrapper .overlay{
+    margin-left:10em;
+  }
+  span.site-header{
+    font-size:2.5em;
+  }
+
+}
+
+@media only screen and (max-width: 840px) {
+  .banner-wrapper .overlay{
+    margin-left:7em;
+  }
+  span.site-header{
+    font-size:2.2em;
+  }
+
+  .main-content{
+    margin-top:22em;
+  }
+
+}
+
+
+
+@media only screen and (max-width: 755px) {
+  .banner-wrapper .overlay{
+    margin-left:9em;
+    margin-top:3em;
+  }
+  span.site-header{
+    font-size:1.8em;
+    margin-top:0.5em;
+  }
+
+  .main-content{
+    margin-top:22em;
+  }
+  span.site-tagline{
+    font-size:1em;
+    max-width:200px;
+  }
+
+}
+
 
