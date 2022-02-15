@@ -54,7 +54,7 @@ const UsersItemList = () => {
 
 
   const renderedLendingList = itemList.map(item => {
-    if (item.lender._id == userId) {
+    if (item.lender._id === userId) {
       return (
         <Item 
           key={item._id} 

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import './Home.css';
-import bannerImage from "../../components/images/woman-with-drill-blue.png";
+import bannerImage from "../../components/images/woman-with-drill.png";
 
 
 const HomeBanner = () => {
@@ -18,7 +18,6 @@ const HomeBanner = () => {
       </div>
   )
 }
-
 
 export default HomeBanner;
 

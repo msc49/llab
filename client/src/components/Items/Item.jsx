@@ -5,7 +5,9 @@ import { Popup } from 'semantic-ui-react'
 import { Rating } from 'semantic-ui-react'
 import '../../img/image.png'
 
-const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowItem }) => {
+const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
+
+  const user = JSON.parse(localStorage.getItem('user'))
 
   const {_id: id, name, description, images, lender, borrower} = item
 
@@ -68,10 +70,15 @@ const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowIte
                 <img src={images[1] ? images[1].path : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} class="hidden content" alt=""/>
               </div>
             </div>
-            <div className={`ui bottom attached ${borrower ? 'blue' : 'green'} button`} tabindex="0">
-              {borrower ? 'Queue' : 'Request'}
-            </div>
-         
+
+            {user.user.username === lender.username ? 
+                 <div className={`ui bottom attached grey button`} tabindex="0" onClick={() => console.log('hi')}>
+                     Update
+                </div> : 
+                <div className={`ui bottom attached ${borrower ? 'blue' : 'green'} button`} tabindex="0">
+                    {borrower ? 'Queue' : 'Request'}
+                </div>
+              }
         </div>
         
         <Link to={`/items/${id}`}>
