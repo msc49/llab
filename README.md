@@ -1,4 +1,10 @@
+# LOCAL LAB
+A local community free sharing app!
+List items to lend, borrow items you need from your local area.
 
+## Screenshots
+
+## Instructions
 MONGO DB (Database)
 1.	Download mongodb/brew:
 brew tap mongodb/brew
@@ -26,5 +32,14 @@ cd server > nodemon index.js
 
 8. Run client (starts react)
 cd client > npm start 
+
+## Technologies used
+MERN stack
+MongoDB production database hosted on Mongo Atlas
+MongoDB local test database
+Express
+React
+Node.js
+Heroku (deployment)
 
 <!-- VIDEOS SAY PASSPORT DOCS MISS THINGS OUT LOL -->

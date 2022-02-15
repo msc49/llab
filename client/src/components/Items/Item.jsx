@@ -9,7 +9,7 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
   const {_id: id, name, description, images, lender, borrower } = item
 
   // set rating when we get value from item
-  let r = 4
+  let r = Math.floor(Math.random() * 5) + 1;
   const RatingStar = () => (
     <Rating icon='star' defaultRating={r} maxRating={5} disabled/>
   )
@@ -63,8 +63,8 @@ const Item = ({ item, deleteItem, updateItem, uploadImage, borrowItem }) => {
          
             <div className="ui attached segment">
               <div className="ui slide masked reveal image tiny">
-                <img className="visible content" src="https://react.semantic-ui.com/images/wireframe/image.png" alt=""/>
-                <img src="https://react.semantic-ui.com//images/avatar/large/elliot.jpg" class="hidden content" alt=""/>
+                <img className="visible content" src={item.images[0] ? item.images[0].path : "https://react.semantic-ui.com/images/wireframe/image.png"} alt=""/>
+                <img src={item.images[1] ? item.images[1].path : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} class="hidden content" alt=""/>
               </div>
             </div>
             <div className={`ui bottom attached ${borrower ? 'blue' : 'green'} button`} tabindex="0">

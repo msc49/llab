@@ -16,7 +16,6 @@ const ItemSchema = new Schema({
     {
       title: {
         type: String,
-        required: true,
       },
       path: {
         type: String,
@@ -34,6 +33,10 @@ const ItemSchema = new Schema({
     ref: "User",
     default: null,
   },
+  available: {
+    type: Boolean,
+    default: true,
+  }
 });
 
 const Item = mongoose.model("Item", ItemSchema);

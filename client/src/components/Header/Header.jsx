@@ -1,96 +1,159 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom'
-import { Popup } from 'semantic-ui-react'
 import MediaQuery from 'react-responsive'
-import Modal from '../Modal/addItemModal';
+import Modal from '../Modal/Modal';
 import './Header.css';
+import express from '../../apis/express';
 
-const Header = ({session, setSession}) => {
+const Header = ({session, setSession, setAlert, setRefreshItems}) => {
   const [modalOpen, setModalOpen] = useState(false)
+
+  const [formItem, setFormItem] = useState({
+    itemName: "",
+    itemDescription: '',
+  })
+  
+  const [formImage, setFormImage] = useState(null)
+
+  const addItem = async (event) => {
+    event.preventDefault()
+    if(session) {
+      const { id: userId } = session.user
+      const { data } = await express.post('/items', {
+        item: {
+          name: formItem.itemName,
+          description: formItem.itemDescription,
+          lender: userId,
+        }
+      })
+      
+      const { name: itemName, lender, _id: itemId } = data
+
+      if(formImage) await uploadImage(itemId)
+      setFormImage(null)
+      setFormItem({
+        itemName: "",
+        itemDescription: ""
+      })
+      setModalOpen(false)
+
+      setRefreshItems(true)
+
+      setAlert({type: 'success', header: `Thanks you for your contribution ${lender.name}`, event: 'ADD_ITEM', itemName, location: lender.location});
+    }
+  }
+
+  const uploadImage = async (id) => {
+    
+    let formData = new FormData()
+    formData.append('itemImage', formImage)
+
+    try {
+      const { data } = await express.post(`/items/${id}/images`, formData)
+      console.log('image upload response', data)
+    } catch(err) {
+      console.log(err)
+    }
+
+  }
+
+  const handleItemChange = (event) => { 
+    const {value, name} = event.target
+    setFormItem(prevItem => ({
+      ...prevItem, [name]: value}))
+  }
+
+  const handleImageChange = (event) => {
+    setFormImage(event.target.files[0])
+    showImagePreview(event)
+  }
+
+  const showImagePreview = (event) => {
+    if(event.target.files.length > 0){
+      const src = URL.createObjectURL(event.target.files[0]);
+      const preview = document.getElementById("file-ip-1-preview");
+      preview.src = src;
+      preview.style.display = "block";
+    }
+  }
 
   const signOut = () => {
     localStorage.removeItem('user')
     setSession(false)
   }
-// eslint-disable-next-line
-  const openAddItemModal = () => {
-    const addItemModal = document.getElementById('add-item-modal')
-    console.log(addItemModal)
-    addItemModal.classList.add("active")
-  }
 
   if(session) {
     return (
       <div className="ui borderless fixed top sticky massive menu">
+        {/* Logo */}
         <Link to='/' className="item">
           Local Lab
         </Link>
         
         <div className='right menu'>
-
-          {/* <div className='item'>
-            <Popup
-              content={'Quick Add New Item'}
-              trigger={<Link to='#' ><i class="large blue plus icon"></i></Link>}
-            />
-          </div> */}
-
+          {/* Modal: Only Displayed On Plus Icon Click */}
           <Modal modalOpen={modalOpen}>
-        <div id="add-item-modal" class="my-modal">
-          <div class="my-modal-content">
-            <span class="my-modal-close" onClick={() => setModalOpen(false)}>&times;</span>
-            {/* Modal Content */}
-            <div className="user-form ui middle aligned center aligned grid">
-              <div className="column">
-            
-                <h2 className="ui image header">
-                  <div className="content">
-                    Log in to your account
-                  </div>
-                </h2>
+            <div id="add-item-modal" class="my-modal">
+              <div class="my-modal-content">
+                <span class="my-modal-close" onClick={() => {
+                  setModalOpen(false)
+                  setFormImage(null)
+                  }}>&times;</span>
 
-                <form onSubmit={()=>{}} className="ui large form" noValidate>
-                  <div className="ui stacked segment">
-                    <div className="field">
-                      <div className="ui left icon input">
-                        <i className="user icon"></i>
-                        <input onChange={()=>{}} text={()=>{}} name="username" placeholder="Username" value={()=>{}} required/>
+                {/* Modal Content */}
+                <div className="ui center aligned grid">
+                  <div className="column">
+                
+                    <h2 className="ui inverted image header">
+                      <div className="content">
+                        Lend a new item
                       </div>
-                    </div> 
+                    </h2>
 
-                    <div className="field">
-                      <div className="ui left icon input">
-                        <i className="lock icon"></i>
-                        <input type="password" onChange={()=>{}} text={()=>{}} name="password" placeholder="Password" value={()=>{}} />
+                    <form onSubmit={addItem} className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
+                      <div className="ui stacked segment my-modal-segment">
+
+                        <div className="field ui left aligned container">
+                          <label htmlFor="item-name"><span className='ui medium text'>Item name</span></label>
+                            <input onChange={handleItemChange} value={formItem.itemName} type="text" id="itemName" name="itemName" placeholder="Bosch Hammer Drill EasyImpact 550W" required/>
+                        </div> 
+
+                        <div className="field ui left aligned container">
+                          <label htmlFor="item-description"><span className='ui medium text'>Item decription</span></label>
+                          <textarea onChange={handleItemChange} value={formItem.itemDescription} rows="4" name="itemDescription" placeholder={`1 year old power drill w/ carrying case\nLightweight, compac, cordless\nCondition: Good`} required/>
+                        </div> 
+
+                        <div className='light-separator'></div>
+
+                        <div className="field ui center aligned container">
+                          <label for="file-upload" class="custom-file-upload">
+                          <i class="upload green icon"></i> Upload image
+                          </label>
+                          <input onChange={handleImageChange} id="file-upload" name="imageFile" type="file" accept="image/*"/>
+                        </div>               
+
+                        <div className="ui container field image-preview">
+                          <img id="file-ip-1-preview" class="ui center aligned small image" src="https://fomantic-ui.com//images/wireframe/image.png" alt=""/>                  
+                        </div>
+
+                        <button className="fluid ui large primary button">Lend</button>
+
                       </div>
-                    </div> 
-
-                    <button className="fluid ui large primary button">Log in</button>
-
-                    <div className='light-separator'></div>
-
-                    <div>
-                      <p>New here?</p>
-                      <p className="ui primary basic button" onClick={()=>{}}>Create new account</p>
-                    </div> 
-
+                    </form>
+                
                   </div>
-                </form>
-            
+                </div>
+                {/* modal Content End */}
               </div>
             </div>
-            {/* modal Content End */}
+          </Modal>
+
+          {/* Blue Plus Icon to Open Modal */}
+          <div className='item'>
+            <Link to='#' onClick={() => setModalOpen(true)}><i class="large blue plus icon"></i></Link>
           </div>
-        </div>
-        </Modal>
 
-        <div className='item'>
-          <Popup
-            content={'Quick Add New Item'}
-            trigger={<Link to='#' onClick={() => setModalOpen(true)}><i class="large blue plus icon"></i></Link>}
-          />
-        </div>
-
+          {/* User Avatar & Name: Opens Dropdown Options */}
           <div className="item">
             <div className="ui inline simple dropdown">
 
@@ -98,7 +161,7 @@ const Header = ({session, setSession}) => {
                 <img className="ui avatar image" src="https://fomantic-ui.com/images/avatar/small/elliot.jpg" alt=""/>
                 {session.user.username}
               </div>
-
+              {/* Drop Down Meny */}
               <div className="menu">
 
                 <div className="item">
@@ -109,6 +172,7 @@ const Header = ({session, setSession}) => {
                 <div className="item">
                   <Link to="/profile">
                   <i className="user circle outline icon"></i>
+
                   Profile
                   </Link>
                 </div>
@@ -139,49 +203,52 @@ const Header = ({session, setSession}) => {
        
         </div>  
 
-
-    </div>
+      </div>
     )
   } else {
     return (
       <div className="ui borderless top massive menu">
+
+        {/* Logo */}
         <Link to='/' className="item">
           Local Lab
         </Link>
 
         <div className='right menu'>
-
+          {/* Stats: Only Displayed On Large Screens */}
           <MediaQuery query='(min-device-width: 700px)'>
             <div className="item">
-            <div className="ui mini statistics">
+              <div className="ui mini statistics">
 
-              <div className="statistic">
-                <div className="value">
-                  <span className='ui small green text'>
-                    <i className="hand holding heart icon"></i> 
-                    200K
-                  </span>
+                <div className="statistic">
+                  <div className="value">
+                    <span className='ui small green text'>
+                      <i className="hand holding heart icon"></i> 
+                      200K
+                    </span>
+                  </div>
+                  <div className="label">
+                    <span className='ui small text'>Lenders</span>
+                  </div>
+
                 </div>
-                <div className="label">
-                  <span className='ui small text'>Lenders</span>
+
+                <div className="statistic">
+                  <div className="value">
+                    <span className='ui small blue text'><i className="gift icon"></i> 2.3M</span>
+                  </div>
+              
+                  <div className="label">
+                    <span className='ui small text'>Items</span>
+                  </div>
                 </div>
 
               </div>
-
-              <div className="statistic">
-                <div className="value">
-                  <span className='ui small blue text'><i className="gift icon"></i> 2.3M</span>
-                </div>
-             
-                <div className="label">
-                  <span className='ui small text'>Items</span>
-                </div>
-              </div>
-
             </div>
-          </div>
           </MediaQuery>    
+
         </div>
+
       </div>
     )
   }

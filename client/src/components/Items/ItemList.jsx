@@ -4,7 +4,7 @@ import HomeBanner from '../Home/HomeBanner';
 import '../Home/Home.css';
 import express from "../../apis/express";
 
-const ItemList = ({session}) => {
+const ItemList = ({session, refreshItems, setRefreshItems}) => {
 
   const [itemList, setItemList] = useState([])
   const [name, setName] = useState("")
@@ -13,6 +13,13 @@ const ItemList = ({session}) => {
   useEffect(() => {
     getItems()
   }, [])
+
+  useEffect(() => {
+    if(refreshItems) {
+      getItems()
+      setRefreshItems(false)
+    }
+  }, [refreshItems, setRefreshItems])
 
   const getItems = async () => {
     const { data } = await express.get('/items')
