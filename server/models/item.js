@@ -32,6 +32,7 @@ const ItemSchema = new Schema({
   borrower: {
     type: Schema.Types.ObjectId,
     ref: "User",
+    default: null,
   },
 });
 

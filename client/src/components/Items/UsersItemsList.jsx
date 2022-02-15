@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import Item from './Item'
 import express from "../../apis/express";
 
-const UsersItemList = ({session}) => {
+const UsersItemList = () => {
+
+
+  const [toggleBorrowing, setToggleBorrowing] = useState(false);
+
 
   const [itemList, setItemList] = useState([])
-
-
-  useEffect(() => {
-    getItems()
-  }, [])
+    useEffect(() => {
+      getItems()
+    }, [])
 
   const getItems = async () => {
     const { data } = await express.get('/items')
@@ -17,10 +19,9 @@ const UsersItemList = ({session}) => {
   }
 
   const deleteItem = async (id) => {
-    const { data } = await express.delete(`/items/${id}`)
+     await express.delete(`/items/${id}`)
     getItems()
   }
-
 
   const updateItem = async (event, name, description, lender, borrower, id) => {
     event.preventDefault()
@@ -30,7 +31,6 @@ const UsersItemList = ({session}) => {
         description: description,
       }
     })
-   
     getItems()
   }
 
@@ -49,10 +49,11 @@ const UsersItemList = ({session}) => {
     getItems()
   }
 
-  const renderedList = itemList.map(item => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const userId = user.user.id;
-    
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userId = user.user.id;
+
+
+  const renderedLendingList = itemList.map(item => {
     if (item.lender._id == userId) {
       return (
         <Item 
@@ -63,20 +64,58 @@ const UsersItemList = ({session}) => {
           uploadImage={uploadImage}
         />
       )
-
     }
-  })
+  });
+
+  const renderedBorrowingList = itemList.map(item => {
+     if(item.borrower == null){
+       return (
+         ""
+       )
+     } else {
+      if (item.borrower._id == userId) {
+        return (
+
+          <Item 
+            key={item._id} 
+            item={item}
+            deleteItem={deleteItem}
+            updateItem={updateItem}
+            uploadImage={uploadImage}
+          />
+         
+        )
+      }
+     }  
+   })
 
   return (
     <div>
+      <div className = "profile-items-header">
+          <h3 className="items-heading">
+            Item's you're {toggleBorrowing ? 
+            <span> borrowing</span> : 
+            <span> lending</span>}
+          </h3>
 
-      <div className="ui two stackable cards">
-        {renderedList}
+          <div className="btn-container">
+              <button className="ui button green" onClick={() => setToggleBorrowing(!toggleBorrowing)}> 
+                {toggleBorrowing ? 
+                  <span> View lending</span> : 
+                  <span> View borrowing </span>}
+              </button>
+          </div>
       </div>
-     
+      
+      {toggleBorrowing ? 
+      <div className="ui two stackable cards">{renderedBorrowingList}</div> : 
+      <div className="ui two stackable cards">{renderedLendingList}</div>
+      }
+
     </div>
   )
 
 }
 
 export default UsersItemList
+
