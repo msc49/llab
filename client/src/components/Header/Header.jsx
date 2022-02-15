@@ -5,7 +5,7 @@ import Modal from '../Modal/Modal';
 import './Header.css';
 import express from '../../apis/express';
 
-const Header = ({session, setSession, setAlert}) => {
+const Header = ({session, setSession, setAlert, setRefreshItems}) => {
   const [modalOpen, setModalOpen] = useState(false)
 
   const [formItem, setFormItem] = useState({
@@ -36,6 +36,8 @@ const Header = ({session, setSession, setAlert}) => {
         itemDescription: ""
       })
       setModalOpen(false)
+
+      setRefreshItems(true)
 
       setAlert({type: 'success', header: `Thanks you for your contribution ${lender.name}`, event: 'ADD_ITEM', itemName, location: lender.location});
     }

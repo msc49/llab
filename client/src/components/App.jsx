@@ -11,6 +11,7 @@ const App = () => {
 
   const [session, setSession] = useState(false)
   const [alert, setAlert] = useState(false)
+  const [refreshItems, setRefreshItems] = useState(false)
 
   useEffect(() => {
     const user = localStorage.getItem('user')
@@ -24,9 +25,9 @@ const App = () => {
     <div>
       <BrowserRouter>
         <div>
-          <Header setSession={setSession} session={session} setAlert={setAlert} />
+          <Header setSession={setSession} session={session} setAlert={setAlert} setRefreshItems={setRefreshItems} />
           <div className="ui container content-field">
-          <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} />}/>
+          <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} refreshItems={refreshItems} setRefreshItems={setRefreshItems} />}/>
           <Route path='/profile' exact render={() => <UserProfile setSession={setSession} session={session} />}/>
           </div>
 
