@@ -1,3 +1,24 @@
 textarea {
   resize: none !important;
 }
+
+input.file-input {
+  all: revert !important;
+  border: none !important;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+#file-ip-1-preview {
+  display: none;
+  margin: 0 auto;
+}

@@ -54,18 +54,14 @@ router.put("/items/:id/borrow/:userId", async (req, res) => {
 const uploadMulter = require('../middleware/images/upload.js')
 const validation = require('../middleware/images/validation.js');
 
-
 router.post("/items/:id/images", uploadMulter, validation, async (req, res) => {
   const { id } = req.params;
   const item = await Item.findById(id)
 
-  const { title } = req.body
-  const { path } = req.file
-  
   item.images.push({
-    title,
-    path
+    path: req.file.path
   })
+  
   await item.save()
   res.json(item)
  

@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom'
-import { Popup } from 'semantic-ui-react'
 import MediaQuery from 'react-responsive'
-import Modal from '../Modal/addItemModal';
+import Modal from '../Modal/Modal';
 import './Header.css';
 import express from '../../apis/express';
 
@@ -12,9 +11,9 @@ const Header = ({session, setSession, setAlert}) => {
   const [formItem, setFormItem] = useState({
     itemName: "",
     itemDescription: '',
-    imageTitle: "",
-    imageFile: "",
-    })
+  })
+  
+  const [formImage, setFormImage] = useState(null)
 
   const addItem = async (event) => {
     event.preventDefault()
@@ -25,33 +24,60 @@ const Header = ({session, setSession, setAlert}) => {
           name: formItem.itemName,
           description: formItem.itemDescription,
           lender: userId,
-          title: formItem.imageTitle,
-          itemImage: formItem.imageFile,
         }
       })
+      
+      const { name: itemName, lender, _id: itemId } = data
+
+      if(formImage) await uploadImage(itemId)
+      setFormImage(null)
+      setFormItem({
+        itemName: "",
+        itemDescription: ""
+      })
       setModalOpen(false)
-      const { name: itemName, lender } = data
+
       setAlert({type: 'success', header: `Thanks you for your contribution ${lender.name}`, event: 'ADD_ITEM', itemName, location: lender.location});
     }
   }
 
-  const handleChange = (event) => { 
+  const uploadImage = async (id) => {
+    
+    let formData = new FormData()
+    formData.append('itemImage', formImage)
+
+    try {
+      const { data } = await express.post(`/items/${id}/images`, formData)
+      console.log('image upload response', data)
+    } catch(err) {
+      console.log(err)
+    }
+
+  }
+
+  const handleItemChange = (event) => { 
     const {value, name} = event.target
     setFormItem(prevItem => ({
-    ...prevItem, [name]: value})
-    )
+      ...prevItem, [name]: value}))
+  }
+
+  const handleImageChange = (event) => {
+    setFormImage(event.target.files[0])
+    showImagePreview(event)
+  }
+
+  const showImagePreview = (event) => {
+    if(event.target.files.length > 0){
+      const src = URL.createObjectURL(event.target.files[0]);
+      const preview = document.getElementById("file-ip-1-preview");
+      preview.src = src;
+      preview.style.display = "block";
+    }
   }
 
   const signOut = () => {
     localStorage.removeItem('user')
     setSession(false)
-  }
-
-// eslint-disable-next-line
-  const openAddItemModal = () => {
-    const addItemModal = document.getElementById('add-item-modal')
-    console.log(addItemModal)
-    addItemModal.classList.add("active")
   }
 
   if(session) {
@@ -67,30 +93,46 @@ const Header = ({session, setSession, setAlert}) => {
           <Modal modalOpen={modalOpen}>
             <div id="add-item-modal" class="my-modal">
               <div class="my-modal-content">
-                <span class="my-modal-close" onClick={() => setModalOpen(false)}>&times;</span>
+                <span class="my-modal-close" onClick={() => {
+                  setModalOpen(false)
+                  setFormImage(null)
+                  }}>&times;</span>
 
                 {/* Modal Content */}
-                <div className="user-form ui middle aligned center aligned grid">
+                <div className="ui center aligned grid">
                   <div className="column">
                 
-                    <h2 className="ui image header">
+                    <h2 className="ui inverted image header">
                       <div className="content">
                         Lend a new item
                       </div>
                     </h2>
 
-                    <form onSubmit={addItem} className="ui large form" noValidate>
-                      <div className="ui stacked segment">
+                    <form onSubmit={addItem} className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
+                      <div className="ui stacked segment my-modal-segment">
 
                         <div className="field ui left aligned container">
-                            <label htmlFor="item-name"><span className='ui medium text'>Item name</span></label>
-                              <input onChange={handleChange} value={formItem.itemName} type="text" id="itemName" name="itemName" placeholder="Bosch Hammer Drill EasyImpact 550W" required/>
+                          <label htmlFor="item-name"><span className='ui medium text'>Item name</span></label>
+                            <input onChange={handleItemChange} value={formItem.itemName} type="text" id="itemName" name="itemName" placeholder="Bosch Hammer Drill EasyImpact 550W" required/>
                         </div> 
 
                         <div className="field ui left aligned container">
                           <label htmlFor="item-description"><span className='ui medium text'>Item decription</span></label>
-                            <textarea onChange={handleChange} value={formItem.itemDescription} rows="4" name="itemDescription" placeholder={`1 year old power drill w/ carrying case\nLightweight, compac, cordless\nCondition: Good`} required/>
+                          <textarea onChange={handleItemChange} value={formItem.itemDescription} rows="4" name="itemDescription" placeholder={`1 year old power drill w/ carrying case\nLightweight, compac, cordless\nCondition: Good`} required/>
                         </div> 
+
+                        <div className='light-separator'></div>
+
+                        <div className="field ui center aligned container">
+                          <label for="file-upload" class="custom-file-upload">
+                          <i class="upload green icon"></i> Upload image
+                          </label>
+                          <input onChange={handleImageChange} id="file-upload" name="imageFile" type="file" accept="image/*"/>
+                        </div>               
+
+                        <div className="ui container field image-preview">
+                          <img id="file-ip-1-preview" class="ui center aligned small image" src="https://fomantic-ui.com//images/wireframe/image.png" alt=""/>                  
+                        </div>
 
                         <button className="fluid ui large primary button">Lend</button>
 
@@ -106,10 +148,7 @@ const Header = ({session, setSession, setAlert}) => {
 
           {/* Blue Plus Icon to Open Modal */}
           <div className='item'>
-            <Popup
-              content={'Quick Add New Item'}
-              trigger={<Link to='#' onClick={() => setModalOpen(true)}><i class="large blue plus icon"></i></Link>}
-            />
+            <Link to='#' onClick={() => setModalOpen(true)}><i class="large blue plus icon"></i></Link>
           </div>
 
           {/* User Avatar & Name: Opens Dropdown Options */}

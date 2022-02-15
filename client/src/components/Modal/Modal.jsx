@@ -1,7 +1,7 @@
 import React from 'react'
-import './addItemModal.css'
+import './Modal.css'
 
-const AddItemModal = ({modalOpen, children}) => {
+const Modal = ({modalOpen, children}) => {
   if (!modalOpen) return null
   return (
     <div id="my-modal">
@@ -10,4 +10,4 @@ const AddItemModal = ({modalOpen, children}) => {
   )
 }
 
-export default AddItemModal
+export default Modal
