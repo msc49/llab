@@ -11,14 +11,14 @@ const Item = ({ item, deleteItem, borrowItem }) => {
 
   const user = JSON.parse(localStorage.getItem('user'))
   const {_id: id, name, description, images, lender, borrower} = item
+
   const [modalOpen, setModalOpen] = useState(false)
 
    // Update Item States
   const [itemName, setName] = useState("")
   const [itemDescription, setDescription] = useState("")
   const [formImage, setFormImage] = useState(null);
-  const [itemList, setItemList] = useState([])
-  
+  const [itemList, setItemList] = useState([])  
 
     const getItems = async () => {
       const { data } = await express.get('/items')
@@ -111,7 +111,7 @@ const Item = ({ item, deleteItem, borrowItem }) => {
       />
   
       </div>
-        <img className="ui avatar image" src={lender.images[0] ? lender.images[lender.images.length-1].path : "https://fomantic-ui.com/images/avatar/small/elliot.jpg"} alt="" data-title="blablabla"/> 
+        <img className="ui avatar image" src={lender.images && lender.images[0] ? lender.images[lender.images.length-1].path : "https://fomantic-ui.com/images/avatar/small/elliot.jpg"} alt="" data-title="blablabla"/> 
         {lender ? `contributed by ${lender.name}` : 'Anon'}
       </div>
       
@@ -123,7 +123,8 @@ const Item = ({ item, deleteItem, borrowItem }) => {
         <div className="ui column centered right floated">
          
             <div className="ui attached segment">
-              <div className="ui slide masked reveal image tiny">
+              {/* on mobile make 'large' image to tiny */}
+              <div className="ui slide masked reveal image large">
                 <img className="visible content" src={images[0] ? images[0].path : "https://react.semantic-ui.com/images/wireframe/image.png"} alt=""/>
                 <img src={images[1] ? images[1].path : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} class="hidden content" alt=""/>
               </div>
@@ -145,7 +146,11 @@ const Item = ({ item, deleteItem, borrowItem }) => {
           {description}
         <br/>
         <p></p>
-   
+        <div className="meta">
+          Location: {lender.location}
+          {borrower ? <p><span className="ui blue text">Availble Soon</span></p>: <p><span className="ui green text">Available now</span></p>}
+        </div>
+
       </div>
       
       <div className="extra">

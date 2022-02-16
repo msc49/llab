@@ -52,7 +52,6 @@ const UsersItemList = () => {
   const user = JSON.parse(localStorage.getItem('user'));
   const userId = user.user.id;
 
-
   const renderedLendingList = itemList.map(item => {
     if (item.lender._id === userId) {
       return (
@@ -73,7 +72,7 @@ const UsersItemList = () => {
          ""
        )
      } else {
-      if (item.borrower._id == userId) {
+      if (item.borrower._id === userId) {
         return (
 
           <Item 

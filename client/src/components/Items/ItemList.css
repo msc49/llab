@@ -1,0 +1,12 @@
+.main-item-list {
+  margin-top: 4rem !important;
+} 
+
+#item-list-empty-search-error {
+  display: none;
+}
+
+#item-list-no-search-results {
+  display: none;
+}
+

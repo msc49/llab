@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { BrowserRouter, Route } from 'react-router-dom'
 import Header from "./Header/Header";
 import UserProfile from "./Users/UserProfile";
+import ItemSearch from './Items/ItemSearch';
 import Main from './Main'
 import Alert from "./Alert/Alert";
 import './App.css'
@@ -13,10 +14,7 @@ const App = () => {
   const [alert, setAlert] = useState(false)
   const [refreshItems, setRefreshItems] = useState(false)
   const [profilePic, setProfilePic] = useState(null)
-
-  console.log('PROFILE PIC FROM APP', profilePic)
-  const profilepik = localStorage.getItem('userPic')
-  console.log('PROFILE PIC FROM LOCAL STORAGE', JSON.parse(profilepik))
+  const [searchItems, setSearchItems] = useState(null)
 
   useEffect(() => {
     const user = localStorage.getItem('user')
@@ -38,8 +36,10 @@ const App = () => {
         <div>
           <Header setSession={setSession} session={session} setAlert={setAlert} setRefreshItems={setRefreshItems} profilePic={profilePic} />
           <div className="ui container content-field">
-          <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} refreshItems={refreshItems} setRefreshItems={setRefreshItems} profilePic={profilePic}/>}/>
-          <Route path='/profile' exact render={() => <UserProfile setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} />}/>
+            <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} refreshItems={refreshItems} setRefreshItems={setRefreshItems} profilePic={profilePic} setSearchItems={setSearchItems}/>}/>
+            <Route path='/profile' exact render={() => <UserProfile setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} />}/>
+            <Route path='/items/search/:query' exact render={() => <ItemSearch setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} searchItems={searchItems} setSearchItems={setSearchItems} />}/>
+          {/* <Route path="*" exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} refreshItems={refreshItems} setRefreshItems={setRefreshItems} profilePic={profilePic} setSearchItems={setSearchItems}/>} /> */}
           </div>
 
           <Alert alert={alert} setAlert={setAlert} /> 

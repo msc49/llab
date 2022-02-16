@@ -2,18 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Item from './Item';
 import HomeBanner from '../Home/HomeBanner';
-import express from "../../apis/express";
 import '../Home/Home.css';
+import express from "../../apis/express";
 import './ItemList.css'
+import './ItemSearch.css'
 
-const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearchItems}) => {
+// clean unecesary functions from here when time allows
+
+const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchItems, setSearchItems}) => {
+
   let history = useHistory();
 
-
   const [itemList, setItemList] = useState([])
-
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
   const [searchItem, setSearchItem] = useState("")
-
 
   useEffect(() => {
     getItems()
@@ -30,8 +33,25 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
     const { data } = await express.get('/items')
     setItemList(data)
   }
-  
+
+  const addItem = async (event) => {
+    event.preventDefault()
+    if(session) {
+      const { id: userId } = session.user
+      const { data } = await express.post('/items', {
+        item: {
+          name: name,
+          description: description,
+          lender: userId
+        }
+      })
+    }
+    
+    getItems()
+  }
+
   const deleteItem = async (id) => {
+
     const { data } = await express.delete(`/items/${id}`)
     getItems()
   }
@@ -41,6 +61,18 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
       const { id: userId } = session.user
       const { data } = await express.put(`/items/${id}/borrow/${userId}`)
     }
+    getItems()
+  }
+
+  const updateItem = async (event, name, description, lender, borrower, id) => {
+    event.preventDefault()
+    await express.put(`/items/${id}`, {
+      item: {
+        name: name,
+        description: description,
+      }
+    })
+   
     getItems()
   }
 
@@ -64,7 +96,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
     event.preventDefault()
 
     if(!searchItem) {
-      const emptySearchError = document.getElementById('item-list-empty-search-error')
+      const emptySearchError = document.getElementById('item-search-empty-search-error')
       emptySearchError.style.display = 'block'
       return
     }
@@ -72,9 +104,8 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
     const { data } = await express.get(`/items/search/${searchItem}`)
 
     if(!data.length) {
-      const noSearchResultsMsg = document.getElementById('item-list-no-search-results')
+      const noSearchResultsMsg = document.getElementById('item-search-no-search-results')
       noSearchResultsMsg.style.display = 'block'
-      setSearchItems(null)
       return
     }
 
@@ -83,23 +114,22 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
   }
 
   const removeWarnings = async (event) => {
-    const emptySearchError = document.getElementById('item-list-empty-search-error')
+    const emptySearchError = document.getElementById('item-search-empty-search-error')
     emptySearchError.style.display = 'none'
 
-    const noSearchResultsMsg = document.getElementById('item-list-no-search-results')
+    const noSearchResultsMsg = document.getElementById('item-search-no-search-results')
     noSearchResultsMsg.style.display = 'none'
   }
 
-  const renderedList = itemList.map(item => {
+  const renderedList = searchItems.map(item => {
     return (
       <Item 
         key={item._id} 
         item={item}
         deleteItem={deleteItem}
+        updateItem={updateItem}
         uploadImage={uploadImage}
         borrowItem={borrowItem}
-        refreshItems={refreshItems} 
-        setRefreshItems={setRefreshItems}
         profilePic={profilePic}
       />
     )
@@ -124,8 +154,8 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
 
       <br/>
 
-      <p id="item-list-empty-search-error"><span className="ui error text">Search cannot be empty!</span></p>
-      <p id="item-list-no-search-results"><span className="ui large grey text">Sorry, no results found.</span></p>
+      <p id="item-search-empty-search-error"><span className="ui error text">Search cannot be empty!</span></p>
+      <p id="item-search-no-search-results"><span className="ui large grey text">Sorry, no results found.</span></p>
 
       <div className="ui one stackable cards main-item-list">
         {renderedList}
