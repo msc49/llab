@@ -42,6 +42,7 @@ const validation = require('../middleware/images/validation.js');
 
 router.put('/users/:id/images', uploadMulter, validation, async (req, res) => {
   console.log('in the route')
+
   const { id } = req.params;
   const user = await User.findById(id)
 
