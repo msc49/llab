@@ -21,8 +21,6 @@ const UserProfile = ({ session, profilePic, setProfilePic }) => {
 
 const userDetails = JSON.parse(localStorage.getItem('user'));
 
-console.log('local storage', userDetails)
-
 const changeProfilePic = async (event) => {
   const { id } = userDetails.user
   console.log('profile pic change request')

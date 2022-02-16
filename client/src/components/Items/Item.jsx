@@ -16,51 +16,72 @@ const Item = ({ item, deleteItem, borrowItem, getItems, setRefreshItems }) => {
   const [modalOpen, setModalOpen] = useState(false)
 
    // Update Item States
-  const [itemName, setName] = useState("");
-  const [itemDescription, setDescription] = useState("");
-  const [itemAvailable, setAvailability] = useState(true);
-  const [formImage, setFormImage] = useState(null);
+  // const [itemName, setName] = useState("");
+  // const [itemDescription, setDescription] = useState("");
+  // const [itemAvailable, setAvailability] = useState(true);
 
-    const updateItem = async (event, name, description, lender, borrower, id, itemAvailable,  setAlert, refreshItems, setRefreshItems) => {
+
+
+  const [formItem, setFormItem] = useState({
+    itemName: "",
+    itemDescription: "",
+    itemAvailable: true
+  })
+
+  const [itemAvailable, setAvailability] = useState(true);
+
+  const [newImage, setNewImage] = useState(null);
+
+    const updateItem = async (event) => {
       event.preventDefault()
-      // const { data } = 
-      await express.put(`/items/${id}`, {
+      const { data } = await express.put(`/items/${id}`, {
         item: {
-          name: name,
-          description: description,
-          available: itemAvailable
+          name: formItem.itemName,
+          description: formItem.itemDescription,
+          available: itemAvailable,
         }
       })
 
-      if(formImage) await uploadImage(id)
-      setFormImage(null)
-   
+      const { name: itemName, lender, _id: itemId } = data
+
+
+      if(newImage) await uploadImage(itemId)
+      setNewImage(null)
+      setFormItem({
+        itemName: "",
+        itemDescription: "",
+        itemAvailable: true
+
+      })
+
       setModalOpen(false)
 
       getItems();
 
       setRefreshItems(true)
-
-    
     }
 
   
-    const uploadImage = async (event, imageTitle, imageFile, id) => {
-      event.preventDefault()
+    const uploadImage = async (id) => {
       let formData = new FormData()
-      formData.append('title', imageTitle)
-      formData.append('itemImage', imageFile)
+      formData.append('itemImage', newImage)
   
       try {
-        const { data } = await express.post(`/items/${id}/images`, formData)
+        const { data } = await express.put(`/items/${id}/images`, formData)
         console.log(data)
       } catch(err) {
         console.log(err)
       }
     }
   
+    const handleItemChange = (event) => { 
+      const {value, name} = event.target
+      setFormItem(prevItem => ({
+        ...prevItem, [name]: value}))
+    }
+    
     const handleImageChange = (event) => {
-      setFormImage(event.target.files[0])
+      setNewImage(event.target.files[0])
       showImagePreview(event)
     }
   
@@ -164,7 +185,7 @@ const Item = ({ item, deleteItem, borrowItem, getItems, setRefreshItems }) => {
         <div class="my-modal-content">
           <span class="my-modal-close" onClick={() => {
             setModalOpen(false)
-            setFormImage(null)
+            setNewImage(null)
             }}>&times;</span>
 
           {/* Modal Content */}
@@ -177,21 +198,21 @@ const Item = ({ item, deleteItem, borrowItem, getItems, setRefreshItems }) => {
                 </div>
               </h2>
 
-              <form onSubmit={(event) => updateItem(event, itemName, itemDescription, item.lender, item.borrower, item._id, itemAvailable)} className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
+              <form onSubmit={updateItem} className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
                 <div className="ui stacked segment my-modal-segment">
 
                   <div className="field ui left aligned container">
                     <label htmlFor="item-name"><span className='ui medium text'>Item name</span></label>
-                    <input onChange={(event) => setName(event.target.value)} value={itemName} type="text" name="name" required/>
+                    <input onChange={handleItemChange} value={formItem.itemName} type="text" name="itemName" required/>
                   </div> 
 
                   <div className="field ui left aligned container">
                     <label htmlFor="item-description"><span className='ui medium text'>Item decription</span></label>
-                    <input onChange={(event) => setDescription(event.target.value)} value={itemDescription} type="text" name="description" required/>
+                    <input onChange={handleItemChange} value={formItem.itemDescription} type="text" name="itemDescription" required/>
                   </div> 
 
                    <div className="ui checkbox">
-                  <input type="checkbox" onChange={() => setAvailability(false)} value={itemAvailable} name="itemAvailable" />
+                   <input type="checkbox" onChange={() => setAvailability(false)} value={itemAvailable} name="itemAvailable" />
                   <label>Mark as unavailable</label>
                 </div>
 
@@ -201,8 +222,12 @@ const Item = ({ item, deleteItem, borrowItem, getItems, setRefreshItems }) => {
                               <label for="file-upload" class="custom-file-upload">
                               <i class="upload green icon"></i> Upload a new image
                               </label>
-                              <input onChange={handleImageChange} id="file-upload" name="imageFile" type="file" accept="image/*"/>
-                            </div>   
+                              <input onChange={handleImageChange} id="file-upload" name="newImage" type="file" accept="image/*"/>
+                  </div>   
+
+                  <div className="ui container field image-preview">
+                          <img id="file-ip-1-preview" class="ui center aligned small image" src="https://fomantic-ui.com//images/wireframe/image.png" alt=""/>                  
+                   </div>
                   <button className="fluid ui large primary button">Update</button>
 
                 </div>
