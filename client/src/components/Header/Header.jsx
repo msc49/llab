@@ -164,10 +164,15 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
               {/* Drop Down Meny */}
               <div className="menu">
 
-                <div className="item">
+                <Link to="/" className='item'>
+                  <i className="home icon"></i>
+                  Home
+                </Link>
+
+                <Link to="/requests" className='item'>
                   <i className="bell red icon"></i>
                   Requests
-                </div>
+                </Link>
 
                 <Link to="/profile" className='item'>
                   <i className="user black circle outline icon"></i>

@@ -64,6 +64,22 @@ router.put("/items/:id/borrow/:userId", async (req, res) => {
 });
 
 // REQUEST ITEM
+router.get('/items/requests/:id', async (req, res) => {
+  const { id } = req.params
+  console.log('lender id', id)
+  const items = await Item.find({lender: id }).populate("borrower").populate("requests.requester")
+  
+  const requestItems = items.filter(item => item.requests[0])
+  
+  console.log(requestItems)
+
+  res.json(requestItems)
+  // for (let request of requestItems) {
+  //   console.log(request.requests)
+  // }
+})
+
+
 router.post("/items/requests", async (req, res) => {
   const { itemId, borrowerId, requestMessage, date } = req.body.request;
   const item = await Item.findById(itemId);

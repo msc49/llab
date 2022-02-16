@@ -14,13 +14,6 @@ const Item = ({ item, session, profilePic, deleteItem, updateItem, uploadImage, 
   const [requestMessage, setRequestMessage] = useState("")
   const [calendar, setCalendar] = useState(new Date());
 
-  console.log(requestMessage)
-
-  if(session) {
-    console.log(session)
-  }
-
-
   const {_id: id, name, description, images, lender, borrower} = item
   // set rating when we get value from item
   let r = Math.floor(Math.random() * 5) + 1;
