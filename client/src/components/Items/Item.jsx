@@ -1,26 +1,87 @@
 import React, {useState} from "react";
 import { Link } from 'react-router-dom'
 import { Popup } from 'semantic-ui-react'
-// import RatingStar from "../semanticUIReact/rating";
 import { Rating } from 'semantic-ui-react'
-import '../../img/image.png'
+import '../../img/image.png';
+import Modal from '../Modal/Modal';
+import express from "../../apis/express";
 
-const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowItem }) => {
 
+const Item = ({ item, deleteItem, borrowItem }) => {
+
+  const user = JSON.parse(localStorage.getItem('user'))
   const {_id: id, name, description, images, lender, borrower} = item
-  // set rating when we get value from item
-  let r = Math.floor(Math.random() * 5) + 1;
-  const RatingStar = () => (
-    <Rating icon='star' defaultRating={r} maxRating={5} disabled/>
-  )
-  
-  // Update Item States
-  // const [name, setName] = useState("")
-  // const [description, setDescription] = useState("")
 
-  // Upload Image States
-  // const [imageTitle, setImageTitle] = useState("")
-  // const [imageFile, setImageFile] = useState("")
+  const [modalOpen, setModalOpen] = useState(false)
+
+   // Update Item States
+  const [itemName, setName] = useState("")
+  const [itemDescription, setDescription] = useState("")
+  const [formImage, setFormImage] = useState(null);
+  const [itemList, setItemList] = useState([])  
+
+    const getItems = async () => {
+      const { data } = await express.get('/items')
+      setItemList(data)
+    }
+
+    const updateItem = async (event, name, description, lender, borrower, id, available,  setAlert, refreshItems, setRefreshItems) => {
+      event.preventDefault()
+      // const { data } = 
+      await express.put(`/items/${id}`, {
+        item: {
+          name: name,
+          description: description,
+          available:available
+        }
+      })
+
+      if(formImage) await uploadImage(id)
+      setFormImage(null)
+   
+      setModalOpen(false)
+
+      setRefreshItems(true)
+
+      getItems();
+
+    }
+
+  
+    const uploadImage = async (event, imageTitle, imageFile, id) => {
+      event.preventDefault()
+      let formData = new FormData()
+      formData.append('title', imageTitle)
+      formData.append('itemImage', imageFile)
+  
+      try {
+        const { data } = await express.post(`/items/${id}/images`, formData)
+        console.log(data)
+      } catch(err) {
+        console.log(err)
+      }
+    }
+  
+    const handleImageChange = (event) => {
+      setFormImage(event.target.files[0])
+      showImagePreview(event)
+    }
+  
+    const showImagePreview = (event) => {
+      if(event.target.files.length > 0){
+        const src = URL.createObjectURL(event.target.files[0]);
+        const preview = document.getElementById("file-ip-1-preview");
+        preview.src = src;
+        preview.style.display = "block";
+      }
+    }
+  
+     // set rating when we get value from item
+    let r = Math.floor(Math.random() * 5) + 1;
+    const RatingStar = () => (
+    <Rating icon='star' defaultRating={r} maxRating={5} disabled/>);  
+  
+ 
 
   return (
     <div className="card">
@@ -68,10 +129,15 @@ const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowIte
                 <img src={images[1] ? images[1].path : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} class="hidden content" alt=""/>
               </div>
             </div>
-            <div className={`ui bottom attached ${borrower ? 'blue' : 'green'} button`} tabindex="0">
-              {borrower ? 'Queue' : 'Request'}
-            </div>
-         
+
+            {user.user.username === lender.username ? 
+                 <div className={`ui bottom attached grey button`} tabindex="0" onClick={() => setModalOpen(true)}>
+                     Update
+                </div> : 
+                <div className={`ui bottom attached ${borrower ? 'blue' : 'green'} button`} tabindex="0">
+                    {borrower ? 'Queue' : 'Request'}
+                </div>
+              }
         </div>
         
         <Link to={`/items/${id}`}>
@@ -84,6 +150,7 @@ const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowIte
           Location: {lender.location}
           {borrower ? <p><span className="ui blue text">Availble Soon</span></p>: <p><span className="ui green text">Available now</span></p>}
         </div>
+
       </div>
       
       <div className="extra">
@@ -92,36 +159,64 @@ const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowIte
         
         </div>
       </div>
-      
-      {/* {
-        item.lender ? <h4> Lender: {item.lender.name}, {item.lender.location}</h4> : ""
-      }  */}
-      
 
+      <div className='right menu'>
 
-      {/* {
-        item.borrower ? <h4>Borrower: {item.borrower.name}, {item.borrower.location}</h4> : ""
-      } */}
+      <Modal modalOpen={modalOpen}>
+      <div id="add-item-modal" class="my-modal">
+        <div class="my-modal-content">
+          <span class="my-modal-close" onClick={() => {
+            setModalOpen(false)
+            setFormImage(null)
+            }}>&times;</span>
 
-      {/* <button onClick={() => deleteItem(item._id)}>Delete</button> */}
+          {/* Modal Content */}
+          <div className="ui center aligned grid">
+            <div className="column">
+          
+              <h2 className="ui inverted image header">
+                <div className="content">
+                  Update item
+                </div>
+              </h2>
 
-      {/* <button onClick={() => borrowItem(item._id)}>Borrow</button> */}
+              <form onSubmit={(event) => updateItem(event, itemName, itemDescription, item.lender, item.borrower, item._id, item.available)} className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
+                <div className="ui stacked segment my-modal-segment">
 
-      {/* <form onSubmit={(event) => updateItem(event, name, description, item.lender, item.borrower, item._id)}>
-        <input onChange={(event) => setName(event.target.value)} value={name} type="text" name="name" required/>
-        <input onChange={(event) => setDescription(event.target.value)} value={description} type="text" name="description" required/>
-        <button>Update Item</button>
-      </form> */}
+                  <div className="field ui left aligned container">
+                    <label htmlFor="item-name"><span className='ui medium text'>Item name</span></label>
+                    <input onChange={(event) => setName(event.target.value)} value={itemName} type="text" name="name" required/>
 
-      {/* <form onSubmit={(event) => uploadImage(event, imageTitle, imageFile, item._id)} encType="multipart/form-data">
-        <input type="text" name="title" value={imageTitle} placeholder="Image Title" onChange={e => setImageTitle(e.target.value)} required/>
-        <input type="file" name="image" onChange={e => setImageFile(e.target.files[0])} multiple/>
-        <input type="file" id="imageFile" capture="user" accept="image/*"/>
-        <button type="submit">Submit</button>
-      </form> */}
+                  </div> 
+
+                  <div className="field ui left aligned container">
+                    <label htmlFor="item-description"><span className='ui medium text'>Item decription</span></label>
+                    <input onChange={(event) => setDescription(event.target.value)} value={itemDescription} type="text" name="description" required/>
+                  </div> 
+
+                  <div className='light-separator'></div>
+                  
+                  <div className="field ui center aligned container">
+                              <label for="file-upload" class="custom-file-upload">
+                              <i class="upload green icon"></i> Upload image
+                              </label>
+                              <input onChange={handleImageChange} id="file-upload" name="imageFile" type="file" accept="image/*"/>
+                            </div>   
+                  <button className="fluid ui large primary button">Update</button>
+
+                </div>
+              </form>
+          
+            </div>
+          </div>
+          {/* modal Content End */}
+        </div>
+      </div>
+      </Modal>
+</div>
     </div>
   )
  
 }
 
-export default Item
+export default Item;

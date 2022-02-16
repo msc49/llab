@@ -9,10 +9,11 @@ import './ItemList.css'
 const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearchItems}) => {
   let history = useHistory();
 
+
   const [itemList, setItemList] = useState([])
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
+
   const [searchItem, setSearchItem] = useState("")
+
 
   useEffect(() => {
     getItems()
@@ -29,22 +30,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
     const { data } = await express.get('/items')
     setItemList(data)
   }
-
-  const addItem = async (event) => {
-    event.preventDefault()
-    if(session) {
-      const { id: userId } = session.user
-      const { data } = await express.post('/items', {
-        item: {
-          name: name,
-          description: description,
-          lender: userId
-        }
-      })
-    }
-    getItems()
-  }
-
+  
   const deleteItem = async (id) => {
     const { data } = await express.delete(`/items/${id}`)
     getItems()
@@ -55,17 +41,6 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
       const { id: userId } = session.user
       const { data } = await express.put(`/items/${id}/borrow/${userId}`)
     }
-    getItems()
-  }
-
-  const updateItem = async (event, name, description, lender, borrower, id) => {
-    event.preventDefault()
-    await express.put(`/items/${id}`, {
-      item: {
-        name: name,
-        description: description,
-      }
-    }) 
     getItems()
   }
 
@@ -121,9 +96,10 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
         key={item._id} 
         item={item}
         deleteItem={deleteItem}
-        updateItem={updateItem}
         uploadImage={uploadImage}
         borrowItem={borrowItem}
+        refreshItems={refreshItems} 
+        setRefreshItems={setRefreshItems}
         profilePic={profilePic}
       />
     )
