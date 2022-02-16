@@ -8,7 +8,6 @@ import '../../img/image.png'
 const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowItem }) => {
 
   const {_id: id, name, description, images, lender, borrower} = item
-  console.log(lender.images)
   // set rating when we get value from item
   let r = Math.floor(Math.random() * 5) + 1;
   const RatingStar = () => (
@@ -63,7 +62,7 @@ const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowIte
         <div className="ui column centered right floated">
          
             <div className="ui attached segment">
-              {/* on mobile make 'large' image to  */}
+              {/* on mobile make 'large' image to tiny */}
               <div className="ui slide masked reveal image large">
                 <img className="visible content" src={images[0] ? images[0].path : "https://react.semantic-ui.com/images/wireframe/image.png"} alt=""/>
                 <img src={images[1] ? images[1].path : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} class="hidden content" alt=""/>
@@ -81,10 +80,10 @@ const Item = ({ item, profilePic, deleteItem, updateItem, uploadImage, borrowIte
           {description}
         <br/>
         <p></p>
-        {/* <div className="meta">
+        <div className="meta">
           Location: {lender.location}
           {borrower ? <p><span className="ui blue text">Availble Soon</span></p>: <p><span className="ui green text">Available now</span></p>}
-        </div> */}
+        </div>
       </div>
       
       <div className="extra">

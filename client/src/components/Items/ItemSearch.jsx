@@ -5,11 +5,11 @@ import HomeBanner from '../Home/HomeBanner';
 import '../Home/Home.css';
 import express from "../../apis/express";
 import './ItemList.css'
+import './ItemSearch.css'
 
 // clean unecesary functions from here when time allows
 
 const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchItems, setSearchItems}) => {
-  console.log('SEARCH PAGE-SEARCH ITESM', searchItems)
 
   let history = useHistory();
 
@@ -17,13 +17,6 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchIte
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [searchItem, setSearchItem] = useState("")
-
-  // useEffect(() => {
-  //   if(searchItems) {
-  //     // display itema
-  //     setSearchItems(false)
-  //   }
-  // }, [searchItems, searchItems])
 
   useEffect(() => {
     getItems()
@@ -73,7 +66,6 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchIte
 
   const updateItem = async (event, name, description, lender, borrower, id) => {
     event.preventDefault()
-    // const { data } = 
     await express.put(`/items/${id}`, {
       item: {
         name: name,
@@ -100,15 +92,33 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchIte
     getItems()
   }
 
-  const submitSearch = async (e) => {
-    e.preventDefault()
-    console.log('I am searching.......!!!!!!!!')
-    console.log('SEARCH ITEM IN function', searchItems)
+  const submitSearch = async (event) => {
+    event.preventDefault()
+
+    if(!searchItem) {
+      const emptySearchError = document.getElementById('item-search-empty-search-error')
+      emptySearchError.style.display = 'block'
+      return
+    }
+
     const { data } = await express.get(`/items/search/${searchItem}`)
+
+    if(!data.length) {
+      const noSearchResultsMsg = document.getElementById('item-search-no-search-results')
+      noSearchResultsMsg.style.display = 'block'
+      return
+    }
+
     setSearchItems(data)
     history.push(`/items/search/${searchItem}`);
-    console.log(data)
-    
+  }
+
+  const removeWarnings = async (event) => {
+    const emptySearchError = document.getElementById('item-search-empty-search-error')
+    emptySearchError.style.display = 'none'
+
+    const noSearchResultsMsg = document.getElementById('item-search-no-search-results')
+    noSearchResultsMsg.style.display = 'none'
   }
 
   const renderedList = searchItems.map(item => {
@@ -129,13 +139,23 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchIte
     <div>
       <HomeBanner />
       <div className="main-content">
-
-      <form onSubmit={submitSearch}>
-        <div className="ui action icon focus fluid large input">
-          <input onChange={e => setSearchItem(e.target.value)} type="text" placeholder="Search for items..." />
-            <i onClick={submitSearch} class="search link icon"></i>
+      {/* SEARCH FORM */}
+      <form onClick={removeWarnings} onSubmit={submitSearch}>
+        <div className="ui slow blue loading double fluid search">
+          <div className="ui icon fluid focus input">
+            <input className="prompt" onChange={(event) => {
+              setSearchItem(event.target.value)
+              removeWarnings()
+              }} type="text" placeholder="Search for items..." />
+            <i class="search icon"></i>
+          </div>
         </div>  
       </form>
+
+      <br/>
+
+      <p id="item-search-empty-search-error"><span className="ui error text">Search cannot be empty!</span></p>
+      <p id="item-search-no-search-results"><span className="ui large grey text">Sorry, no results found.</span></p>
 
       <div className="ui one stackable cards main-item-list">
         {renderedList}

@@ -16,10 +16,6 @@ const App = () => {
   const [profilePic, setProfilePic] = useState(null)
   const [searchItems, setSearchItems] = useState(null)
 
-  console.log('PROFILE PIC FROM APP', profilePic)
-  const profilepik = localStorage.getItem('userPic')
-  console.log('PROFILE PIC FROM LOCAL STORAGE', JSON.parse(profilepik))
-
   useEffect(() => {
     const user = localStorage.getItem('user')
     if (user) {
