@@ -101,6 +101,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
         refreshItems={refreshItems} 
         setRefreshItems={setRefreshItems}
         profilePic={profilePic}
+        getItems={getItems}
       />
     )
   })

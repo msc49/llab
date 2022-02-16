@@ -7,32 +7,28 @@ import Modal from '../Modal/Modal';
 import express from "../../apis/express";
 
 
-const Item = ({ item, deleteItem, borrowItem }) => {
+const Item = ({ item, deleteItem, borrowItem, getItems, setRefreshItems }) => {
 
-  const user = JSON.parse(localStorage.getItem('user'))
-  const {_id: id, name, description, images, lender, borrower} = item
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  const {_id: id, name, description, images, lender, borrower, available} = item;
 
   const [modalOpen, setModalOpen] = useState(false)
 
    // Update Item States
-  const [itemName, setName] = useState("")
-  const [itemDescription, setDescription] = useState("")
+  const [itemName, setName] = useState("");
+  const [itemDescription, setDescription] = useState("");
+  const [itemAvailable, setAvailability] = useState(true);
   const [formImage, setFormImage] = useState(null);
-  const [itemList, setItemList] = useState([])  
 
-    const getItems = async () => {
-      const { data } = await express.get('/items')
-      setItemList(data)
-    }
-
-    const updateItem = async (event, name, description, lender, borrower, id, available,  setAlert, refreshItems, setRefreshItems) => {
+    const updateItem = async (event, name, description, lender, borrower, id, itemAvailable,  setAlert, refreshItems, setRefreshItems) => {
       event.preventDefault()
       // const { data } = 
       await express.put(`/items/${id}`, {
         item: {
           name: name,
           description: description,
-          available:available
+          available: itemAvailable
         }
       })
 
@@ -41,10 +37,11 @@ const Item = ({ item, deleteItem, borrowItem }) => {
    
       setModalOpen(false)
 
-      setRefreshItems(true)
-
       getItems();
 
+      setRefreshItems(true)
+
+    
     }
 
   
@@ -150,7 +147,6 @@ const Item = ({ item, deleteItem, borrowItem }) => {
           Location: {lender.location}
           {borrower ? <p><span className="ui blue text">Availble Soon</span></p>: <p><span className="ui green text">Available now</span></p>}
         </div>
-
       </div>
       
       <div className="extra">
@@ -180,13 +176,12 @@ const Item = ({ item, deleteItem, borrowItem }) => {
                 </div>
               </h2>
 
-              <form onSubmit={(event) => updateItem(event, itemName, itemDescription, item.lender, item.borrower, item._id, item.available)} className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
+              <form onSubmit={(event) => updateItem(event, itemName, itemDescription, item.lender, item.borrower, item._id, itemAvailable)} className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
                 <div className="ui stacked segment my-modal-segment">
 
                   <div className="field ui left aligned container">
                     <label htmlFor="item-name"><span className='ui medium text'>Item name</span></label>
                     <input onChange={(event) => setName(event.target.value)} value={itemName} type="text" name="name" required/>
-
                   </div> 
 
                   <div className="field ui left aligned container">
@@ -194,11 +189,16 @@ const Item = ({ item, deleteItem, borrowItem }) => {
                     <input onChange={(event) => setDescription(event.target.value)} value={itemDescription} type="text" name="description" required/>
                   </div> 
 
+                   <div className="ui checkbox">
+                  <input type="checkbox" onChange={() => setAvailability(false)} value={itemAvailable} name="itemAvailable" />
+                  <label>Mark as unavailable</label>
+                </div>
+
                   <div className='light-separator'></div>
                   
                   <div className="field ui center aligned container">
                               <label for="file-upload" class="custom-file-upload">
-                              <i class="upload green icon"></i> Upload image
+                              <i class="upload green icon"></i> Upload a new image
                               </label>
                               <input onChange={handleImageChange} id="file-upload" name="imageFile" type="file" accept="image/*"/>
                             </div>   
