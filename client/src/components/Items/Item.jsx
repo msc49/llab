@@ -145,7 +145,8 @@ const Item = ({ item, deleteItem, borrowItem, getItems, setRefreshItems }) => {
         <p></p>
         <div className="meta">
           Location: {lender.location}
-          {borrower ? <p><span className="ui blue text">Availble Soon</span></p>: <p><span className="ui green text">Available now</span></p>}
+          {item.available ? <p><span className="ui green text">Available now</span></p> : 
+          borrower ? <p><span className="ui blue text">Availble Soon</span></p> : <p><span className="ui red text">Not available</span></p>} 
         </div>
       </div>
       

@@ -91,6 +91,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
   }
 
   const renderedList = itemList.map(item => {
+    if(item.available) {
     return (
       <Item 
         key={item._id} 
@@ -103,7 +104,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
         profilePic={profilePic}
         getItems={getItems}
       />
-    )
+    )};
   })
 
   return (
