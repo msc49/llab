@@ -63,6 +63,21 @@ router.put("/items/:id/borrow/:userId", async (req, res) => {
   res.json(item);
 });
 
+// REQUEST ITEM
+router.post("/items/requests", async (req, res) => {
+  const { itemId, borrowerId, requestMessage, date } = req.body.request;
+  const item = await Item.findById(itemId);
+
+  item.requests.push({
+    requester: borrowerId,
+    message: requestMessage,
+    return: date,
+  });
+
+  await item.save();
+  res.json(item);
+});
+
 // UPLOAD ITEM IMAGE
 // USE MULTER
 const uploadMulter = require("../middleware/images/upload.js");

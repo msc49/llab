@@ -125,6 +125,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
         uploadImage={uploadImage}
         borrowItem={borrowItem}
         profilePic={profilePic}
+        session={session}
       />
     )
   })
@@ -141,7 +142,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
               setSearchItem(event.target.value)
               removeWarnings()
               }} type="text" placeholder="Search for items..." />
-            <i class="search icon"></i>
+            <i className="search icon"></i>
           </div>
         </div>  
       </form>
@@ -151,7 +152,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
       <p id="item-list-empty-search-error"><span className="ui error text">Search cannot be empty!</span></p>
       <p id="item-list-no-search-results"><span className="ui large grey text">Sorry, no results found.</span></p>
 
-      <div className="ui one stackable cards main-item-list">
+      <div className="ui one cards main-item-list">
         {renderedList}
       </div>
 

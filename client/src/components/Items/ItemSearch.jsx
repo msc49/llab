@@ -147,7 +147,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchIte
               setSearchItem(event.target.value)
               removeWarnings()
               }} type="text" placeholder="Search for items..." />
-            <i class="search icon"></i>
+            <i className="search icon"></i>
           </div>
         </div>  
       </form>

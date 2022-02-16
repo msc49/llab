@@ -42,9 +42,14 @@ const ItemSchema = new Schema({
       requester: {
         type: Schema.Types.ObjectId,
         ref: "User",
+        required: true,
       }, 
       message: {
         type: String,
+      },
+      approved: {
+        type: Boolean,
+        default: false,
       },
       return: {
         type: Date,
@@ -67,12 +72,17 @@ module.exports = Item;
 
 // pseudo code
 // -----------
-// user requests item (message, intended return date) and is added to the request queue
-// message appears in notifications
-// lender reviews requests and approves one 
-// message appears in notifications
-// borrower is added to item / + their message & intended return date
-// borrower returns item
-// lender confirms, (borrower and can now approve other items
+// 1. user requests item (message, intended return date) and is added to the request queue
+// message appears in notifications//on hold//
+// 2. lender reviews requests and approves one >> (sets approved to true on req), set requester as borrower,
+// message appears in notifications //on hold//
+
+//3.  borrower is added to item / 
+
+// 4. borrower returns item (button) >> return request
+
+// 5. lender confirms return, button >> delete request, delete borrow from it, delete return request
+
+//  (borrower and can now approve other items -- don't care
 
 

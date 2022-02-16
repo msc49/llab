@@ -93,9 +93,9 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
         <div className='right menu'>
           {/* Modal: Only Displayed On Plus Icon Click */}
           <Modal modalOpen={modalOpen}>
-            <div id="add-item-modal" class="my-modal">
-              <div class="my-modal-content">
-                <span class="my-modal-close" onClick={() => {
+            <div id="add-item-modal" className="my-modal">
+              <div className="my-modal-content">
+                <span className="my-modal-close" onClick={() => {
                   setModalOpen(false)
                   setFormImage(null)
                   }}>&times;</span>
@@ -126,14 +126,14 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
                         <div className='light-separator'></div>
 
                         <div className="field ui center aligned container">
-                          <label for="file-upload" class="custom-file-upload">
-                          <i class="upload green icon"></i> Upload image
+                          <label htmlFor="file-upload" className="custom-file-upload">
+                          <i className="upload green icon"></i> Upload image
                           </label>
                           <input onChange={handleImageChange} id="file-upload" name="imageFile" type="file" accept="image/*"/>
                         </div>               
 
                         <div className="ui container field image-preview">
-                          <img id="file-ip-1-preview" class="ui center aligned small image" src="https://fomantic-ui.com//images/wireframe/image.png" alt=""/>                  
+                          <img id="file-ip-1-preview" className="ui center aligned small image" src="https://fomantic-ui.com//images/wireframe/image.png" alt=""/>                  
                         </div>
 
                         <button className="fluid ui large primary button">Lend</button>
@@ -150,7 +150,7 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
 
           {/* Blue Plus Icon to Open Modal */}
           <div className='item'>
-            <Link to='#' onClick={() => setModalOpen(true)}><i class="large blue plus icon"></i></Link>
+            <Link to='#' onClick={() => setModalOpen(true)}><i className="large blue plus icon"></i></Link>
           </div>
 
           {/* User Avatar & Name: Opens Dropdown Options */}
@@ -165,35 +165,18 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
               <div className="menu">
 
                 <div className="item">
-                  <i className="bell icon"></i>
-                  Notifications
+                  <i className="bell red icon"></i>
+                  Requests
                 </div>
 
-                <div className="item">
-                  <Link to="/profile">
-                  <i className="user circle outline icon"></i>
-
+                <Link to="/profile" className='item'>
+                  <i className="user black circle outline icon"></i>
                   Profile
-                  </Link>
-                </div>
-
-                <div className="item">
-                  <i className="cog icon"></i>
-                  Settings
-                </div>
-                
-                <div className="item">
-                <i className="comment alternate outline icon"></i>
-                  Chat
-                </div>
-
-                <div className="item">
-                  <i className="question circle outline icon"></i>
-                  Help
-                </div>
+                </Link>
 
                 <div className="item" onClick={signOut}>
-                  <span className='ui blue text'>Sign Out</span>
+                  <i className='sign out alternate icon'></i>
+                  Sign Out
                 </div>
 
               </div>

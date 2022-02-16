@@ -9,23 +9,11 @@ import express from '../../apis/express';
 
 const UserProfile = ({ session, profilePic, setProfilePic }) => {
 
-  console.log('PROFILE PIC IN USERPROFILE', profilePic)
-  // const [userProfilePic, setUserProfilePic] = useState(null)
-
-  // useEffect(() => {
-  //   const userPic = localStorage.getItem('userPic')
-  //   if (userPic) {
-  //     setUserProfilePic(JSON.parse(userPic))
-  //   }
-  // }, [])
-
 const userDetails = JSON.parse(localStorage.getItem('user'));
 
-console.log('local storage', userDetails)
 
 const changeProfilePic = async (event) => {
   const { id } = userDetails.user
-  console.log('profile pic change request')
   if(event.target.files) {
 
     const userImage = event.target.files[0]
@@ -37,9 +25,6 @@ const changeProfilePic = async (event) => {
         const userPicture = data.images.slice(-1)
         localStorage.setItem('userPic', JSON.stringify(userPicture))
         setProfilePic(JSON.parse(localStorage.getItem('userPic')))
-
-        // const userPic = JSON.parse(localStorage.getItem('userPic'));
-        // console.log('USER_PIC', userPic[0].path)
         
       } catch(err) {
         console.log(err)
@@ -59,8 +44,8 @@ return (
 
             <form className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
               <div id="pic-button-container" className="ui center aligned container">
-                <label for="file-upload" class="custom-file-upload">
-                  <i class="upload green icon"></i> Upload image
+                <label htmlFor="file-upload" className="custom-file-upload">
+                  <i className="upload green icon"></i> Upload image
                 </label>
                 <input onChange={changeProfilePic} id="file-upload" name="imageFile" type="file" accept="image/*"/>
               </div>
