@@ -22,8 +22,6 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
   const RatingStar = () => (
     <Rating icon='star' defaultRating={r} maxRating={5} disabled/>
   )
-
-  console.log(session.user.username)
   
   // Update Item States
   // const [name, setName] = useState("")
@@ -90,7 +88,7 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
       />
   
       </div>
-        <img className="ui avatar image" src={lender.images && lender.images[0] ? lender.images[lender.images.length-1].path : "https://fomantic-ui.com/images/avatar/small/elliot.jpg"} alt="" data-title="blablabla"/> 
+        <img className="ui avatar image" src={lender.image ? lender.image : "https://fomantic-ui.com/images/avatar/small/elliot.jpg"} alt="" data-title="blablabla"/> 
         {lender ? `contributed by ${lender.name}` : 'Anon'}
       </div>
       

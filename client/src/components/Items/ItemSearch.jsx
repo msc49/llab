@@ -9,7 +9,7 @@ import './ItemSearch.css'
 
 // clean unecesary functions from here when time allows
 
-const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchItems, setSearchItems, setAlert}) => {
+const ItemList = ({session, refreshItems, setRefreshItems, searchItems, setSearchItems, setAlert}) => {
 
   let history = useHistory();
 
@@ -130,7 +130,6 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchIte
         updateItem={updateItem}
         uploadImage={uploadImage}
         borrowItem={borrowItem}
-        profilePic={profilePic}
         session={session}
         setAlert={setAlert}
       />

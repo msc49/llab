@@ -7,10 +7,8 @@ import express from '../../apis/express';
 
 
 
-const UserProfile = ({ session, profilePic, setProfilePic }) => {
-
+const UserProfile = ({ session, setSession }) => {
 const userDetails = JSON.parse(localStorage.getItem('user'));
-
 
 const changeProfilePic = async (event) => {
   const { id } = userDetails.user
@@ -21,17 +19,16 @@ const changeProfilePic = async (event) => {
       formData.append('userImage', userImage)
   
       try {
-        const { data } = await express.put(`/users/${id}/images`, formData)
-        const userPicture = data.images.slice(-1)
-        localStorage.setItem('userPic', JSON.stringify(userPicture))
-        setProfilePic(JSON.parse(localStorage.getItem('userPic')))
-        
+        const { data: { image } } = await express.put(`/users/${id}/images`, formData)
+        const user = JSON.parse(localStorage.getItem('user'))
+        user['user']['image'] = image
+        localStorage.setItem('user', JSON.stringify(user))
+        setSession(JSON.parse(localStorage.getItem('user')))
       } catch(err) {
         console.log(err)
       }
 
   }
-
 
 }
   
@@ -40,7 +37,7 @@ return (
     <div className="profile-meta">
        <div className="avatar-container">
          
-            <img alt="user profile" className="avatar" src={profilePic ? profilePic[0].path : testImage}></img>
+            <img alt="user profile" className="avatar" src={session ? session.user.image : testImage}></img>
 
             <form className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
               <div id="pic-button-container" className="ui center aligned container">

@@ -28,17 +28,9 @@ const UserSchema = new Schema({
       ref: "Item",
     },
   ],
-    images: [
-    {
-      title: {
-        type: String,
-      },
-      path: {
-        type: String,
-        required: true,
-      }
-    }
-],
+  image: {
+    type: String,
+  },
 });
 
 

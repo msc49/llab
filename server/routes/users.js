@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require("../models/user");
 const passportMiddleWare = require("../middleware/passport_jwt/jwt");
 
-// USER ROUTES
+// CREATE NEW USER
 router.post("/users", async (req, res) => {
   const { name, email, username, password, location } = req.body.user;
   const user = new User({ name, email, username });
@@ -17,6 +17,7 @@ router.post("/users", async (req, res) => {
   res.json(newUserPacket);
 });
 
+// USER LOGIN
 router.post("/login", passport.authenticate("local"), async (req, res) => {
   const { token, expiresIn } = passportMiddleWare.issueJWT(req.user);
   const { _id: id, name, location, username } = req.user;
@@ -35,23 +36,16 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
   res.json(userAuthPacket);
 });
 
-
-// Use multer middleware
+// SET USER IMAGE
 const uploadMulter = require('../middleware/images/uploadUserImage.js')
 const validation = require('../middleware/images/validation.js');
 
 router.put('/users/:id/images', uploadMulter, validation, async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id)
-  
-  user.images.push({
-    path: req.file.path
-  })
+  const user = await User.findByIdAndUpdate(id, { image: req.file.path }, { new: true })
   
   await user.save()
-
   res.json(user)
-
 })
 
 
