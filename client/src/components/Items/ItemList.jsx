@@ -6,7 +6,7 @@ import express from "../../apis/express";
 import '../Home/Home.css';
 import './ItemList.css'
 
-const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearchItems}) => {
+const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearchItems, setAlert}) => {
   let history = useHistory();
 
   const [itemList, setItemList] = useState([])
@@ -126,6 +126,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
         // borrowItem={borrowItem}
         profilePic={profilePic}
         session={session}
+        setAlert={setAlert}
       />
     )
   })

@@ -41,8 +41,8 @@ const App = () => {
           <div className="ui container content-field">
             <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} refreshItems={refreshItems} setRefreshItems={setRefreshItems} profilePic={profilePic} setSearchItems={setSearchItems}/>}/>
             <Route path='/profile' exact render={() => <UserProfile setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} />}/>
-            <Route path='/items/search/:query' exact render={() => <ItemSearch setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} searchItems={searchItems} setSearchItems={setSearchItems} />}/>
-            <Route path='/manage' exact render={() => <Manage session={session} profilePic={profilePic} setProfilePic={setProfilePic} />} />
+            <Route path='/items/search/:query' exact render={() => <ItemSearch setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} searchItems={searchItems} setSearchItems={setSearchItems} setAlert={setAlert} />}/>
+            <Route path='/manage' exact render={() => <Manage session={session} profilePic={profilePic} setProfilePic={setProfilePic} setAlert={setAlert}/>} />
             {/* <Route path='/requests' exact render={() => <Requests setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} />} /> */}
             {/* <Route path='/loans' exact render={() => <Loans setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} />} /> */}
           {/* <Route path="*" exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} refreshItems={refreshItems} setRefreshItems={setRefreshItems} profilePic={profilePic} setSearchItems={setSearchItems}/>} /> */}

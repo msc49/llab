@@ -3,7 +3,7 @@ import express from '../../apis/express'
 
 import RequestItem from './RequestItem'
 
-const Requests = ({session, setShowLoans}) => {
+const Requests = ({session, setShowLoans, setAlert}) => {
 
   const [requestsList, setRequestsList] = useState([])
 
@@ -34,6 +34,7 @@ const Requests = ({session, setShowLoans}) => {
         requestItem={requestItem}
         session={session}
         getRequests={getRequests}
+        setAlert={setAlert}
       />
     )
   })

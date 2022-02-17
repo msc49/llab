@@ -5,7 +5,7 @@ import '../../img/image.png'
 import express from '../../apis/express'
 import './RequestItem.css'
 
- const RequestItem = ({requestItem, getRequests}) => {
+ const RequestItem = ({requestItem, getRequests, setAlert}) => {
    
   const { _id: itemId, name, description, images, borrower, requests } = requestItem
 

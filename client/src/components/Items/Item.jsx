@@ -9,7 +9,7 @@ import Modal from '../Modal/Modal';
 import '../../img/image.png'
 import './Item.css'
 
-const Item = ({ item, session, profilePic, deleteItem, updateItem, uploadImage, borrowItem }) => {
+const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, uploadImage, borrowItem }) => {
   
   const [modalOpen, setModalOpen] = useState(false)
   const [requestMessage, setRequestMessage] = useState("")
@@ -21,6 +21,8 @@ const Item = ({ item, session, profilePic, deleteItem, updateItem, uploadImage, 
   const RatingStar = () => (
     <Rating icon='star' defaultRating={r} maxRating={5} disabled/>
   )
+
+  console.log(session.user.username)
   
   // Update Item States
   // const [name, setName] = useState("")
@@ -42,6 +44,7 @@ const Item = ({ item, session, profilePic, deleteItem, updateItem, uploadImage, 
       } 
     })
     setModalOpen(false)
+    setAlert({type: 'success', header: "Request sent successfully!", event: 'REQUEST_ITEM', username: session.user.username, itemName: name, lender: lender.username});
     console.log(data)
   }
 
