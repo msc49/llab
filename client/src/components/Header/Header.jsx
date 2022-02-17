@@ -20,6 +20,13 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
 
   const addItem = async (event) => {
     event.preventDefault()
+
+    if(!formItem.itemName || !formItem.itemDescription || !formImage) {
+      const addItemError = document.getElementById('add-item-error')
+      addItemError.style.display = 'block'
+      return 
+    }
+
     if(session) {
       const { id: userId } = session.user
       const { data } = await express.post('/items', {
@@ -44,6 +51,10 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
 
       setAlert({type: 'success', header: `Thanks you for your contribution ${lender.name}`, event: 'ADD_ITEM', itemName, location: lender.location});
     }
+  }
+
+  const hideAdditemError = () => {
+    document.getElementById('add-item-error').style.display = 'none'
   }
 
   const uploadImage = async (id) => {
@@ -101,7 +112,7 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
         <div className='right menu'>
           {/* Modal: Only Displayed On Plus Icon Click */}
           <Modal modalOpen={modalOpen}>
-            <div id="add-item-modal" className="my-modal">
+            <div id="add-item-modal" className="my-modal" onClick={hideAdditemError}>
               <div className="my-modal-content">
                 <span className="my-modal-close" onClick={() => {
                   setModalOpen(false)
@@ -143,6 +154,8 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
                         <div className="ui container field image-preview">
                           <img id="file-ip-1-preview" className="ui center aligned small image" src="https://fomantic-ui.com//images/wireframe/image.png" alt=""/>                  
                         </div>
+                        
+                        <p id="add-item-error"><span className="ui error text">Search cannot be empty!</span></p>
 
                         <button className="fluid ui large primary button">Lend</button>
 

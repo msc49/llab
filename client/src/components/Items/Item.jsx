@@ -121,7 +121,10 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
         <p></p>
         <div className="meta">
           Location: {lender.location}
-          {borrower ? <p><span className="ui blue text">Availble {new Date(currentApprovedRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}</span></p>: <p><span className="ui green text">Available now</span></p>}
+          {borrower ? <p><span className="ui blue text">Availble {new Date(currentApprovedRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}</span></p>
+          : borrower && new Date(Date.now()) > new Date(currentApprovedRequest.return) ? <p>This item was due to be returned on {new Date(currentApprovedRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}</p> 
+          : <p><span className="ui green text">Available now</span></p>}
+          
         </div>
       </div>
       
