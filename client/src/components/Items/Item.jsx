@@ -107,7 +107,7 @@ const Item = ({ item, session, profilePic, deleteItem, updateItem, uploadImage, 
          
         </div>
         
-        <Link to={`/items/${id}`}>
+        <Link to='#'>
           <h3 className="header">{name}</h3>
         </Link>
           {description}

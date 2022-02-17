@@ -54,7 +54,7 @@ const Alert = ({ alert, setAlert }) => {
         {
           alert.event === 'SIGN_UP' ? <p>Hi <b>{alert.username}</b>, log-in to see what's on offer <em data-emoji="gift"></em> in {alert.location ? <b>{alert.location}</b> : 'your area'}!</p> :
           alert.event === 'LOG_IN' ? <p><b>You're in!</b> Browse free items in {alert.location ? <b>{alert.location}</b> : 'your area'}, and help your community by lending your unused goods <em data-emoji="angel"></em></p> : 
-          alert.event === 'ADD_ITEM' ? <p><b>List {alert.itemName}</b> from your <b>profile page</b> to make it available to people in {alert.location ? <b>{alert.location}</b> : 'your area'}!</p> :  "DIDN't Hit"
+          alert.event === 'ADD_ITEM' ? <p><b>You've made your {alert.itemName}</b> available to borrow by people in {alert.location ? <b>{alert.location}</b> : 'your area'}!</p> :  ""
         }
       </div>
     )

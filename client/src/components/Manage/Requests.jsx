@@ -47,7 +47,7 @@ const Requests = ({session, setShowLoans}) => {
             Item Requests
             <div className="sub header">Manage borrow requests for your items</div>
           </div>
-            <button onClick={() => setShowLoans(true)} class="ui right floated primary basic button">View Borrowing</button>
+            <button onClick={() => setShowLoans(true)} className="ui right floated primary basic button">View Borrowing</button>
         </h2>
       </div>
       <div className="ui one cards main-item-list">

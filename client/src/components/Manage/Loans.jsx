@@ -47,7 +47,7 @@ const Loans = ({session, setShowLoans}) => {
             Loans
             <div className="sub header">Manage lending and pending requests</div>
           </div>
-            <button onClick={() => setShowLoans(false)} class="ui right floated primary basic button">View Lending</button>
+            <button onClick={() => setShowLoans(false)} className="ui right floated primary basic button">View Lending</button>
         </h2>
       </div>
       <div className="ui one cards main-item-list">
