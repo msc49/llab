@@ -4,6 +4,7 @@ import MediaQuery from 'react-responsive'
 import Modal from '../Modal/Modal';
 import './Header.css';
 import express from '../../apis/express';
+import logo_image from '../images/local-lab.png'
 
 const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) => {
   const [modalOpen, setModalOpen] = useState(false)
@@ -87,6 +88,7 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
       <div className="ui borderless fixed top sticky massive menu">
         {/* Logo */}
         <Link to='/' className="item">
+          <img src={logo_image} alt="logo"></img>
           Local Lab
         </Link>
         
