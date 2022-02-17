@@ -20,7 +20,7 @@ router.post("/users", async (req, res) => {
 // USER LOGIN
 router.post("/login", passport.authenticate("local"), async (req, res) => {
   const { token, expiresIn } = passportMiddleWare.issueJWT(req.user);
-  const { _id: id, name, location, username } = req.user;
+  const { _id: id, name, location, username, image } = req.user;
   const userAuthPacket = {
     token: {
       token,
@@ -31,6 +31,7 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
       name,
       username,
       location,
+      image,
     },
   };
   res.json(userAuthPacket);
