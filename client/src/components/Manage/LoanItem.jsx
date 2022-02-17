@@ -74,13 +74,15 @@ import './LoanItem.css'
                   {borrower === myRequest.requester ? <p className="ui floated right green label">Approved</p> : borrower ? <p className="ui floated right orange label">In Use</p> : <p className="ui floated right red label">Pending Approval</p>}
                 
                 <div className="meta">
-                  {borrower === myRequest.requester ? `contact ${lender.username}: ${lender.email}` : ""}
+                  {borrower === myRequest.requester ? `You're request was approved! Contact ${lender.username} at ${lender.email}` : ""}
+                  {borrower && borrower !== myRequest.requester ? <p>Another user is currently borrowing this item, and {new Date(Date.now()) > new Date(myRequest.return) ? 'was' : 'is'} due to return it by <span className='ui orange text bold'>{new Date(myRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}.</span></p>: ""}
                 </div>
                 <div className='light-separator'></div>
                 <div className="description">
+                {borrower && borrower !== myRequest.requester ? <p>Why not browse some <Link to='/'><span className='ui orange text bold'>other items</span> </Link> while you wait?</p>: ""}
                 </div>
-                  {borrower === myRequest.requester ? <p>You are currently <span className={`ui text ${Date(Date.now()) > new Date(myRequest.return) ? 'red' : 'blue' }`}><b>borrowing</b></span><b>{name}</b>and are due to return it on <span className={`ui text ${Date(Date.now()) > new Date(myRequest.return) ? 'red' : 'blue' }`}><b>{new Date(myRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}.</b></span></p> : ""}
-                  {borrower === myRequest.requester && new Date(Date.now()) > new Date(myRequest.return) ? <p><span className="ui error text">Return Overdue!</span> .</p> : ""}
+                  {borrower === myRequest.requester ? <p>You are currently <span className={`ui text ${new Date(Date.now()) > new Date(myRequest.return) ? 'red' : 'blue' }`}><b>borrowing</b></span><b>{name}</b>and {new Date(Date.now()) > new Date(myRequest.return) ? 'were' : 'are'} due to return it by <span className={`ui text ${new Date(Date.now()) > new Date(myRequest.return) ? 'red' : 'blue' }`}><b>{new Date(myRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}.</b></span></p> : ""}
+                  {borrower === myRequest.requester && new Date(Date.now()) > new Date(myRequest.return) ? <p><span className="ui error text">Return Overdue!</span></p> : ""}
                   {myRequest.requester !== borrower && new Date(Date.now()) > new Date(myRequest.return) ? <p><span className="ui error text">Expired Request.</span> Please remove from your dashboard.</p> : ""}
                 </div>
 
