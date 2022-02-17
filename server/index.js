@@ -78,7 +78,6 @@ app.get("/", (req, res) => {
   // } else {
   //   req.session.viewCount = 1
   // }
-  // console.log(req.session)
   res.send("home");
 });
 

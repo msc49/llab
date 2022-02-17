@@ -26,7 +26,7 @@ const ItemSchema = new Schema({
   lender: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true,
+    // required: true,
   },
   borrower: {
     type: Schema.Types.ObjectId,
@@ -54,17 +54,12 @@ const ItemSchema = new Schema({
       return: {
         type: Date,
       },
+      return_request: {
+        type: Boolean,
+        default: false
+      },
     }
   ],
-  return_request: {
-    requester: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
-    message: {
-      type: String,
-    }
-  }
 });
 
 const Item = mongoose.model("Item", ItemSchema);
@@ -78,12 +73,14 @@ module.exports = Item;
 // message appears in notifications //on hold//
 
 //3.  borrower is added to item / 
-
+//  decline a request - clear request 
 // -  --- - - - - - - - --  
+
+// (BE ABLE TO REQUEST FROM SEARCH PAGE)
 
 // 4. borrower returns item (button) >> return request
 
-// 5. lender confirms return, button >> delete request, delete borrow from it, delete return request
+// 5. lender confirms return, button >> delete request, delete borrow from item
 
 //  (borrower and can now approve other items -- don't care
 

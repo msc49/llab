@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
 
 
 // let { path } = req.file
-// console.log('PATH', path)
+
 
 // if (
 //   !req.file.mimetype.includes("jpeg") &&

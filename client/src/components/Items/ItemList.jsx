@@ -50,13 +50,13 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
     getItems()
   }
 
-  const borrowItem = async (id) => {
-    if(session) {
-      const { id: userId } = session.user
-      const { data } = await express.put(`/items/${id}/borrow/${userId}`)
-    }
-    getItems()
-  }
+  // const borrowItem = async (id) => {
+  //   if(session) {
+  //     const { id: userId } = session.user
+  //     const { data } = await express.put(`/items/${id}/borrow/${userId}`)
+  //   }
+  //   getItems()
+  // }
 
   const updateItem = async (event, name, description, lender, borrower, id) => {
     event.preventDefault()
@@ -123,7 +123,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, setSearch
         deleteItem={deleteItem}
         updateItem={updateItem}
         uploadImage={uploadImage}
-        borrowItem={borrowItem}
+        // borrowItem={borrowItem}
         profilePic={profilePic}
         session={session}
       />

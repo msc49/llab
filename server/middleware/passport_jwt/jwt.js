@@ -55,7 +55,6 @@ function genPassword(password) {
  */
 function issueJWT(user) {
   const _id = user._id;
-  console.log(user)
   const expiresIn = '1d';
 
   const payload = {

@@ -53,7 +53,6 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
 
     try {
       const { data } = await express.post(`/items/${id}/images`, formData)
-      console.log('image upload response', data)
     } catch(err) {
       console.log(err)
     }
@@ -132,7 +131,7 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
 
                         <div className="field ui center aligned container">
                           <label htmlFor="file-upload" className="custom-file-upload">
-                          <i className="upload green icon"></i> Upload image
+                          <i className="camera icon"></i> Upload image
                           </label>
                           <input onChange={handleImageChange} id="file-upload" name="imageFile" type="file" accept="image/*"/>
                         </div>               
@@ -174,9 +173,9 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
                   Home
                 </Link>
 
-                <Link to="/requests" className='item'>
-                  <i className="bell red icon"></i>
-                  Requests
+                <Link to="/manage" className='item'>
+                  <i className="bell icon"></i>
+                  Manage
                 </Link>
 
                 <Link to="/profile" className='item'>

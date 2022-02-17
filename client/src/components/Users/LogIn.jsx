@@ -19,8 +19,6 @@ const UserLogIn = ({ setShowLogIn, setSession, setAlert }) => {
   setSession(JSON.parse(localStorage.getItem('user')))
   const { username, location } = data.user
   setAlert({type: 'success', header: "Log in successful!", event: 'LOG_IN', username, location});
-
-  console.log('stored in localstorage', JSON.parse(localStorage.getItem('user')))
 }
 
   function handleChange(event) { 

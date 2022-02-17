@@ -4,7 +4,9 @@ import Header from "./Header/Header";
 import UserProfile from "./Users/UserProfile";
 import ItemSearch from './Items/ItemSearch';
 import Main from './Main'
-import Requests from "./Requests/Requests";
+import Manage from "./Manage/Manage";
+import Requests from "./Manage/Requests";
+import Loans from "./Manage/Loans";
 import Alert from "./Alert/Alert";
 import './App.css'
 
@@ -40,7 +42,9 @@ const App = () => {
             <Route path='/' exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} refreshItems={refreshItems} setRefreshItems={setRefreshItems} profilePic={profilePic} setSearchItems={setSearchItems}/>}/>
             <Route path='/profile' exact render={() => <UserProfile setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} />}/>
             <Route path='/items/search/:query' exact render={() => <ItemSearch setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} searchItems={searchItems} setSearchItems={setSearchItems} />}/>
-            <Route path='/requests' exact render={() => <Requests setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} />} />
+            <Route path='/manage' exact render={() => <Manage session={session} profilePic={profilePic} setProfilePic={setProfilePic} />} />
+            {/* <Route path='/requests' exact render={() => <Requests setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} />} /> */}
+            {/* <Route path='/loans' exact render={() => <Loans setSession={setSession} session={session} profilePic={profilePic} setProfilePic={setProfilePic} />} /> */}
           {/* <Route path="*" exact render={() => <Main setSession={setSession} session={session} setAlert={setAlert} refreshItems={refreshItems} setRefreshItems={setRefreshItems} profilePic={profilePic} setSearchItems={setSearchItems}/>} /> */}
           </div>
 

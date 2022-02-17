@@ -5,8 +5,8 @@ import '../../img/image.png'
 import express from '../../apis/express'
 import './RequestItem.css'
 
- const RequestItem = ({requestItem, session}) => {
-  const { _id: itemId, name, description, images, lender, borrower, requests, getRequests } = requestItem
+ const RequestItem = ({requestItem, getRequests}) => {
+  const { _id: itemId, name, description, images, borrower, requests } = requestItem
 
     // set rating when we get value from item
     let r = Math.floor(Math.random() * 5) + 1;
@@ -19,14 +19,25 @@ import './RequestItem.css'
         requestId, 
       })
       getRequests()
-     
+    }
+
+    const declineRequest = async (requestId) => {
+      const { data } = await express.delete(`items/${itemId}/requests/${requestId}`)
       console.log(data)
+      console.log('decline')
+      getRequests()
+    }
+
+    const confirmReturn = async (requestId) => {
+      const { data } = await express.delete(`items/${itemId}/returns/${requestId}`)
+      console.log(data)
+      console.log('decline')
+      getRequests()
     }
     
 
     const reqs = requests.map(request => request)
     const singleReq = reqs.map(singleReq => {
-      console.log(singleReq)
       return (
         <div className='ui cards request-cards'>
           
@@ -53,15 +64,15 @@ import './RequestItem.css'
             </div>
             <div className="extra content">
               <div className="ui two buttons">
+                {singleReq.return_request ? <button onClick={() => confirmReturn(singleReq._id)} className='ui basic green button'>Confirm Return</button> : ""}
                 <div onClick={() => approveRequest(singleReq.requester._id, singleReq._id)} className={`ui basic green button ${borrower && borrower._id ? 'disabled' : ""}`}>{borrower && borrower._id === singleReq.requester._id ? "Approved" : "Approve"}</div>
-                {borrower && borrower._id && borrower._id ===  singleReq.requester._id ? "" : <div className="ui basic red button">Decline</div> }
+                {borrower && borrower._id && borrower._id ===  singleReq.requester._id ? "" : <div onClick={() => declineRequest(singleReq._id)} className="ui basic red button">Decline</div> }
               </div>
             </div>
           </div>
         </div>
       )
     })
-
    
 
   return (
