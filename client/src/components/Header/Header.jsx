@@ -76,6 +76,10 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
       const preview = document.getElementById("file-ip-1-preview");
       preview.src = src;
       preview.style.display = "block";
+    } else {
+      const preview = document.getElementById("file-ip-1-preview");
+      preview.src = "";
+      preview.style.display = "none";
     }
   }
 
