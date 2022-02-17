@@ -13,7 +13,7 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
   
   const [modalOpen, setModalOpen] = useState(false)
   const [requestMessage, setRequestMessage] = useState("")
-  const [calendar, setCalendar] = useState(new Date());
+  const [calendar, setCalendar] = useState(new Date(Date.now() + (7*24*60*6*1000)));
 
   const {_id: id, name, description, images, lender, borrower} = item
   // set rating when we get value from item
@@ -193,7 +193,7 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
                           <div className="calendar-style">
                             <label htmlFor="return-calendar"><span className='ui large text blue'>Choose your intended return date:</span></label>
                             <p></p>
-                            <Calendar onChange={(event) => setCalendar(event)} defaultValue={new Date(Date.now() + 12096e5)}   />
+                            <Calendar onChange={(event) => setCalendar(event)} value={calendar}   />
                           </div>
                         </div>             
                         <button className="fluid ui large primary button">Request</button>
