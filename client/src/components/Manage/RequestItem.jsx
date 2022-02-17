@@ -22,11 +22,12 @@ import './RequestItem.css'
       getRequests()
     }
 
-    const declineRequest = async (requestId) => {
+    const declineRequest = async (requestId, requester) => {
       const { data } = await express.delete(`items/${itemId}/requests/${requestId}`)
       console.log(data)
       console.log('decline')
       getRequests()
+      setAlert({type: 'warning', header: "Request Declined!", event: 'DECLINE_REQUEST', itemName: name, requester: requester});
     }
 
     const confirmReturn = async (requestId) => {
@@ -67,7 +68,7 @@ import './RequestItem.css'
               <div className="ui two buttons">
                 {singleReq.return_request ? <button onClick={() => confirmReturn(singleReq._id)} className='ui basic green button'>Confirm Return</button> : ""}
                 <div onClick={() => approveRequest(singleReq.requester._id, singleReq._id)} className={`ui basic green button ${borrower && borrower._id ? 'disabled' : ""}`}>{borrower && borrower._id === singleReq.requester._id ? "Approved" : "Approve"}</div>
-                {borrower && borrower._id && borrower._id ===  singleReq.requester._id ? "" : <div onClick={() => declineRequest(singleReq._id)} className="ui basic red button">Decline</div> }
+                {borrower && borrower._id && borrower._id ===  singleReq.requester._id ? "" : <div onClick={() => declineRequest(singleReq._id, singleReq.requester.username)} className="ui basic red button">Decline</div> }
               </div>
             </div>
           </div>
