@@ -64,6 +64,7 @@ const Header = ({session, setSession, setAlert, setRefreshItems}) => {
 
     try {
       const { data } = await express.post(`/items/${id}/images`, formData)
+      console.log(data)
     } catch(err) {
       console.log(err)
     }
@@ -179,7 +180,7 @@ const Header = ({session, setSession, setAlert, setRefreshItems}) => {
             <div className="ui inline simple dropdown">
             
               <div className="text">
-                <img className="ui avatar image" src={session ? session.user.image : "https://fomantic-ui.com/images/avatar/small/elliot.jpg"} alt=""/>
+                <img className="ui avatar image" src={session && session.user.image ? session.user.image : "https://fomantic-ui.com/images/avatar/small/elliot.jpg"} alt=""/>
                 {session.user.username}
               </div>
               {/* Drop Down Meny */}

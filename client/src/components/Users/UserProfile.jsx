@@ -37,7 +37,7 @@ return (
     <div className="profile-meta">
        <div className="avatar-container">
          
-            <img alt="user profile" className="avatar" src={session ? session.user.image : testImage}></img>
+            <img alt="user profile" className="avatar" src={session && session.user.image ? session.user.image : testImage}></img>
 
             <form className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
               <div id="pic-button-container" className="ui center aligned container">

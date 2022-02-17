@@ -115,7 +115,8 @@ const ItemList = ({session, refreshItems, setRefreshItems, setSearchItems, setAl
     noSearchResultsMsg.style.display = 'none'
   }
 
-  const renderedList = itemList.map(item => {
+  // console.log(itemList)
+  const renderedList = itemList.filter(item => item.lender._id !== session.user.id).map(item => {
     return (
       <Item 
         key={item._id} 
