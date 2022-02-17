@@ -44,7 +44,6 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
     })
     setModalOpen(false)
     setAlert({type: 'success', header: "Request sent successfully!", event: 'REQUEST_ITEM', username: session.user.username, itemName: name, lender: lender.username});
-    console.log(data)
   }
 
   // const updateItem = async (event, name, description, lender, borrower, id) => {

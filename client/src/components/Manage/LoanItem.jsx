@@ -5,12 +5,12 @@ import '../../img/image.png'
 import express from '../../apis/express'
 import './LoanItem.css'
 
- const LoanItem = ({loanItem, session, getLoans}) => {
+ const LoanItem = ({loanItem, session, getLoans, setAlert}) => {
 
   const { _id: itemId, name, description, images, lender, borrower, requests } = loanItem
   const { id: userId } = session ? session.user : ""
 
-    // set rating when we get value from item
+    // SET RATING
     let r = Math.floor(Math.random() * 5) + 1;
     const RatingStar = () => (
       <Rating icon='star' defaultRating={r} maxRating={5} disabled/>
@@ -21,14 +21,14 @@ import './LoanItem.css'
 
     const removeRequest = async () => {
       const { data } = await express.delete(`items/${itemId}/requests/${myRequest._id}`)
-      console.log(data)
-      console.log('decline')
       getLoans()
+      setAlert({type: 'warning', header: "Request Removed!", event: 'REMOVE_REQUEST', itemName: name, lender});
     }
 
     const returnRequest = async () => {
       const { data } = await express.put(`items/${itemId}/returns/${myRequest._id}`)
       getLoans()
+      setAlert({type: 'success', header: "Return Requested!", event: 'RETURN_REQUEST', itemName: name, lender});
     }
 
   return (
@@ -86,7 +86,7 @@ import './LoanItem.css'
                 <div className="description">
                 {borrower && borrower !== myRequest.requester ? <p>Why not browse some <Link to='/'><span className='ui orange text bold'>other items</span> </Link> while you wait?</p>: ""}
                 </div>
-                  {borrower === myRequest.requester && myRequest.return_request ? <p>Thank you for returning this item. Find your next <Link to='/'><span className='ui orange text bold'>local gem</span> </Link> today</p> 
+                  {borrower === myRequest.requester && myRequest.return_request ? <p>Thank you for returning this item. Find your next <Link to='/'><span className='ui orange text bold'>local gem <em data-emoji="gem"></em></span> </Link> today!</p> 
                   : borrower === myRequest.requester ? <p>You are currently <span className={`ui text ${new Date(Date.now()) > new Date(myRequest.return) ? 'red' : 'blue' }`}><b>borrowing</b></span><b>{name}</b>and {new Date(Date.now()) > new Date(myRequest.return) ? 'were' : 'are'} due to return it by <span className={`ui text ${new Date(Date.now()) > new Date(myRequest.return) ? 'red' : 'blue' }`}><b>{new Date(myRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}.</b></span></p> 
                   : ""}
                   {borrower === myRequest.requester && new Date(Date.now()) > new Date(myRequest.return) ? <p><span className="ui error text">Return Overdue!</span></p> : ""}

@@ -102,7 +102,6 @@ router.post("/items/requests", async (req, res) => {
 
 // GET BORROWED & PENDING REQ ITEMS
 router.get('/items/loans/:id', async (req, res) => {
-  console.log('hit loans')
   const { id: userId } = req.params
   const items = await Item.find({ 'requests.requester' : userId }).populate('lender').populate('requests')
   
@@ -111,7 +110,6 @@ router.get('/items/loans/:id', async (req, res) => {
 
 // RETURN ITEM REQUEST
 router.put('/items/:id/returns/:requestId', async (req, res) => {
-  console.log('hit returns')
   const { id: itemId, requestId } = req.params
   const item = await Item.findById(itemId)
   const request = await item.requests.id(requestId)
@@ -122,13 +120,10 @@ router.put('/items/:id/returns/:requestId', async (req, res) => {
 
 // CONFIRM RETURN
 router.delete('/items/:id/returns/:requestId', async (req, res) => {
-  console.log('hit confirm return')
   const { id: itemId, requestId } = req.params
   const item = await Item.findByIdAndUpdate(itemId, {borrower : null})
-  console.log(item)
   await item.requests.id(requestId).remove()
   await item.save()
-  console.log(item)
   res.json(item)
 })
 

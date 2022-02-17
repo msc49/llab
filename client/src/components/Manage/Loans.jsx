@@ -3,7 +3,7 @@ import express from '../../apis/express'
 
 import LoanItem from './LoanItem'
 
-const Loans = ({session, setShowLoans}) => {
+const Loans = ({session, setShowLoans, setAlert}) => {
 
   const [loansList, setLoansList] = useState([])
   const { id } = session ? session.user : ""
@@ -33,6 +33,7 @@ const Loans = ({session, setShowLoans}) => {
         loanItem={loanItem}
         session={session}
         getLoans={getLoans}
+        setAlert={setAlert}
       />
     )
   })

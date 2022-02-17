@@ -8,33 +8,31 @@ import './RequestItem.css'
  const RequestItem = ({requestItem, getRequests, setAlert}) => {
    
   const { _id: itemId, name, description, images, borrower, requests } = requestItem
-  console.log(borrower)
-    // set rating when we get value from item
+ console.log(borrower)
+    // SET RATING
     let r = Math.floor(Math.random() * 5) + 1;
     const RatingStar = () => (
       <Rating icon='star' defaultRating={r} maxRating={5} disabled/>
     )
     
-    const approveRequest = async (requester, requestId) => {
-      const { data } = await express.put(`/items/${itemId}/borrow/${requester}`, {
+    const approveRequest = async (requesterId, requestId, requester) => {
+      const { data } = await express.put(`/items/${itemId}/borrow/${requesterId}`, {
         requestId, 
       })
       getRequests()
+      setAlert({type: 'success', header: "Request Approved!", event: 'APPROVE_REQUEST', itemName: name, requester: requester});
     }
 
     const declineRequest = async (requestId, requester) => {
       const { data } = await express.delete(`items/${itemId}/requests/${requestId}`)
-      console.log(data)
-      console.log('decline')
       getRequests()
       setAlert({type: 'warning', header: "Request Declined!", event: 'DECLINE_REQUEST', itemName: name, requester: requester});
     }
 
     const confirmReturn = async (requestId) => {
       const { data } = await express.delete(`items/${itemId}/returns/${requestId}`)
-      console.log(data)
-      console.log('decline')
       getRequests()
+      setAlert({type: 'success', header: "Return Confirmation!", event: 'CONFIRM_RETURN', itemName: name, borrower: borrower.username});
     }
     
 
@@ -74,7 +72,7 @@ import './RequestItem.css'
               <div className="ui two buttons">
                 {borrower && borrower._id && borrower._id === singleReq.requester._id && singleReq.return_request ? <button onClick={() => confirmReturn(singleReq._id)} className='ui basic green button'>Confirm Return</button> 
                 : ""}
-                {borrower && borrower._id && borrower._id === singleReq.requester._id ? "" : <div onClick={() => approveRequest(singleReq.requester._id, singleReq._id)} className={`ui basic green button ${borrower && borrower._id ? 'disabled' : ""}`}>{borrower && borrower._id === singleReq.requester._id ? "Approved" : "Approve"}</div>}
+                {borrower && borrower._id && borrower._id === singleReq.requester._id ? "" : <div onClick={() => approveRequest(singleReq.requester._id, singleReq._id, singleReq.requester.username)} className={`ui basic green button ${borrower && borrower._id ? 'disabled' : ""}`}>{borrower && borrower._id === singleReq.requester._id ? "Approved" : "Approve"}</div>}
                 {borrower && borrower._id && borrower._id === singleReq.requester._id ? "" : <div onClick={() => declineRequest(singleReq._id, singleReq.requester.username)} className="ui basic red button">Decline</div> }
               </div>
             </div>
