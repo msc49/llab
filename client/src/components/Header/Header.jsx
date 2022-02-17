@@ -4,7 +4,8 @@ import MediaQuery from 'react-responsive'
 import Modal from '../Modal/Modal';
 import './Header.css';
 import express from '../../apis/express';
-import logo_image from '../images/local-lab.png'
+import logo_image from '../images/local-lab-logo.png'
+
 
 const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) => {
   const [modalOpen, setModalOpen] = useState(false)
