@@ -72,12 +72,14 @@ module.exports = Item;
 
 // pseudo code
 // -----------
-// 1. user requests item (message, intended return date) and is added to the request queue
+// 1. user requests item (message + return date) and is added to the request queue
 // message appears in notifications//on hold//
 // 2. lender reviews requests and approves one >> (sets approved to true on req), set requester as borrower,
 // message appears in notifications //on hold//
 
 //3.  borrower is added to item / 
+
+// -  --- - - - - - - - --  
 
 // 4. borrower returns item (button) >> return request
 

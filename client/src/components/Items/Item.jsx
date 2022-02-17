@@ -39,6 +39,7 @@ const Item = ({ item, session, profilePic, deleteItem, updateItem, uploadImage, 
         date: calendar,
       } 
     })
+    setModalOpen(false)
     console.log(data)
   }
 

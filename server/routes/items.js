@@ -27,10 +27,7 @@ router.get("/items/:id", async (req, res) => {
 // SEARCH ITEMS
 router.get("/items/search/:query", async (req, res) => {
   const { query } = req.params;
-  console.log('hit search with: ', query)
-  console.log('querying mongo')
   const items = await Item.find({name: new RegExp('.*' + query + '.*', "i")})
-  console.log(items)
   res.json(items);
 });
 
@@ -54,29 +51,32 @@ router.delete("/items/:id", async (req, res) => {
 
 // BORROW ITEM
 router.put("/items/:id/borrow/:userId", async (req, res) => {
-  const { id, userId } = req.params;
+  const { id: itemId, userId } = req.params;
+  const { requestId } = req.body;
+  console.log(itemId, userId, requestId)
   const item = await Item.findByIdAndUpdate(
-    id,
+    itemId,
     { borrower: userId },
     { new: true }
-  );
+  )
+  // special mongoose syntax to find nested objects = 'const thing = parent.child.id(child_id)'
+  const request = await item.requests.id(requestId)
+  request.approved = true
+  console.log('request b4', request)
+  await request.save()
+  await item.save()
+  console.log('request after', request)
   res.json(item);
 });
 
 // REQUEST ITEM
 router.get('/items/requests/:id', async (req, res) => {
   const { id } = req.params
-  console.log('lender id', id)
   const items = await Item.find({lender: id }).populate("borrower").populate("requests.requester")
   
   const requestItems = items.filter(item => item.requests[0])
-  
-  console.log(requestItems)
 
   res.json(requestItems)
-  // for (let request of requestItems) {
-  //   console.log(request.requests)
-  // }
 })
 
 

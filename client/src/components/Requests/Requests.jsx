@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import { Divider } from 'semantic-ui-react'
 import express from '../../apis/express'
 
 import RequestItem from './RequestItem'
@@ -26,15 +25,24 @@ const Requests = ({session}) => {
       <RequestItem 
         key={requestItem._id} 
         requestItem={requestItem}
-        // profilePic={profilePic}
         session={session}
+        getRequests={getRequests}
       />
     )
   })
 
   return (
-    <div className="ui one cards main-item-list">
-      {renderedRequestsList}
+    <div>
+      <h2 className="ui header">
+        <i className="red bell icon"></i>
+        <div className="content">
+          Item Requests
+          <div className="sub header">Manage your requests</div>
+        </div>
+      </h2>
+      <div className="ui one cards main-item-list">
+        {renderedRequestsList}
+      </div>
     </div>
   )
 }

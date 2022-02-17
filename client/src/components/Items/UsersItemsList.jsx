@@ -108,8 +108,8 @@ const UsersItemList = () => {
       </div>
       {/* @Sabrina, btw I changed image size for items list and noticed it's affect the display on your page too since it's a shared component. I found if you remove 'two' from the className below it will arrange everything without squashing the text. Will leave it up to you.  */}
       {toggleBorrowing ? 
-      <div className="ui two stackable cards">{renderedBorrowingList}</div> : 
-      <div className="ui two stackable cards">{renderedLendingList}</div>
+      <div className="ui stackable cards">{renderedBorrowingList}</div> : 
+      <div className="ui stackable cards">{renderedLendingList}</div>
       }
 
     </div>

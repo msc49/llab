@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 import MediaQuery from 'react-responsive'
 import Modal from '../Modal/Modal';
 import './Header.css';
 import express from '../../apis/express';
 
 const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) => {
+
+  let history = useHistory();
   const [modalOpen, setModalOpen] = useState(false)
 
   const [formItem, setFormItem] = useState({
@@ -80,6 +83,8 @@ const Header = ({session, setSession, setAlert, setRefreshItems, profilePic}) =>
   const signOut = () => {
     localStorage.removeItem('user')
     setSession(false)
+    history.push('/');
+
   }
 
   if(session) {

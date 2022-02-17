@@ -2,96 +2,105 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Rating } from 'semantic-ui-react'
 import '../../img/image.png'
-// import HomeBanner from '../Home/HomeBanner'
+import express from '../../apis/express'
+import './RequestItem.css'
 
  const RequestItem = ({requestItem, session}) => {
+  const { _id: itemId, name, description, images, lender, borrower, requests, getRequests } = requestItem
 
-  const { _id: itemId, name, description, images, requests } = requestItem
     // set rating when we get value from item
     let r = Math.floor(Math.random() * 5) + 1;
     const RatingStar = () => (
       <Rating icon='star' defaultRating={r} maxRating={5} disabled/>
     )
     
+    const approveRequest = async (requester, requestId) => {
+      const { data } = await express.put(`/items/${itemId}/borrow/${requester}`, {
+        requestId, 
+      })
+      getRequests()
+     
+      console.log(data)
+    }
     
-    const reqs = requests.map(request => request.requester)
+
+    const reqs = requests.map(request => request)
     const singleReq = reqs.map(singleReq => {
+      console.log(singleReq)
       return (
-        <div className='ui cards'>
+        <div className='ui cards request-cards'>
           
-          <div class="card">
-            <div class="content">
-              <img class="right floated mini ui image" src="/images/avatar/large/elliot.jpg" alt=''/>
-              <div class="header">
-              {singleReq.name}
-              </div>
-              <div class="meta">
-                {singleReq.location}
-                {singleReq.email}
-              </div>
-              <div class="description">
-                {singleReq.name} requested to borrow your {name}
-              </div>
+          <div className="ui card request-card">   
+            <div className="content">
+              {borrower && borrower._id && borrower._id === singleReq.requester._id ? <p className="ui floated right green label">Current Borrower</p> : ""}
+              <img className="right floated mini ui image" src="https://react.semantic-ui.com//images/avatar/large/elliot.jpg" alt=''/>
+            <div className="header">
+              {singleReq.requester.name}
             </div>
-            <div class="extra content">
-              <div class="ui two buttons">
-                <div class="ui basic green button">Approve</div>
-                <div class="ui basic red button">Decline</div>
+            <div className="meta">
+              {singleReq.requester.location}
+              {singleReq.requester.email}
+            </div>
+            <div className='light-separator'></div>
+            <div className="description">
+              {borrower && borrower._id === singleReq.requester._id ? <p><b>{singleReq.requester.name}</b> is currently <span className={`ui text ${Date(Date.now()) > new Date(singleReq.return) ? 'red' : 'blue' }`}><b>borrowing</b></span>your <b>{name}</b>and is due to return it on <span className={`ui text ${Date(Date.now()) > new Date(singleReq.return) ? 'red' : 'blue' }`}><b>{new Date(singleReq.return).toLocaleString('en-En', {day: "numeric", month: "long"})}.</b></span></p> : <p><b>{singleReq.requester.name}</b>would like to <span className={`ui text ${Date(Date.now()) > new Date(singleReq.return) ? 'red' : 'blue' }`}><b>borrow</b></span>your <b>{name}</b>and return it on <span className={`ui text ${Date(Date.now()) > new Date(singleReq.return) ? 'red' : 'blue' }`}><b>{new Date(singleReq.return).toLocaleString('en-En', {day: "numeric", month: "long"})}.</b></span></p>}
+            </div>
+              {borrower && singleReq.requester._id === borrower._id && new Date(Date.now()) > new Date(singleReq.return) ? <p><span className="ui error text">Return Overdue!</span> Contact customer support if the borrower has become unresponsive.</p> : ""}
+              {borrower && singleReq.requester._id !== borrower._id && new Date(Date.now()) > new Date(singleReq.return) ? <p><span className="ui error text">Old request.</span> Decline to clear from your dashboard.</p> : ""}
+            <div className='ui segment blue'>
+              {singleReq.message !== "" ? `"${singleReq.message}"` : "No message." }
+            </div>
+            </div>
+            <div className="extra content">
+              <div className="ui two buttons">
+                <div onClick={() => approveRequest(singleReq.requester._id, singleReq._id)} className={`ui basic green button ${borrower && borrower._id ? 'disabled' : ""}`}>{borrower && borrower._id === singleReq.requester._id ? "Approved" : "Approve"}</div>
+                {borrower && borrower._id && borrower._id ===  singleReq.requester._id ? "" : <div className="ui basic red button">Decline</div> }
               </div>
             </div>
           </div>
-        
         </div>
       )
-    } )
+    })
 
+   
 
   return (
-    // <div>
-    // <HomeBanner />
 
     <div className='ui card'>
-
-    
-    <div className="content">
-        <div className="ui column centered right floated">
-         
-            <div className="ui attached segment">
-              <div className="ui slide masked reveal image">
-                <img className="visible content" src={images[0] ? images[0].path : "https://react.semantic-ui.com/images/wireframe/image.png"} alt=""/>
-                <img src={images[1] ? images[1].path : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} className="hidden content" alt=""/>
-              </div>
-            </div>
-            
-        </div>
-        
+      
+      <div className='content'>
         <Link to={`/items/${itemId}`}>
           <h3 className="header">{name}</h3>
         </Link>
-          {description}
-        <br/>
-        <p></p>
-        <div className="meta">
-
-        {/* {requests ? requests.forEach(request => (request.requester)) : ""}
-        {requests.forEach(request => (request.requester))} */}
-        
-        {singleReq}
-   
+        {description}
+      </div>
+      
+    
+        <div className="content">
+          <div className="ui column centered right floated">
           
-      
-          {/* {borrower ? <p><span className="ui blue text">Availble Soon</span></p>: <p><span className="ui green text">Available now</span></p>} */}
+              <div className="ui segment">
+                <div className="ui slide masked reveal image">
+                  <img className="visible content" src={images[0] ? images[0].path : "https://react.semantic-ui.com/images/wireframe/image.png"} alt=""/>
+                  <img src={images[1] ? images[1].path : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} className="hidden content" alt=""/>
+                </div>
+              </div>
+              
+          </div>
+          
+          <div className="meta">    
+            {singleReq}
+          </div>
         </div>
-      </div>
       
-      <div className="extra">
-        <div>
-          Rating: <RatingStar />
-        
+        <div className="extra">
+          <div>
+            Rating: <RatingStar />
+          </div>
         </div>
-      </div>
+
     </div>
-    // </div>
+    
   )
 }
 

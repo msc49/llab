@@ -44,8 +44,8 @@ return (
 
             <form className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
               <div id="pic-button-container" className="ui center aligned container">
-                <label htmlFor="file-upload" className="custom-file-upload">
-                  <i className="upload green icon"></i> Upload image
+                <label htmlFor="file-upload" className="custom-file-upload blue">
+                  <i className="camera white icon"></i>choose picture
                 </label>
                 <input onChange={changeProfilePic} id="file-upload" name="imageFile" type="file" accept="image/*"/>
               </div>
