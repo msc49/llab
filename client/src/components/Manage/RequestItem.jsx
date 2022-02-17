@@ -6,6 +6,7 @@ import express from '../../apis/express'
 import './RequestItem.css'
 
  const RequestItem = ({requestItem, getRequests}) => {
+   
   const { _id: itemId, name, description, images, borrower, requests } = requestItem
 
     // set rating when we get value from item

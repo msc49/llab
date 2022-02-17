@@ -10,6 +10,7 @@ import '../../img/image.png'
 import './Item.css'
 
 const Item = ({ item, session, profilePic, deleteItem, updateItem, uploadImage, borrowItem }) => {
+  
   const [modalOpen, setModalOpen] = useState(false)
   const [requestMessage, setRequestMessage] = useState("")
   const [calendar, setCalendar] = useState(new Date());
@@ -31,6 +32,7 @@ const Item = ({ item, session, profilePic, deleteItem, updateItem, uploadImage, 
 
   const requestItem = async (event) => {
     event.preventDefault()
+   
     const { data } = await express.post('/items/requests', {
       request: {
         itemId: id,
@@ -191,8 +193,6 @@ const Item = ({ item, session, profilePic, deleteItem, updateItem, uploadImage, 
                             <Calendar onChange={(event) => setCalendar(event)} defaultValue={new Date(Date.now() + 12096e5)}   />
                           </div>
                         </div>             
-                        {/* defaultValue={new Date(Date.now() + 12096e5)} */}
-
                         <button className="fluid ui large primary button">Request</button>
 
                       </div>
@@ -204,29 +204,10 @@ const Item = ({ item, session, profilePic, deleteItem, updateItem, uploadImage, 
               </div>
             </div>
           </Modal>
-
-
-
-
-
-
-
-
-
     </div>
-
-    
-
-
-
-
-
-
   )
  
 }
-
-
 
 export default Item
 

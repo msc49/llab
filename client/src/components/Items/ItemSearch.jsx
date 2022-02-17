@@ -131,6 +131,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, profilePic, searchIte
         uploadImage={uploadImage}
         borrowItem={borrowItem}
         profilePic={profilePic}
+        session={session}
       />
     )
   })
