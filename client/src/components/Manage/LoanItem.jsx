@@ -9,7 +9,7 @@ import './LoanItem.css'
 
   const { _id: itemId, name, description, images, lender, borrower, requests } = loanItem
   const { id: userId } = session ? session.user : ""
-
+    console.log('BORROQER', borrower)
     // set rating when we get value from item
     let r = Math.floor(Math.random() * 5) + 1;
     const RatingStar = () => (
@@ -71,10 +71,10 @@ import './LoanItem.css'
             <div className='ui cards request-cards'>
               <div className="ui card request-card">   
                 <div className="content">
-                  {borrower && borrower._id === myRequest.requester ? <p className="ui floated right green label">Approved</p> : borrower ? <p className="ui floated right orange label">In Use</p> : <p className="ui floated right red label">Pending Approval</p>}
+                  {borrower === myRequest.requester ? <p className="ui floated right green label">Approved</p> : borrower ? <p className="ui floated right orange label">In Use</p> : <p className="ui floated right red label">Pending Approval</p>}
                 
                 <div className="meta">
-                  {borrower && borrower._id === myRequest.requester ? `contact ${lender.name} at ${lender.email}` : ""}
+                  {borrower === myRequest.requester ? `contact ${lender.username}: ${lender.email}` : ""}
                 </div>
                 <div className='light-separator'></div>
                 <div className="description">

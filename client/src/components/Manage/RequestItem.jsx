@@ -50,7 +50,7 @@ import './RequestItem.css'
               {singleReq.requester.name}
             </div>
             <div className="meta">
-              {singleReq.requester.location}
+              <p>{singleReq.requester.location}</p>
               {singleReq.requester.email}
             </div>
             <div className='light-separator'></div>
