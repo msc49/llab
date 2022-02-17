@@ -9,7 +9,7 @@ import './LoanItem.css'
 
   const { _id: itemId, name, description, images, lender, borrower, requests } = loanItem
   const { id: userId } = session ? session.user : ""
-    console.log('BORROQER', borrower)
+
     // set rating when we get value from item
     let r = Math.floor(Math.random() * 5) + 1;
     const RatingStar = () => (
@@ -17,7 +17,7 @@ import './LoanItem.css'
     )  
 
     const myRequest = requests.filter(request => request.requester === userId)[0]
-    console.log('my request', myRequest)
+
 
     const removeRequest = async () => {
       const { data } = await express.delete(`items/${itemId}/requests/${myRequest._id}`)
@@ -28,8 +28,6 @@ import './LoanItem.css'
 
     const returnRequest = async () => {
       const { data } = await express.put(`items/${itemId}/returns/${myRequest._id}`)
-      console.log(data)
-      console.log('decline')
       getLoans()
     }
 
@@ -40,7 +38,7 @@ import './LoanItem.css'
       <div className='content'>
         {/* not showing? */}
         <div className="right floated tiny ui image">
-          <img className="" src={ lender.images[0] ? lender.images[lender.images.length-1].path : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} alt=''/>
+          <img className="" src={ lender.image ? lender.image : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} alt=''/>
         </div>
         <Link to={`/items/${itemId}`}>
           <h3 className="header">{name}</h3>
@@ -71,17 +69,26 @@ import './LoanItem.css'
             <div className='ui cards request-cards'>
               <div className="ui card request-card">   
                 <div className="content">
-                  {borrower === myRequest.requester ? <p className="ui floated right green label">Approved</p> : borrower ? <p className="ui floated right orange label">In Use</p> : <p className="ui floated right red label">Pending Approval</p>}
+                  {borrower === myRequest.requester && myRequest.return_request ? <p className="ui floated right green label">Return pending confirmation</p> 
+                  : borrower === myRequest.requester ? <p className="ui floated right green label">Approved</p> 
+                  : borrower ? <p className="ui floated right orange label">In Use</p> 
+                  : <p className="ui floated right red label">Request Pending Approval</p>}
                 
                 <div className="meta">
-                  {borrower === myRequest.requester ? `You're request was approved! Contact ${lender.username} at ${lender.email}` : ""}
-                  {borrower && borrower !== myRequest.requester ? <p>Another user is currently borrowing this item, and {new Date(Date.now()) > new Date(myRequest.return) ? 'was' : 'is'} due to return it by <span className='ui orange text bold'>{new Date(myRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}.</span></p>: ""}
+                  {borrower === myRequest.requester && myRequest.return_request ? `Your return is pending confirmation from the lender. Send ${lender.username} a gentle reminder if this take more than a few days: ${lender.email}` 
+                  : borrower === myRequest.requester ? `You're request was approved! Contact ${lender.username} at ${lender.email}` : ""}
+
+                  {borrower && borrower !== myRequest.requester ? <p>Another user is currently borrowing this item, and {new Date(Date.now()) > new Date(myRequest.return) ? 'was' 
+                  : 'is'} due to return it by <span className='ui orange text bold'>{new Date(myRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}.</span></p>
+                  : ""}
                 </div>
                 <div className='light-separator'></div>
                 <div className="description">
                 {borrower && borrower !== myRequest.requester ? <p>Why not browse some <Link to='/'><span className='ui orange text bold'>other items</span> </Link> while you wait?</p>: ""}
                 </div>
-                  {borrower === myRequest.requester ? <p>You are currently <span className={`ui text ${new Date(Date.now()) > new Date(myRequest.return) ? 'red' : 'blue' }`}><b>borrowing</b></span><b>{name}</b>and {new Date(Date.now()) > new Date(myRequest.return) ? 'were' : 'are'} due to return it by <span className={`ui text ${new Date(Date.now()) > new Date(myRequest.return) ? 'red' : 'blue' }`}><b>{new Date(myRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}.</b></span></p> : ""}
+                  {borrower === myRequest.requester && myRequest.return_request ? <p>Thank you for returning this item. Find your next <Link to='/'><span className='ui orange text bold'>local gem</span> </Link> today</p> 
+                  : borrower === myRequest.requester ? <p>You are currently <span className={`ui text ${new Date(Date.now()) > new Date(myRequest.return) ? 'red' : 'blue' }`}><b>borrowing</b></span><b>{name}</b>and {new Date(Date.now()) > new Date(myRequest.return) ? 'were' : 'are'} due to return it by <span className={`ui text ${new Date(Date.now()) > new Date(myRequest.return) ? 'red' : 'blue' }`}><b>{new Date(myRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}.</b></span></p> 
+                  : ""}
                   {borrower === myRequest.requester && new Date(Date.now()) > new Date(myRequest.return) ? <p><span className="ui error text">Return Overdue!</span></p> : ""}
                   {myRequest.requester !== borrower && new Date(Date.now()) > new Date(myRequest.return) ? <p><span className="ui error text">Expired Request.</span> Please remove from your dashboard.</p> : ""}
                 </div>
@@ -89,8 +96,10 @@ import './LoanItem.css'
                 
                 <div className="extra content">
                   <div>
-                    {borrower === myRequest.requester ? <button onClick={returnRequest} className="ui fluid basic green button">Return</button> : ""}
-                    {borrower !== myRequest.requester ? <button onClick={removeRequest} className="ui fluid basic red button">Remove</button> : ""}
+                    {borrower === myRequest.requester && myRequest.return_request ? <button className="ui fluid basic green disabled button">Returned</button> 
+                    : borrower === myRequest.requester ? <button onClick={returnRequest} className="ui fluid basic green button">Return</button> 
+                    : borrower !== myRequest.requester ? <button onClick={removeRequest} className="ui fluid basic red button">Remove</button> :
+                    ""}
                   </div>
                 </div>
               </div>

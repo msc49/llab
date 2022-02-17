@@ -45,10 +45,10 @@ const Requests = ({session, setShowLoans, setAlert}) => {
         <h2 className="ui header">
           <i className="blue bell icon"></i>
           <div className="content">
-            Item Requests
-            <div className="sub header">Manage borrow requests for your items</div>
+            Incoming Requests
+            <div className="sub header">Manage incoming requests for your items</div>
           </div>
-            <button onClick={() => setShowLoans(true)} className="ui right floated primary basic button">View Borrowing</button>
+            <button onClick={() => setShowLoans(true)} className="ui right floated primary basic button">Switch to borrowing</button>
         </h2>
       </div>
       <div className="ui one cards main-item-list">

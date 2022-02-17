@@ -13,7 +13,6 @@ const Loans = ({session, setShowLoans}) => {
       if(session) {
         const { data } = await express.get(`/items/loans/${id}`)
         setLoansList(data)
-        console.log(data)
       }
     }
     refreshLoans()
@@ -45,7 +44,7 @@ const Loans = ({session, setShowLoans}) => {
           <i className="blue gift icon"></i>
           <div className="content">
             Loans
-            <div className="sub header">Manage lending and pending requests</div>
+            <div className="sub header">Manage your borrowed items and borrow requests</div>
           </div>
             <button onClick={() => setShowLoans(false)} className="ui right floated primary basic button">View Lending</button>
         </h2>

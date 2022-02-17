@@ -113,7 +113,7 @@ router.get('/items/loans/:id', async (req, res) => {
 router.put('/items/:id/returns/:requestId', async (req, res) => {
   console.log('hit returns')
   const { id: itemId, requestId } = req.params
-  const item = await findById(itemId)
+  const item = await Item.findById(itemId)
   const request = await item.requests.id(requestId)
   request.return_request = true
   await item.save()
@@ -121,13 +121,14 @@ router.put('/items/:id/returns/:requestId', async (req, res) => {
 })
 
 // CONFIRM RETURN
-router.delete('items/:id/returns/:requestId', async (req, res) => {
+router.delete('/items/:id/returns/:requestId', async (req, res) => {
   console.log('hit confirm return')
   const { id: itemId, requestId } = req.params
-  const item = await Item.findById(itemId)
+  const item = await Item.findByIdAndUpdate(itemId, {borrower : null})
+  console.log(item)
   await item.requests.id(requestId).remove()
-  await item.borrower.remove()
   await item.save()
+  console.log(item)
   res.json(item)
 })
 
