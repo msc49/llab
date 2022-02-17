@@ -14,8 +14,9 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
   const [modalOpen, setModalOpen] = useState(false)
   const [requestMessage, setRequestMessage] = useState("")
   const [calendar, setCalendar] = useState(new Date(Date.now() + (7*24*60*6*1000)));
-
+  
   const {_id: id, name, description, images, lender, borrower} = item
+  const currentApprovedRequest = item.requests.find(request => request.approved)
   // set rating when we get value from item
   let r = Math.floor(Math.random() * 5) + 1;
   const RatingStar = () => (
@@ -120,7 +121,7 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
         <p></p>
         <div className="meta">
           Location: {lender.location}
-          {borrower ? <p><span className="ui blue text">Availble Soon</span></p>: <p><span className="ui green text">Available now</span></p>}
+          {borrower ? <p><span className="ui blue text">Availble {new Date(currentApprovedRequest.return).toLocaleString('en-En', {day: "numeric", month: "long"})}</span></p>: <p><span className="ui green text">Available now</span></p>}
         </div>
       </div>
       
