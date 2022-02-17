@@ -80,4 +80,25 @@ router.post("/items/:id/images", uploadMulter, validation, async (req, res) => {
   res.json(item);
 });
 
+// UPLOAD NEW ITEM IMAGE
+// USE MULTER
+
+
+router.put("/items/:id/images", uploadMulter, validation, async (req, res) => {
+  const { id } = req.params;
+  const item = await Item.findById(id);
+
+  item.images = [];
+
+  item.images.push({
+    path: req.file.path,
+  });
+
+  await item.save();
+  res.json(item);
+});
+
+
+
+
 module.exports = router;
