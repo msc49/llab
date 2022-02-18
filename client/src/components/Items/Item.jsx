@@ -6,7 +6,7 @@ import express from "../../apis/express";
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import Modal from '../Modal/Modal';
-import '../../img/image.png'
+import '../images/image.png'
 import './Item.css'
 
 const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, uploadImage, borrowItem }) => {

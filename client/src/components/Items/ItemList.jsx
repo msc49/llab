@@ -116,7 +116,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, setSearchItems, setAl
   }
 
   // console.log(itemList)
-  const renderedList = itemList.filter(item => item.lender._id !== session.user.id).map(item => {
+  const renderedList = itemList.filter(item => item.available && item.lender._id !== session.user.id).map(item => {
     return (
       <Item 
         key={item._id} 

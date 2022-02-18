@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import MediaQuery from 'react-responsive'
 import Modal from '../Modal/Modal';
+import logo_image from '../images/local-lab.png'
 import './Header.css';
 import express from '../../apis/express';
 
@@ -107,6 +108,7 @@ const Header = ({session, setSession, setAlert, setRefreshItems}) => {
       <div className="ui borderless fixed top sticky massive menu">
         {/* Logo */}
         <Link to='/' className="item">
+          <img src={logo_image} alt="logo"></img>
           Local Lab
         </Link>
         

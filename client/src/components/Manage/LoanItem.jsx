@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Rating } from 'semantic-ui-react'
-import '../../img/image.png'
+import '../images/image.png'
 import express from '../../apis/express'
 import './LoanItem.css'
 
