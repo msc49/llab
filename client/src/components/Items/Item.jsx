@@ -6,30 +6,28 @@ import express from "../../apis/express";
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import Modal from '../Modal/Modal';
+import Modal2 from '../Modal/Modal2';
 import '../images/image.png'
 import './Item.css'
 
-const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, uploadImage, borrowItem }) => {
+const Item = ({ item, session, setAlert, getItems }) => {
+
+  const {_id: id, name, description, images, available: availability, lender, borrower} = item
+  const currentApprovedRequest = item.requests.find(request => request.approved)
   
   const [modalOpen, setModalOpen] = useState(false)
+  const [modal2Open, setModal2Open] = useState(false)
   const [requestMessage, setRequestMessage] = useState("")
   const [calendar, setCalendar] = useState(new Date(Date.now() + (7*24*60*6*1000)));
+  const [labItemName, setLabItemName] = useState("")
+  const [labItemDescription, setLabItemDescription] = useState("")
+  const [labItemAvailability, setLabItemAvailability] = useState(availability)
+  const [labItemImage, setLabItemImage] = useState(null)
   
-  const {_id: id, name, description, images, lender, borrower} = item
-  const currentApprovedRequest = item.requests.find(request => request.approved)
-  // set rating when we get value from item
   let r = Math.floor(Math.random() * 5) + 1;
   const RatingStar = () => (
     <Rating icon='star' defaultRating={r} maxRating={5} disabled/>
   )
-  
-  // Update Item States
-  // const [name, setName] = useState("")
-  // const [description, setDescription] = useState("")
-
-  // Upload Image States
-  // const [imageTitle, setImageTitle] = useState("")
-  // const [imageFile, setImageFile] = useState("")
 
   const requestItem = async (event) => {
     event.preventDefault()
@@ -46,17 +44,52 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
     setAlert({type: 'success', header: "Request sent successfully!", event: 'REQUEST_ITEM', username: session.user.username, itemName: name, lender: lender.username});
   }
 
-  // const updateItem = async (event, name, description, lender, borrower, id) => {
-  //   event.preventDefault()
-  //   await express.put(`/items/${id}`, {
-  //     item: {
-  //       name: name,
-  //       description: description,
-  //     }
-  //   }) 
-  //   getItems()
-  // }
+  const updateLabItem = async (event) => {
+    event.preventDefault()
+    const { data } = await express.put(`/items/${id}`, {
+      item: {
+        name: labItemName,
+        description: labItemDescription,
+        available: labItemAvailability,
+      }
+    }) 
+    if(labItemImage) await labImageUpload(id)
+    setLabItemImage(null)
+    setModal2Open(false)
+    getItems()
+  }
 
+  const labImageUpload = async (id) => {
+    
+    let formData = new FormData()
+    formData.append('itemImage', labItemImage)
+
+    try {
+      const { data } = await express.post(`/items/${id}/images`, formData)
+      console.log(data)
+    } catch(err) {
+      console.log(err)
+    }
+
+  }
+
+  const handleLabItemImageChange = (event) => {
+    setLabItemImage(event.target.files[0])
+    showImagePreview(event)
+  }
+
+  const showImagePreview = (event) => {
+    if(event.target.files.length > 0){
+      const src = URL.createObjectURL(event.target.files[0]);
+      const preview = document.getElementById("lab-file-ip-1-preview");
+      preview.src = src;
+      preview.style.display = "block";
+    } else {
+      const preview = document.getElementById("lab-file-ip-1-preview");
+      preview.src = "";
+      preview.style.display = "none";
+    }
+  }
  
 
   return (
@@ -104,9 +137,16 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
                 <img src={images[1] ? images[1].path : "https://react.semantic-ui.com//images/avatar/large/elliot.jpg"} className="hidden content" alt=""/>
               </div>
             </div>
-            <div onClick={() => setModalOpen(true)} className="ui bottom attached blue button" tabIndex="0">
+
+            {
+              session.user.id === lender._id ?  <div className={`ui bottom attached grey button`} tabindex="0" onClick={() => setModal2Open(true)}>
+              Update
+              </div> :
+              <div onClick={() => setModalOpen(true)} className="ui bottom attached blue button" tabIndex="0">
               Request
             </div>
+            }
+            
          
         </div>
         
@@ -132,34 +172,11 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
         </div>
       </div>
       
-      {/* {
-        item.lender ? <h4> Lender: {item.lender.name}, {item.lender.location}</h4> : ""
-      }  */}
-      
-
-
-      {/* {
-        item.borrower ? <h4>Borrower: {item.borrower.name}, {item.borrower.location}</h4> : ""
-      } */}
+     
 
       {/* <button onClick={() => deleteItem(item._id)}>Delete</button> */}
 
-      {/* <button onClick={() => borrowItem(item._id)}>Borrow</button> */}
-
-      {/* <form onSubmit={(event) => updateItem(event, name, description, item.lender, item.borrower, item._id)}>
-        <input onChange={(event) => setName(event.target.value)} value={name} type="text" name="name" required/>
-        <input onChange={(event) => setDescription(event.target.value)} value={description} type="text" name="description" required/>
-        <button>Update Item</button>
-      </form> */}
-
-      {/* <form onSubmit={(event) => uploadImage(event, imageTitle, imageFile, item._id)} encType="multipart/form-data">
-        <input type="text" name="title" value={imageTitle} placeholder="Image Title" onChange={e => setImageTitle(e.target.value)} required/>
-        <input type="file" name="image" onChange={e => setImageFile(e.target.files[0])} multiple/>
-        <input type="file" id="imageFile" capture="user" accept="image/*"/>
-        <button type="submit">Submit</button>
-      </form> */}
-
-<Modal modalOpen={modalOpen}>
+          <Modal modalOpen={modalOpen}>
             <div id="add-item-modal" className="my-modal">
               <div className="my-modal-content">
                 <span className="my-modal-close" onClick={() => {setModalOpen(false)}}>&times;</span>
@@ -208,7 +225,69 @@ const Item = ({ item, session, setAlert, profilePic, deleteItem, updateItem, upl
               </div>
             </div>
           </Modal>
-    </div>
+
+          {/* Modal 2 (item update) */}
+          <Modal2 modalOpen={modalOpen}>
+            <div id="add-item-modal" class="my-modal">
+              <div class="my-modal-content">
+                <span class="my-modal-close" onClick={() => {
+                  setModal2Open(false)
+                  setLabItemImage(null)
+                  }}>&times;</span>
+
+                  {/* Modal Content */}
+                  <div className="ui center aligned grid">
+                    <div className="column">
+                  
+                      <h2 className="ui inverted image header">
+                        <div className="content">
+                          Update item
+                        </div>
+                      </h2>
+
+                      <form onSubmit={updateLabItem} className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
+                        <div className="ui stacked segment my-modal-segment">
+                          {/* WORKING FROM HERE!!!!!!!!!!!!!!!!!! */}
+                        <div className="field ui left aligned container">
+                          <label htmlFor="item-name"><span className='ui medium text'>Item name</span></label>
+                          <input onChange={(event) => setLabItemName(event.target.value)} defaultValue={name} type="text" name="itemName" required/>
+                        </div> 
+
+                        <div className="field ui left aligned container">
+                          <label htmlFor="item-description"><span className='ui medium text'>Item decription</span></label>
+                          <input onChange={(event) => setLabItemDescription(event.target.value)} defaultValue={description} type="text" name="itemDescription" required/>
+                        </div> 
+
+                        <div className="ui checkbox">
+                          <input type="checkbox" onClick={() => setLabItemAvailability(!labItemAvailability)} value={labItemAvailability} name="itemAvailability" />
+                          <label>List / Unlist Your Items</label>
+                        </div>
+
+                        <div className='light-separator'></div>
+                  
+                        <div className="field ui center aligned container">
+                          <label for="file-upload" class="custom-file-upload">
+                          <i class="upload green icon"></i> Upload a new image
+                          </label>
+                          <input onChange={handleLabItemImageChange} id="file-upload" name="labItemImage" type="file" accept="image/*"/>
+                        </div>   
+
+                        <div className="ui container field lab-image-preview">
+                          <img id="lab-file-ip-1-preview" class="ui center aligned small image" src="https://fomantic-ui.com//images/wireframe/image.png" alt=""/>                  
+                        </div>
+
+                        <button className="fluid ui large primary button">Update</button>
+
+                      </div>
+                    </form>
+                
+                  </div>
+                </div>
+                {/* modal Content End */}
+              </div>
+            </div>
+          </Modal2>
+        </div>
   )
  
 }

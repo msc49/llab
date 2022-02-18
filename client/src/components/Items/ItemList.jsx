@@ -50,14 +50,6 @@ const ItemList = ({session, refreshItems, setRefreshItems, setSearchItems, setAl
     getItems()
   }
 
-  // const borrowItem = async (id) => {
-  //   if(session) {
-  //     const { id: userId } = session.user
-  //     const { data } = await express.put(`/items/${id}/borrow/${userId}`)
-  //   }
-  //   getItems()
-  // }
-
   const updateItem = async (event, name, description, lender, borrower, id) => {
     event.preventDefault()
     await express.put(`/items/${id}`, {
@@ -115,18 +107,14 @@ const ItemList = ({session, refreshItems, setRefreshItems, setSearchItems, setAl
     noSearchResultsMsg.style.display = 'none'
   }
 
-  // console.log(itemList)
-  const renderedList = itemList.filter(item => item.available && item.lender._id !== session.user.id).map(item => {
+  const renderedList = itemList.reverse().filter(item => item.available && item.lender._id !== session.user.id).map(item => {
     return (
       <Item 
         key={item._id} 
         item={item}
-        deleteItem={deleteItem}
-        updateItem={updateItem}
-        uploadImage={uploadImage}
-        // borrowItem={borrowItem}
         session={session}
         setAlert={setAlert}
+        getItems={getItems}
       />
     )
   })
