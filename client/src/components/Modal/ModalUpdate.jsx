@@ -1,8 +1,8 @@
 import React from 'react'
 import './Modal.css'
 
-const Modal2 = ({modalOpen, children}) => {
-  if (!modalOpen) return null
+const ModalUpdate = ({modalUpdateOpen, children}) => {
+  if (!modalUpdateOpen) return null
   return (
     <div id="my-modal">
       {children}
@@ -10,4 +10,4 @@ const Modal2 = ({modalOpen, children}) => {
   )
 }
 
-export default Modal2
+export default ModalUpdate

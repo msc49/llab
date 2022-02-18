@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Item from './Item'
 import express from "../../apis/express";
 
-const UsersItemList = () => {
+const UsersItemList = ({session}) => {
 
 
   const [toggleBorrowing, setToggleBorrowing] = useState(false);
@@ -62,6 +62,7 @@ const UsersItemList = () => {
           deleteItem={deleteItem}
           updateItem={updateItem}
           uploadImage={uploadImage}
+          session={session}
         />
       )
     }

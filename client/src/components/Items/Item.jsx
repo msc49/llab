@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from 'react-router-dom'
 import { Popup } from 'semantic-ui-react'
 import { Rating } from 'semantic-ui-react'
@@ -6,7 +6,7 @@ import express from "../../apis/express";
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import Modal from '../Modal/Modal';
-import Modal2 from '../Modal/Modal2';
+import ModalUpdate from '../Modal/ModalUpdate';
 import '../images/image.png'
 import './Item.css'
 
@@ -15,14 +15,20 @@ const Item = ({ item, session, setAlert, getItems }) => {
   const {_id: id, name, description, images, available: availability, lender, borrower} = item
   const currentApprovedRequest = item.requests.find(request => request.approved)
   
+  console.log('session', session ? session.user.id : "")
+  console.log('lender', lender ? lender._id : "")
+
+
   const [modalOpen, setModalOpen] = useState(false)
-  const [modal2Open, setModal2Open] = useState(false)
+  const [modalUpdateOpen, setModalUpdateOpen] = useState(false)
   const [requestMessage, setRequestMessage] = useState("")
   const [calendar, setCalendar] = useState(new Date(Date.now() + (7*24*60*6*1000)));
   const [labItemName, setLabItemName] = useState("")
   const [labItemDescription, setLabItemDescription] = useState("")
   const [labItemAvailability, setLabItemAvailability] = useState(availability)
   const [labItemImage, setLabItemImage] = useState(null)
+
+  console.log(labItemAvailability)
   
   let r = Math.floor(Math.random() * 5) + 1;
   const RatingStar = () => (
@@ -41,7 +47,7 @@ const Item = ({ item, session, setAlert, getItems }) => {
       } 
     })
     setModalOpen(false)
-    setAlert({type: 'success', header: "Request sent successfully!", event: 'REQUEST_ITEM', username: session.user.username, itemName: name, lender: lender.username});
+    setAlert({type: 'success', header: "Request sent successfully!", event: 'REQUEST_ITEM', username: session ? session.user.username : "", itemName: name, lender: lender.username});
   }
 
   const updateLabItem = async (event) => {
@@ -55,7 +61,7 @@ const Item = ({ item, session, setAlert, getItems }) => {
     }) 
     if(labItemImage) await labImageUpload(id)
     setLabItemImage(null)
-    setModal2Open(false)
+    setModalUpdateOpen(false)
     getItems()
   }
 
@@ -139,7 +145,7 @@ const Item = ({ item, session, setAlert, getItems }) => {
             </div>
 
             {
-              session.user.id === lender._id ?  <div className={`ui bottom attached grey button`} tabindex="0" onClick={() => setModal2Open(true)}>
+              session && session.user.id === lender._id ? <div className={`ui bottom attached grey button`} tabIndex="0" onClick={() => setModalUpdateOpen(true)}>
               Update
               </div> :
               <div onClick={() => setModalOpen(true)} className="ui bottom attached blue button" tabIndex="0">
@@ -227,11 +233,11 @@ const Item = ({ item, session, setAlert, getItems }) => {
           </Modal>
 
           {/* Modal 2 (item update) */}
-          <Modal2 modalOpen={modalOpen}>
-            <div id="add-item-modal" class="my-modal">
-              <div class="my-modal-content">
-                <span class="my-modal-close" onClick={() => {
-                  setModal2Open(false)
+          <ModalUpdate modalUpdateOpen={modalUpdateOpen}>
+            <div id="add-item-modal" className="my-modal">
+              <div className="my-modal-content">
+                <span className="my-modal-close" onClick={() => {
+                  setModalUpdateOpen(false)
                   setLabItemImage(null)
                   }}>&times;</span>
 
@@ -259,21 +265,21 @@ const Item = ({ item, session, setAlert, getItems }) => {
                         </div> 
 
                         <div className="ui checkbox">
-                          <input type="checkbox" onClick={() => setLabItemAvailability(!labItemAvailability)} value={labItemAvailability} name="itemAvailability" />
-                          <label>List / Unlist Your Items</label>
+                          <input type="checkbox" onChange={() => setLabItemAvailability(!labItemAvailability)} name="itemAvailability" checked={availability} />
+                          <label> delist {item.name}? </label>
                         </div>
 
                         <div className='light-separator'></div>
                   
                         <div className="field ui center aligned container">
-                          <label for="file-upload" class="custom-file-upload">
-                          <i class="upload green icon"></i> Upload a new image
+                          <label htmlFor="file-upload" className="custom-file-upload">
+                          <i className="upload green icon"></i> Upload a new image
                           </label>
                           <input onChange={handleLabItemImageChange} id="file-upload" name="labItemImage" type="file" accept="image/*"/>
                         </div>   
 
                         <div className="ui container field lab-image-preview">
-                          <img id="lab-file-ip-1-preview" class="ui center aligned small image" src="https://fomantic-ui.com//images/wireframe/image.png" alt=""/>                  
+                          <img id="lab-file-ip-1-preview" className="ui center aligned small image" src="https://fomantic-ui.com//images/wireframe/image.png" alt=""/>                  
                         </div>
 
                         <button className="fluid ui large primary button">Update</button>
@@ -286,7 +292,7 @@ const Item = ({ item, session, setAlert, getItems }) => {
                 {/* modal Content End */}
               </div>
             </div>
-          </Modal2>
+          </ModalUpdate>
         </div>
   )
  
