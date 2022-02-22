@@ -53,8 +53,8 @@ const UsersItemList = ({session}) => {
   const userId = user.user.id;
 
 
-  const renderedLendingList = itemList.map(item =>  {
-    if (item.lender._id === userId) {
+  const renderedLendingList = itemList.map(item => {
+    if (item && item.lender && item.lender_id === userId) {
       return (
         <Item 
           key={item._id} 
@@ -63,6 +63,7 @@ const UsersItemList = ({session}) => {
           updateItem={updateItem}
           uploadImage={uploadImage}
           session={session}
+          getItems={getItems}
         />
       )
     }

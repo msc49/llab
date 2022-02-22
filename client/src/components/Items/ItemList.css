@@ -1,5 +1,5 @@
 .main-item-list {
-  margin-top: 4rem !important;
+  margin-top: 1rem !important;
 } 
 
 #item-list-empty-search-error {
@@ -10,3 +10,8 @@
   display: none;
 }
 
+#search-bar {
+  position: relative;
+  top: 1rem;
+  margin-top: 5rem !important;
+}

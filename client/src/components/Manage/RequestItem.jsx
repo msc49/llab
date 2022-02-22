@@ -8,7 +8,7 @@ import './RequestItem.css'
  const RequestItem = ({requestItem, getRequests, setAlert}) => {
    
   const { _id: itemId, name, description, images, borrower, requests } = requestItem
- console.log(borrower)
+ 
     // SET RATING
     let r = Math.floor(Math.random() * 5) + 1;
     const RatingStar = () => (

@@ -1,0 +1,82 @@
+/* The Modal (background) */
+#my-update-modal {
+  /* display: none; Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 100000000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+@media screen and (min-width: 700px) {
+  .my-modal-content {
+    background-color: inherit;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #fff;
+    border-radius: 25px;
+    width: fit-content; /* Could be more or less, depending on screen size */
+  }
+}
+
+.my-modal-content {
+  background-color: inherit;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 5px;
+  border: none;
+  border-radius: 25px;
+  width: 100%; /* Could be more or less, depending on screen size */
+}
+
+.my-modal-segment {
+  border-radius: 15px !important;
+  border: 1px solid grey !important;
+}
+
+.my-modal-form { 
+  padding: 0 !important;
+  margin: 0 auto !important;
+}
+/* The Close Button */
+
+.my-modal-close {
+  color: #fff;
+  position: relative;
+  left: 93% !important;
+  top: 0px !important;
+  font-size: 32px;
+  font-weight: bold;
+  z-index: 1;
+}
+
+@media screen and (min-width: 700px) {
+  .my-modal-close {
+    color: #fff;
+    position: relative;
+    left: 70% !important;
+    font-size: 32px;
+    font-weight: bold;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .my-modal-close {
+    color: #fff;
+    position: relative;
+    left: 61% !important;
+    font-size: 32px;
+    font-weight: bold;
+  }
+}
+
+.my-modal-close:hover,
+.my-modal-close:focus {
+  color: lightblue;
+  text-decoration: none;
+  cursor: pointer;
+}

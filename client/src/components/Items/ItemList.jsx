@@ -107,7 +107,7 @@ const ItemList = ({session, refreshItems, setRefreshItems, setSearchItems, setAl
     noSearchResultsMsg.style.display = 'none'
   }
 
-  const renderedList = itemList.reverse().filter(item => item.available && item.lender._id !== session.user.id).map(item => {
+  const renderedList = itemList.reverse().filter(item => item.available && item.lender && item.lender._id !== session.user.id).map(item => {
     return (
       <Item 
         key={item._id} 
@@ -124,8 +124,8 @@ const ItemList = ({session, refreshItems, setRefreshItems, setSearchItems, setAl
       <HomeBanner />
       <div className="main-content">
       {/* SEARCH FORM */}
-      <form onClick={removeWarnings} onSubmit={submitSearch}>
-        <div className="ui slow blue loading double fluid search">
+      <form id="search-bar" onClick={removeWarnings} onSubmit={submitSearch}>
+        <div className="ui big slow blue loading double fluid search">
           <div className="ui icon fluid focus input">
             <input className="prompt" onChange={(event) => {
               setSearchItem(event.target.value)

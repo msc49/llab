@@ -18,8 +18,6 @@ const App = () => {
   const [refreshItems, setRefreshItems] = useState(false)
   const [searchItems, setSearchItems] = useState(null)
 
-  console.log(session)
-
   useEffect(() => {
     const user = localStorage.getItem('user')
     if (user) {

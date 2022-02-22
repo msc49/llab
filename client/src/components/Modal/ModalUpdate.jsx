@@ -1,5 +1,5 @@
 import React from 'react'
-import './Modal.css'
+import './ModalUpdate.css'
 
 const ModalUpdate = ({modalUpdateOpen, children}) => {
   if (!modalUpdateOpen) return null

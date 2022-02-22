@@ -15,21 +15,16 @@ const Item = ({ item, session, setAlert, getItems }) => {
   const {_id: id, name, description, images, available: availability, lender, borrower} = item
   const currentApprovedRequest = item.requests.find(request => request.approved)
   
-  console.log('session', session ? session.user.id : "")
-  console.log('lender', lender ? lender._id : "")
-
-
   const [modalOpen, setModalOpen] = useState(false)
   const [modalUpdateOpen, setModalUpdateOpen] = useState(false)
   const [requestMessage, setRequestMessage] = useState("")
   const [calendar, setCalendar] = useState(new Date(Date.now() + (7*24*60*6*1000)));
   const [labItemName, setLabItemName] = useState("")
   const [labItemDescription, setLabItemDescription] = useState("")
-  const [labItemAvailability, setLabItemAvailability] = useState(availability)
+  const [labItemAvailability, setLabItemAvailability] = useState(true)
   const [labItemImage, setLabItemImage] = useState(null)
 
-  console.log(labItemAvailability)
-  
+
   let r = Math.floor(Math.random() * 5) + 1;
   const RatingStar = () => (
     <Rating icon='star' defaultRating={r} maxRating={5} disabled/>
@@ -59,10 +54,11 @@ const Item = ({ item, session, setAlert, getItems }) => {
         available: labItemAvailability,
       }
     }) 
+    console.log(data)
     if(labItemImage) await labImageUpload(id)
     setLabItemImage(null)
     setModalUpdateOpen(false)
-    getItems()
+    await getItems()
   }
 
   const labImageUpload = async (id) => {
@@ -80,6 +76,9 @@ const Item = ({ item, session, setAlert, getItems }) => {
   }
 
   const handleLabItemImageChange = (event) => {
+    console.log('hdllod')
+    console.log('something changed')
+    console.log(event.target.files[0])
     setLabItemImage(event.target.files[0])
     showImagePreview(event)
   }
@@ -263,24 +262,25 @@ const Item = ({ item, session, setAlert, getItems }) => {
                           <label htmlFor="item-description"><span className='ui medium text'>Item decription</span></label>
                           <input onChange={(event) => setLabItemDescription(event.target.value)} defaultValue={description} type="text" name="itemDescription" required/>
                         </div> 
-
-                        <div className="ui checkbox">
-                          <input type="checkbox" onChange={() => setLabItemAvailability(!labItemAvailability)} name="itemAvailability" checked={availability} />
-                          <label> delist {item.name}? </label>
+                        
+                        <div class="ui checkbox">
+                          <input onChange={() => setLabItemAvailability(!labItemAvailability)} type="checkbox" checked={labItemAvailability ? 'checked': ''} />
+                          <label>{labItemAvailability ? 'listed': 'unlisted'}</label>
                         </div>
+                      
 
                         <div className='light-separator'></div>
                   
-                        <div className="field ui center aligned container">
+                        {/* <div className="field ui center aligned container">
                           <label htmlFor="file-upload" className="custom-file-upload">
-                          <i className="upload green icon"></i> Upload a new image
+                            <i className="upload green icon"></i> Upload a new image
                           </label>
-                          <input onChange={handleLabItemImageChange} id="file-upload" name="labItemImage" type="file" accept="image/*"/>
+                          <input onClick={handleLabItemImageChange} id="file-upload-update" name="labItemImage" type="file" accept="image/*"/>
                         </div>   
 
                         <div className="ui container field lab-image-preview">
                           <img id="lab-file-ip-1-preview" className="ui center aligned small image" src="https://fomantic-ui.com//images/wireframe/image.png" alt=""/>                  
-                        </div>
+                        </div> */}
 
                         <button className="fluid ui large primary button">Update</button>
 

@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import UsersItemList from '../Items/UsersItemsList';
 import testImage from "../images/linda.jpeg";
 import './UserProfile.css'
@@ -8,15 +8,18 @@ import express from '../../apis/express';
 
 
 const UserProfile = ({ session, setSession }) => {
+
 const userDetails = JSON.parse(localStorage.getItem('user'));
 
-const changeProfilePic = async (event) => {
-  const { id } = userDetails.user
-  if(event.target.files) {
+const [profilePic, setProfilePic] = useState(null)
 
-    const userImage = event.target.files[0]
+const changeProfilePic = async (event) => {
+  event.preventDefault()
+  console.log(profilePic)
+  const { id } = userDetails.user
+  if(profilePic) {
     let formData = new FormData()
-      formData.append('userImage', userImage)
+      formData.append('userImage', profilePic)
   
       try {
         const { data: { image } } = await express.put(`/users/${id}/images`, formData)
@@ -39,12 +42,18 @@ return (
          
             <img alt="user profile" className="avatar" src={session && session.user.image ? session.user.image : testImage}></img>
 
-            <form className="ui large form my-modal-form" encType='multipart/form-data' noValidate>
+            <form onSubmit={changeProfilePic} className="ui large form" encType='multipart/form-data' noValidate>
               <div id="pic-button-container" className="ui center aligned container">
                 <label htmlFor="file-upload" className="custom-file-upload blue">
                   <i className="camera white icon"></i>choose picture
                 </label>
-                <input onChange={changeProfilePic} id="file-upload" name="imageFile" type="file" accept="image/*"/>
+                <input onChange={(event) => setProfilePic(event.target.files[0])} id="file-upload" name="imageFile" type="file" accept="image/*"/>
+      
+                <p></p>
+                <p></p>
+                <div>
+                  <button className='ui mini blue basic button'>Submit</button>
+                </div>
               </div>
             </form>
 
