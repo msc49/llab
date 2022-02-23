@@ -78,7 +78,7 @@ Used state and effect hooks to control the flow of information between component
 
 * MongoDB - document-oriented NoSQL database
 * Mongo Atlas - hosted mongoDB production database
-* Mongoose - ODM for
+* Mongoose - ODM for MongoDB
 
 ### Autentication
 
