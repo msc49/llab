@@ -23,9 +23,10 @@ Developed a full-stack web application which provides a system for community mem
 * Displaying alerts to confirm user actions
 
 ### Demo
-* Request-Approve-Return-Confirm Cycle Video Demo
+
+* Request-Approve-Return-Confirm Cycle Video Demo (click to link to video)
 [![Log In >> click for full demo](./readmeAssets/app_login.png)](https://youtu.be/lnx5pY6V3Mo)
-* Add Item Video Demo
+* Add Item Video Demo (click to link to video)
 [![Add Item >> click for add item demo](./readmeAssets/app_lend_item.png)](https://youtu.be/1C_X4oAMfKM)
 * Main Feed Image
 ![Main Feed](./readmeAssets/app_feed.png)
