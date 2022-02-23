@@ -23,15 +23,10 @@ Developed a full-stack web application which provides a system for community mem
 * Displaying alerts to confirm user actions
 
 ### Demo
-<!-- https://youtu.be/lnx5pY6V3Mo
-https://youtu.be/1C_X4oAMfKM -->
 
-![Local Lab: Item Request Demo](./video_RACR_cycle.mp4)
-![Local Lab: Add Item Demo](./video_add_item.mp4)
-
-![Log In](./readmeAssets/app_login.png)
+[dwsdwsd](https://youtu.be/lnx5pY6V3Mo)
+[![Add Item >> click for add item demo](./readmeAssets/app_lend_item.png)](https://youtu.be/1C_X4oAMfKM)
 ![Main Feed](./readmeAssets/app_feed.png)
-![Add Item](./readmeAssets/app_lend_item.png)
 ![Request Item](./readmeAssets/app_request_item.png)
 ![Manage Incoming Requests](./readmeAssets/app_manage_incoming_requests.png)
 ![Manage Outgoing Request](./readmeAssets/app_manage_outgoing_requests.png)
