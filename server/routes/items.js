@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Item = require("../models/item");
 
-// ITEM ROUTES
 // ALL ITEMS LIST
 router.get("/items", async (req, res) => {
   const items = await Item.find({}).populate("borrower").populate("lender");

@@ -168,10 +168,3 @@ cd client > npm start
 4. Adding a badge system, so users are allocated badges based on good lending and borrowing behaviour
 5. Adding a rating system for borrowers, so lenders can share their items with confidence
 
-## Team (Alphabetical)
-
-* [Evie Palaiochorinou](https://github.com/EviePalaiochorinou)
-* [James Cort](https://github.com/j-cort)
-* [Mayo Theodore](https://github.com/Mayo-Theodore)
-* [Muhammad Choudhry](https://github.com/msc49)
-* [Sabrina Lord](https://github.com/sabrinalord)
